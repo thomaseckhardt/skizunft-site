@@ -1,11 +1,54 @@
 ---
 import type { Code } from 'astro:components'
+import { fetchStories } from '../storyblok/utils/fetchStories'
 import CourseDateGroup from '../components/CourseDateGroup.astro'
 import RadioCardGroup from '../components/RadioCardGroup.astro'
 import TextField from '../components/TextField.astro'
 import ToggleGroup from '../components/ToggleGroup.astro'
 import Page from '../layouts/Page.astro'
 import SkillLevelGroup from '../components/SkillLevelGroup.astro'
+
+const dateFormat = new Intl.DateTimeFormat('de-DE', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+})
+
+const courseStories = await fetchStories({
+  content_type: 'Course',
+  per_page: 50,
+})
+const courses = courseStories.map((story) => {
+  const startDate = new Date(`${story.content.startDate}+0000`)
+  const endDate = new Date(`${story.content.endDate}+0000`)
+
+  return {
+    closed: false,
+    disabled: false,
+    state: undefined,
+    stateColor: undefined,
+    ...story.content,
+    id: story.uuid,
+    name: story.name,
+    slug: story.slug,
+    startDate,
+    endDate,
+    dateFormatted: dateFormat.formatRange(startDate, endDate),
+  }
+})
+const courseCategoryStories = await fetchStories({
+  content_type: 'CourseCategory',
+  per_page: 50,
+})
+const courseCategories = courseCategoryStories.map((story) => {
+  return {
+    ...story.content,
+    minAge: parseInt(story.content.minAge),
+    maxAge: parseInt(story.content.maxAge),
+    id: story.uuid,
+    slug: story.slug,
+  }
+})
 
 const key = 'booking'
 
@@ -185,18 +228,8 @@ const disciplines = [
   </div>
 </Page>
 
-<script is:inline define:vars={{ key, Discipline, disciplines, dates, categories }}>
+<script is:inline define:vars={{ key, Discipline, disciplines, courses, courseCategories }}>
 document.addEventListener('alpine:init', () => {
-  const currentkid = 0
-
-  const kids = [
-    {
-      discipline: Discipline.Ski,
-      age: 3,
-      skillLevel: 'Beginner',
-    },
-  ]
-
   const getCategories = (kid, categories) => {
     const availableCategories = categories.filter((category) => {
       return (
@@ -220,12 +253,6 @@ document.addEventListener('alpine:init', () => {
     dates: [],
   }
 
-  const dateFormat = new Intl.DateTimeFormat('de-DE', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-
   Alpine.data('kid', () => ({
     ...defaultkid,
     init() { },
@@ -248,27 +275,22 @@ document.addEventListener('alpine:init', () => {
     ],
     getCategories(kid) {
       console.log('getCategories', kid)
-      return getCategories(kid, categories)
+      return getCategories(kid, courseCategories)
     },
     getCategoriesOptions(kid) {
       console.log('getCategoriesOptions', kid)
-      return getCategories(kid, categories).map((category) => ({
+      return getCategories(kid, courseCategories).map((category) => ({
         ...category,
         label: category.name,
         value: category.id,
       }))
     },
     getDateOptions(kid) {
-      return getDates(kid, dates).map((date) => {
-        const startDate = new Date(`${date.startDate}+0000`)
-        const endDate = new Date(`${date.endDate}+0000`)
-
+      return getDates(kid, courses).map((date) => {
         return {
           ...date,
           label: date.name,
           value: date.slug,
-          startDate,
-          endDate,
           // state: 'wenige Plätze',
           // state: 'ausgebucht',
           // state: 'abgesagt',
@@ -276,7 +298,6 @@ document.addEventListener('alpine:init', () => {
           // disabled: true,
           disabled: false,
           closed: false,
-          formattedDate: dateFormat.formatRange(startDate, endDate),
         }
       })
     },

@@ -3,11 +3,20 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev --host",
-    "start": "astro dev",
-    "build": "astro build",
+    "dev": "PUBLIC_ENV=development astro dev --host",
+    "develop": "npm run dev",
+    "start": "npm run dev",
+    "build": "PUBLIC_ENV=production astro build",
+    "build:preview": "PUBLIC_ENV=preview astro build",
     "preview": "astro preview --host",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "vitest --ui",
+    "coverage": "vitest run --coverage",
+    "sb-login": "storyblok login",
+    "sb-pull-components": "dotenv -e ./.env.local cross-var storyblok pull-components --space %STORYBLOK_SPACE%",
+    "sb-generate-types": "dotenv -e ./.env.local cross-var storyblok-generate-ts source=./components.%STORYBLOK_SPACE%.json target=./src/types/storyblok-component-types.d.ts",
+    "sb-graphiql": "dotenv -e ./.env.local cross-var open https://gapi-browser.storyblok.com/?token=%STORYBLOK_TOKEN%",
+    "tailwindcss": "npx tailwindcss -i ./src/styles/base.css -o ./tailwind/base.css --watch"
   },
   "dependencies": {
     "@alpinejs/collapse": "^3.13.1",
@@ -16,6 +25,7 @@
     "@astrojs/rss": "^3.0.0",
     "@astrojs/sitemap": "^3.0.1",
     "@astrojs/tailwind": "^5.0.1",
+    "@storyblok/astro": "^3.0.1",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.6",
     "@tailwindcss/typography": "^0.5.10",
@@ -26,6 +36,12 @@
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.0",
     "prettier-plugin-tailwindcss": "^0.5.5",
-    "tailwindcss": "^3.3.3"
+    "storyblok-rich-text-astro-renderer": "^1.4.1",
+    "tailwindcss": "^3.3.3",
+    "vite": "^4.4.11"
+  },
+  "devDependencies": {
+    "cross-var": "^1.1.0",
+    "dotenv-cli": "^7.3.0"
   }
 }
