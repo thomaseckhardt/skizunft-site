@@ -1,0 +1,15 @@
+---
+import Toggle from './Toggle.astro'
+
+const { xModel } = Astro.props
+---
+
+<div class="flex items-center">
+  <slot>
+    <Toggle xModel={xModel} />
+  </slot>
+  <span class="ml-3 text-sm" id="annual-billing-label">
+    <span class="font-medium text-gray-900">Teilnehmer ist Vereinsmitglied</span>
+    <span class="text-gray-500"> (Spare 10 € pro Kurs)</span>
+  </span>
+</div>

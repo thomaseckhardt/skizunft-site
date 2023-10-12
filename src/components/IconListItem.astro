@@ -1,0 +1,11 @@
+---
+import clsx from 'clsx'
+import Icon from './Icon.astro'
+
+const { icon = 'checkmark-16-regular', className, ...props } = Astro.props
+---
+
+<li class={clsx('relative', className)} {...props}>
+  <Icon name={icon} className="absolute -left-6 top-1" sizeClass="w-4 h-4" />
+  <slot />
+</li>

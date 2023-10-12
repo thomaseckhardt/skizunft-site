@@ -1,0 +1,31 @@
+{
+  "name": "skizunft-site",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev --host",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview --host",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@alpinejs/collapse": "^3.13.1",
+    "@alpinejs/persist": "^3.13.1",
+    "@astrojs/mdx": "^1.1.1",
+    "@astrojs/rss": "^3.0.0",
+    "@astrojs/sitemap": "^3.0.1",
+    "@astrojs/tailwind": "^5.0.1",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.6",
+    "@tailwindcss/typography": "^0.5.10",
+    "alpinejs": "^3.13.1",
+    "astro": "^3.2.3",
+    "astro-icon": "^0.8.1",
+    "clsx": "^2.0.0",
+    "prettier": "^3.0.3",
+    "prettier-plugin-astro": "^0.12.0",
+    "prettier-plugin-tailwindcss": "^0.5.5",
+    "tailwindcss": "^3.3.3"
+  }
+}

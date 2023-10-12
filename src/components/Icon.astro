@@ -1,0 +1,27 @@
+---
+import { Icon } from 'astro-icon'
+import type { Code } from 'astro:components'
+import clsx from 'clsx'
+
+const {
+  pack = 'fluent',
+  name = 'warning-24-filled',
+  filename,
+  className = 'inline-block',
+  sizeClass = 'w-6 h-6',
+  ...props
+} = Astro.props
+
+const iconProps = filename
+  ? {
+      name: filename,
+    }
+  : {
+      pack,
+      name,
+    }
+---
+
+<!-- <span class={clsx(className)}> -->
+<Icon {...iconProps} class={clsx('flex-none', className, sizeClass)} {...props} />
+<!-- </span> -->

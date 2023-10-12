@@ -1,0 +1,288 @@
+---
+import type { Code } from 'astro:components'
+import CourseDateGroup from '../components/CourseDateGroup.astro'
+import RadioCardGroup from '../components/RadioCardGroup.astro'
+import TextField from '../components/TextField.astro'
+import ToggleGroup from '../components/ToggleGroup.astro'
+import Page from '../layouts/Page.astro'
+import SkillLevelGroup from '../components/SkillLevelGroup.astro'
+
+const key = 'booking'
+
+const Discipline = {
+  Ski: 'Ski',
+  Snowboard: 'Snowboard',
+}
+
+const dates = [
+  {
+    _uid: '536a716e-f2f2-48e1-a2e7-7be17777d54d',
+    closed: false,
+    endDate: '2024-01-07 00:00',
+    canceled: false,
+    category: '839a6648-23e0-46eb-b172-66c2fd09749b',
+    component: 'Course',
+    startDate: '2024-01-06 00:00',
+    name: 'Ski Beginner 1',
+    slug: 'ski-beginner-1',
+  },
+  {
+    _uid: 'b773dd76-d4e0-49ee-ba20-cea88b42df65',
+    closed: false,
+    endDate: '2024-01-14 00:00',
+    canceled: false,
+    category: '839a6648-23e0-46eb-b172-66c2fd09749b',
+    component: 'Course',
+    startDate: '2024-01-13 00:00',
+    name: 'Ski Beginner 2',
+    slug: 'ski-beginner-2',
+  },
+]
+
+const categories = [
+  {
+    // "uuid": "f6180986-b09c-4785-ab13-17adaf2a5663",
+    id: 'f6180986-b09c-4785-ab13-17adaf2a5663',
+    name: 'Bambini',
+    minAge: '3',
+    maxAge: '5',
+    component: 'CourseCategory',
+    discipline: Discipline.Ski,
+  },
+  {
+    id: '839a6648-23e0-46eb-b172-66c2fd09749b',
+    name: 'Beginner',
+    minAge: '6',
+    maxAge: '13',
+    component: 'CourseCategory',
+    discipline: Discipline.Ski,
+    skillLevel: 'Beginner',
+  },
+  {
+    id: '0260d5f0-1630-49e0-9902-fcd144e269ac',
+    name: 'Junior Champion',
+    minAge: '6',
+    maxAge: '13',
+    component: 'CourseCategory',
+    discipline: Discipline.Ski,
+    skillLevel: 'Junior_Champion',
+  },
+  {
+    id: '64821e5f-f54d-4113-8288-e1372e688df5',
+    name: 'Champion',
+    minAge: '6',
+    maxAge: '13',
+    component: 'CourseCategory',
+    discipline: Discipline.Ski,
+    skillLevel: 'Champion',
+  },
+  {
+    id: 'd9ab2cd9-297f-42d6-a8e8-247bda84a8ad',
+    name: 'Snowboard',
+    minAge: '6',
+    maxAge: '13',
+    component: 'CourseCategory',
+    discipline: Discipline.Snowboard,
+    skillLevel: 'Beginner',
+  },
+]
+
+const disciplines = [
+  {
+    value: Discipline.Ski,
+    label: 'Skikurs',
+    description: 'Für Kinder ab 3 bis einschließlich 13 Jahren',
+  },
+  {
+    value: Discipline.Snowboard,
+    label: 'Snowboardkurs',
+    description: 'Für Kinder ab 6 bis einschließlich 13 Jahren',
+  },
+]
+---
+
+<Page title="Kursbuchung" description="" className="bg-gray-50">
+  <div x-data={key} class="box">
+    <template x-for="(kid, kidIndex) in kids" :key="kidIndex">
+      <div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3 py-10">
+        <div class="px-4 sm:px-0">
+          <div class="sticky top-4">
+            <h3 class="text-base font-semibold leading-7 text-gray-900"><span x-text="kidIndex + 1"></span>. Kind</h3>
+            <p x-show="kid.firstname" class="mt-1 text-sm text-gray-600">
+              <span x-text="kid.firstname"></span>
+              <span x-show="kid.age">, <span x-text="kid.age"></span> Jahre</span>
+            </p>
+            <pre class="text-xs" x-text="JSON.stringify(kid, null, 2)"></pre>
+            <pre class="text-xs" x-text="JSON.stringify(getCategoriesOptions(kid), null, 2)"></pre>
+            <pre class="text-xs" x-text="JSON.stringify(getDateOptions(kid), null, 2)"></pre>
+          </div>
+        </div>
+
+        <div class="md:col-span-2 space-y-10">
+          <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
+            <div class="px-4 py-6 sm:p-8 space-y-6">
+              <RadioCardGroup
+                label="Für welchen Kurs möchtest du dich anmelden?"
+                xoptions="disciplines"
+                xmodel="kid.discipline"
+                name={`'kid_discipline_' + kidIndex`}
+              />
+              <TextField label="Vorname" xModel="kid.firstname" />
+              <TextField label="Nachname" xModel="kid.lastname" />
+              <TextField
+                type="number"
+                min="3"
+                max="100"
+                step="1"
+                variant="number"
+                label="Alter"
+                xModel="kid.age"
+                description="Wir bieten Skikurse für Kinder ab 3 bis einschließlich 13 Jahren"
+              />
+              <ToggleGroup xModel="kid.isMember" />
+              <SkillLevelGroup
+                x-show="getCategoriesOptions(kid).length > 1"
+                label="Könnensstufe"
+                model="kid.categoryId"
+                name="'kid_skillLevel_' + kidIndex"
+              >
+                <div slot="introduction" class="text-sm mt-2 max-w-xl">
+                  <p>
+                    Du bist unsicher welche Könnensstufe du auswählen sollst? Erfahre hier was du für welche Könnenstufe
+                    mitbringen solltest und was du lernen wirst.
+                  </p>
+                </div>
+              </SkillLevelGroup>
+              <CourseDateGroup
+                x-show="getDateOptions(kid).length > 1"
+                xoptions="getDateOptions(kid)"
+                label="Kurstermine"
+                model="kid.dates"
+                name="'kid_dates_' + kidIndex"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+    <div>
+      <button
+        type="button"
+        class="relative block w-full rounded-lg border border-dashed border-gray-300 p-6 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+      >
+        <div
+          class="inline-flex items-center rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+        >
+          <svg class="-ml-0.5 mr-1.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path
+              d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"
+            ></path>
+          </svg>
+           Kind hinzufügen
+        </div>
+      </button>
+    </div>
+  </div>
+</Page>
+
+<script is:inline define:vars={{ key, Discipline, disciplines, dates, categories }}>
+document.addEventListener('alpine:init', () => {
+  const currentkid = 0
+
+  const kids = [
+    {
+      discipline: Discipline.Ski,
+      age: 3,
+      skillLevel: 'Beginner',
+    },
+  ]
+
+  const getCategories = (kid, categories) => {
+    const availableCategories = categories.filter((category) => {
+      return (
+        category.discipline === kid.discipline &&
+        parseInt(category.minAge) <= parseInt(kid.age) &&
+        parseInt(category.maxAge) >= parseInt(kid.age)
+      )
+    })
+
+    return availableCategories
+  }
+
+  const getDates = (kid, dates) => {
+    return dates.filter((date) => date.category === kid.categoryId)
+  }
+
+  const defaultkid = {
+    discipline: Discipline.Ski,
+    age: 6,
+    isMember: false,
+    dates: [],
+  }
+
+  const dateFormat = new Intl.DateTimeFormat('de-DE', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+
+  Alpine.data('kid', () => ({
+    ...defaultkid,
+    init() { },
+  }))
+
+  Alpine.data(key, () => ({
+    disciplines,
+    createkid() {
+      this.kids.push({
+        ...defaultkid,
+      })
+    },
+    kids: [
+      {
+        ...defaultkid,
+      },
+      {
+        ...defaultkid,
+      },
+    ],
+    getCategories(kid) {
+      console.log('getCategories', kid)
+      return getCategories(kid, categories)
+    },
+    getCategoriesOptions(kid) {
+      console.log('getCategoriesOptions', kid)
+      return getCategories(kid, categories).map((category) => ({
+        ...category,
+        label: category.name,
+        value: category.id,
+      }))
+    },
+    getDateOptions(kid) {
+      return getDates(kid, dates).map((date) => {
+        const startDate = new Date(`${date.startDate}+0000`)
+        const endDate = new Date(`${date.endDate}+0000`)
+
+        return {
+          ...date,
+          label: date.name,
+          value: date.slug,
+          startDate,
+          endDate,
+          // state: 'wenige Plätze',
+          // state: 'ausgebucht',
+          // state: 'abgesagt',
+          // stateColor: 'text-red-700',
+          // disabled: true,
+          disabled: false,
+          closed: false,
+          formattedDate: dateFormat.formatRange(startDate, endDate),
+        }
+      })
+    },
+    init() {
+      console.log('init')
+    },
+  }))
+})
+</script>

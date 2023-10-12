@@ -1,0 +1,27 @@
+---
+import clsx from "clsx";
+import Icon from "./Icon.astro";
+
+const { level = "warning" } = Astro.props;
+
+const levelStyles = {
+  warning: {
+    root: "border-yellow-400 bg-yellow-50",
+    icon: "text-yellow-400",
+    content: "prose-warning",
+    iconName: "warning-24-filled",
+  },
+};
+const levelStyle = levelStyles[level] ?? levelStyles.warning;
+---
+
+<div class={clsx("border-l-4 px-4 py-2", levelStyle.root)}>
+  <div class="flex">
+    <div class={clsx("flex-shrink-0 relative top-0.5", levelStyle.icon)}>
+      <Icon name={levelStyle.iconName} />
+    </div>
+    <div class={clsx("ml-3 prose max-w-none", levelStyle.content)}>
+      <slot />
+    </div>
+  </div>
+</div>

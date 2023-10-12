@@ -1,0 +1,63 @@
+---
+import clsx from 'clsx'
+import Icon from './Icon.astro'
+
+const { label, model, xoptions } = Astro.props
+---
+
+<fieldset>
+  <legend class="text-base font-semibold leading-6 text-gray-900">{label}</legend>
+  <div class="mt-4 space-y-2">
+    <!-- Active: "border-sky-600 ring-2 ring-sky-600", Not Active: "border-gray-300" -->
+    <template {...{ 'x-for': `(item, index) in ${xoptions}` }} :key="index">
+      <label
+        class="relative flex items-center rounded-lg bg-white p-4 shadow-sm focus:outline-none text-sm"
+        :class="item.disabled ? 'cursor-not-allowed' : 'cursor-pointer'"
+      >
+        <input type="checkbox" class="sr-only peer" x-model={model} :value="item.value" :disabled="item.disabled" />
+        <span
+          class={clsx('flex-1 relative z-10 text-gray-900', 'peer-disabled:text-gray-500 peer-disabled:ring-gray-200')}
+        >
+          <span class="font-medium" x-text="item.label"></span>
+           &middot;
+          <span x-text="item.formattedDate"></span>
+        </span>
+        <span
+          x-show="item.state"
+          x-text="item.state"
+          class={clsx(
+            'relative z-10 ml-5 pl-6 text-sm text-right',
+            'peer-disabled:text-gray-500 peer-disabled:ring-gray-200',
+            'peer-checked:hidden',
+          )}
+          :class="item.stateColor ? item.stateColor : 'text-gray-500'"
+        >
+        </span>
+        <Icon
+          x-show="!item.disabled"
+          name="checkmark-circle-20-filled"
+          className="ml-2 text-sky-600 invisible peer-checked:visible peer-disabled:hidden relative z-10"
+          sizeClass="h-5 w-5"
+        />
+        <Icon
+          x-show="!item.disabled && item.state"
+          name="calendar-info-20-regular"
+          className="-ml-5 text-gray-500 relative z-10 peer-checked:hidden"
+          sizeClass="h-5 w-5"
+        />
+        <Icon
+          x-show="item.closed"
+          name="warning-20-regular"
+          className="ml-2 text-gray-500 hidden peer-disabled:block relative z-10"
+          sizeClass="h-5 w-5"
+        />
+        <span
+          class={clsx(
+            'pointer-events-none absolute -inset-px rounded-lg ring-1 ring-inset ring-gray-300 peer-checked:ring-2 peer-checked:ring-sky-600',
+            'peer-disabled:bg-gray-50',
+          )}
+          aria-hidden="true"></span>
+      </label>
+    </template>
+  </div>
+</fieldset>

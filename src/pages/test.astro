@@ -1,0 +1,39 @@
+<div x-data="list">
+  <template x-for="(item, index) in items" :key="index">
+    <div>
+      <select x-for="$parent.categories" value="item.category">
+        <template x-for="(item, index) in items" :key="index">
+          <option x-text="item" :value="item" :selected="item === $parent.items[index].category"></option>
+        </template>
+      </select>
+      <div x-text="settings[]"></div>
+    </div>
+  </template>
+</div>
+
+<script is:inline>
+document.addEventListener('alpine:init', () => {
+  Alpine.data('list', () => ({
+    categories: ['category_1', 'category_2', 'category_3'],
+    settings: {
+      category_1: {
+        name: 'Setting 1',
+      },
+      category_2: {
+        name: 'Setting 2',
+      },
+      category_3: {
+        name: 'Setting 3',
+      },
+    },
+    items: [
+      {
+        category: 'category_3',
+      },
+      {
+        category: 'category_1',
+      },
+    ],
+  }))
+})
+</script>

@@ -1,0 +1,8 @@
+---
+import clsx from 'clsx'
+const { className, ...props } = Astro.props
+---
+
+<ul class={clsx('pl-6', className)} {...props}>
+  <slot />
+</ul>
