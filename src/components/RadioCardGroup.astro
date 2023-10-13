@@ -4,7 +4,7 @@ const { items, value, label, name, xmodel, xoptions, ...props } = Astro.props
 
 <fieldset {...props}>
   <legend class="text-base font-semibold leading-6 text-gray-900">{label}</legend>
-  <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4">
+  <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4 lg:grid-cols-3">
     <template {...{ 'x-for': `(item, index) in ${xoptions}` }} x-bind:key="index">
       <label class="relative flex cursor-pointer rounded-lg bg-white p-4 shadow-sm focus:outline-none">
         <input type="radio" x-model={xmodel} x-bind:name={name} class="sr-only peer" x-bind:value="item.value" />
@@ -23,7 +23,7 @@ const { items, value, label, name, xmodel, xoptions, ...props } = Astro.props
           </span>
         </span>
         <svg
-          class="h-5 w-5 text-sky-600 invisible peer-checked:visible relative z-10"
+          class="flex-none h-5 w-5 text-sky-600 invisible peer-checked:visible relative z-10"
           viewBox="0 0 20 20"
           fill="currentColor"
           aria-hidden="true"
