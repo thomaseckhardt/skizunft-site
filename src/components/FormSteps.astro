@@ -20,15 +20,14 @@ const { ...props } = Astro.props
           >
           </div>
         </div>
-        <a
-          href="#"
+        <div
           class="relative"
           :class="index >= step.index && 'cursor-default'"
           :aria-current="step.slug == item.slug"
         >
           <div
             x-show="index < step.index"
-            class="flex h-8 w-8 items-center justify-center rounded-full bg-brandblue-600 transition hover:bg-brandblue-900"
+            class="flex h-8 w-8 items-center justify-center rounded-full bg-brandblue-600 transition"
           >
             <svg
               class="h-5 w-5 text-white"
@@ -64,7 +63,7 @@ const { ...props } = Astro.props
           >
             <div x-text="item.label"></div>
           </div>
-        </a>
+        </div>
       </li>
     </template>
   </ol>

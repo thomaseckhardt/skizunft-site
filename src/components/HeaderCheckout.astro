@@ -1,0 +1,37 @@
+---
+import clsx from 'clsx'
+
+import Logo from '@/components/Logo.astro'
+import DsvSkischule from '@/images/dsv-skischule.svg'
+---
+
+<header>
+  <nav
+    class="stack mx-auto max-w-7xl items-center p-6 lg:px-8"
+    aria-label="Global"
+  >
+    <div class="flex">
+      <a href="/" class="z-10 block cursor-pointer">
+        <span class="sr-only">Skizunft Kollnau e.V.</span>
+        <Logo className="h-12 w-auto text-brandblue-800" />
+      </a>
+    </div>
+    <div class="flex justify-center font-hero text-2xl">
+      DSV-Skischule Skizunft Kollnau
+    </div>
+    <div class="flex justify-end">
+      <a
+        href="https://www.deutscherskiverband.de/detail_skischulen_de,58926,1145822,detail.html"
+        target="_blank"
+        rel="noreferrer"
+        class="relative z-10 block cursor-pointer py-3"
+      >
+        <img
+          src={DsvSkischule.src}
+          alt="DSV Skischule Skizunft Kollnau e.V."
+          class="h-[24px] w-auto"
+        />
+      </a>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import BaseHead from '../components/BaseHead.astro'
+import Footer from '../components/Footer.astro'
+import clsx from 'clsx'
+import HeaderCheckout from '@/components/HeaderCheckout.astro'
+
+type Props = CollectionEntry<'blog'>['data']
+
+const { title, description, className } = Astro.props
+---
+
+<html lang="de">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+
+  <body class={clsx(className)}>
+    <HeaderCheckout />
+    <slot />
+    <Footer />
+    <script>
+      import Alpine from 'alpinejs'
+      import collapse from '@alpinejs/collapse'
+      import persist from '@alpinejs/persist'
+
+      Alpine.plugin(collapse)
+      // Alpine.plugin(persist)
+
+      // Optional: Extend Alpine.js
+      // Alpine.directive('foo', ...)
+
+      // Alpine.store('user', {
+      //   investorProfile: Alpine.$persist('Private_Investor').as('investor_profile'),
+      //   country: Alpine.$persist('DE').as('investor_country'),
+      // })
+
+      window.Alpine = Alpine
+      Alpine.start()
+    </script>
+  </body>
+</html>

@@ -1,11 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 
-import defaultTheme from 'tailwindcss/defaultTheme'
-import colors from 'tailwindcss/colors'
-import plugin from 'tailwindcss/plugin'
 import tailwindcssContainerQueries from '@tailwindcss/container-queries'
 import tailwindcssForms from '@tailwindcss/forms'
 import tailwindcssTypography from '@tailwindcss/typography'
+import defaultTheme from 'tailwindcss/defaultTheme'
+import plugin from 'tailwindcss/plugin'
 
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
@@ -140,6 +139,16 @@ export default {
     tailwindcssTypography,
     plugin(function ({ theme, addUtilities, addComponents, matchUtilities }) {
       addComponents({
+        '.grid-stacked': {
+          'grid-area': '1 / 1 / 2 / 2',
+        },
+        '.stack': {
+          display: 'grid',
+        },
+        '.stack > *': {
+          'grid-area': '1/1',
+          width: '100%',
+        },
         'ul.list-icon': {
           listStyle: 'none',
           paddingLeft: '0',

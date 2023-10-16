@@ -1,18 +1,18 @@
 ---
-import Page from '@/layouts/Page.astro'
+import CheckoutPage from '@/layouts/CheckoutPage.astro'
 import FormSteps from '@/components/FormSteps.astro'
 
 const key = 'booking'
 ---
 
-<Page title="Kursbuchung" description="" className="bg-gray-50">
-  <div>
+<CheckoutPage title="Kursbuchung" description="" className="bg-gray-50">
+  <div x-data={key}>
     <FormSteps />
     <div class="mt-10">
       <div>Fertig</div>
     </div>
   </div>
-</Page>
+</CheckoutPage>
 
 <script is:inline define:vars={{ key }}>
   document.addEventListener('alpine:init', () => {

@@ -1,6 +1,6 @@
 ---
 import { fetchStories } from '@/storyblok/utils/fetchStories'
-import Page from '@/layouts/Page.astro'
+import CheckoutPage from '@/layouts/CheckoutPage.astro'
 import FormSteps from '@/components/FormSteps.astro'
 import BookingSelection from '@/components/BookingSelection.astro'
 import BookingRegistration from '@/components/BookingRegistration.astro'
@@ -108,7 +108,7 @@ const disciplines = {
 }
 ---
 
-<Page title="Kursbuchung" description="" className="bg-gray-50">
+<CheckoutPage title="Kursbuchung" description="" className="bg-gray-50">
   <form
     x-data={key}
     class="box py-10"
@@ -121,8 +121,9 @@ const disciplines = {
       <BookingSelection stepSlug="selection" />
       <BookingRegistration stepSlug="booking" />
     </div>
+    <input type="hidden" value="Test" name="testItems[][name]" />
   </form>
-</Page>
+</CheckoutPage>
 
 <script
   is:inline
@@ -208,6 +209,7 @@ const disciplines = {
     const currentStep = 0
 
     Alpine.data(key, () => ({
+      testItems: [],
       discountPercentage: 0.1,
       currentStep,
       step: steps[currentStep],
