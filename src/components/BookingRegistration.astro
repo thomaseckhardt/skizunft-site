@@ -105,9 +105,18 @@ const { stepSlug } = Astro.props
             </p>
           </div>
           <div class="relative mt-6 grid gap-x-6 gap-y-6 sm:grid-cols-2">
-            <TextField label="Dein Vorname" xModel="contact.firstname" />
-            <TextField label="Dein Nachname" xModel="contact.lastname" />
             <TextField
+              name="firstname"
+              label="Dein Vorname"
+              xModel="firstname"
+            />
+            <TextField
+              name="lastname"
+              label="Dein Nachname"
+              xModel="lastname"
+            />
+            <TextField
+              name="email"
               type="email"
               className="sm:col-span-2"
               startIcon="mail-24-regular"
@@ -117,6 +126,7 @@ const { stepSlug } = Astro.props
               description="An diese E-Mail wird die Buchungsbestätigung geschickt. Darüber hinaus nehmen wir nur Kontakt auf, sofern es Kursrelevante Informationen gibt."
             />
             <TextField
+              name="phone"
               className="sm:col-span-2"
               startIcon="phone-24-regular"
               label="Deine Telefonnummer"
@@ -131,12 +141,14 @@ const { stepSlug } = Astro.props
             </h2>
             <div class="relative mt-4 grid gap-x-6 gap-y-4 sm:grid-cols-3">
               <TextField
+                name="address"
                 label="Adresse"
                 xModel="contact.address"
                 className="sm:col-span-3"
               />
               <TextField label="PLZ" xModel="contact.postalCode" />
               <TextField
+                name="city"
                 label="Stadt"
                 xModel="contact.city"
                 className="sm:col-span-2"
@@ -156,15 +168,15 @@ const { stepSlug } = Astro.props
               />
             </div>
             <div class="ml-3 text-sm leading-6">
-              <label for="agb" class="font-medium text-gray-900"
-                >Allgemeine Geschäftbedingungen</label
-              >
+              <label for="agb" class="font-medium text-gray-900">
+                Allgemeine Geschäftbedingungen
+              </label>
               <p
                 id="agb-description"
                 class="prose prose-sm prose-gray text-gray-500"
               >
-                Ich bestätige, dass ich die <a href="/agb/" target="_blank"
-                  >Allgemeinen Geschäftsbedingungen</a
+                Ich bestätige, dass ich die <a href="/agb/" target="_blank">
+                  Allgemeinen Geschäftsbedingungen</a
                 > der Skischule Oberstaufen gelesen habe und mit ihnen
                 einverstanden bin.
               </p>
@@ -181,18 +193,18 @@ const { stepSlug } = Astro.props
               />
             </div>
             <div class="ml-3 text-sm leading-6">
-              <label for="privacy" class="font-medium text-gray-900"
-                >Datenschutzerklärung</label
-              >
+              <label for="privacy" class="font-medium text-gray-900">
+                Datenschutzerklärung
+              </label>
               <p
                 id="privacy-description"
                 class="prose prose-sm prose-gray text-gray-500"
               >
-                Ich habe die <a href="/datenschutz/" target="_blank"
-                  >Datenschutzerklärung</a
-                > zur Kenntnis genommen. Ich stimme zu, dass meine Angaben und
-                Daten zur Beantwortung meiner Anfrage elektronisch erhoben und
-                gespeichert werden. Hinweis: Sie können Ihre Einwilligung
+                Ich habe die <a href="/datenschutz/" target="_blank">
+                  Datenschutzerklärung
+                </a> zur Kenntnis genommen. Ich stimme zu, dass meine Angaben
+                und Daten zur Beantwortung meiner Anfrage elektronisch erhoben
+                und gespeichert werden. Hinweis: Sie können Ihre Einwilligung
                 jederzeit für die Zukunft widerrufen, per E-Mail an
                 info@szkollnau.de
               </p>

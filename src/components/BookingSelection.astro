@@ -119,10 +119,13 @@ const { stepSlug } = Astro.props
               x-show="getCategoriesOptions(kid).length > 0"
               class="!mt-12"
             >
-              <legend class="text-lg font-semibold leading-6 text-gray-900"
-                >Kurstermine</legend
+              <legend class="text-lg font-semibold leading-6 text-gray-900">
+                Kurstermine
+              </legend>
+              <div
+                x-show="getDateOptions(kid).length > 0"
+                class="mt-4 flex items-baseline gap-x-2 text-sm"
               >
-              <div class="mt-4 flex items-baseline gap-x-2 text-sm">
                 <div
                   x-text="getSelectedCategory(kid)?.priceFormatted"
                   :class="kid.isMember && 'line-through'"
@@ -161,7 +164,7 @@ const { stepSlug } = Astro.props
                 >
                   <div>Gesamtbetrag</div>
                   <div class="text-2xl">
-                    <div x-text="getPriceFinal(kid)"></div>
+                    <div x-text="formatPrice(getPriceFinal(kid))"></div>
                   </div>
                 </div>
               </div>

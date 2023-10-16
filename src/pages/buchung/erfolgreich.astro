@@ -1,0 +1,44 @@
+---
+import Page from '@/layouts/Page.astro'
+import FormSteps from '@/components/FormSteps.astro'
+
+const key = 'booking'
+---
+
+<Page title="Kursbuchung" description="" className="bg-gray-50">
+  <div>
+    <FormSteps />
+    <div class="mt-10">
+      <div>Fertig</div>
+    </div>
+  </div>
+</Page>
+
+<script is:inline define:vars={{ key }}>
+  document.addEventListener('alpine:init', () => {
+    currentStep = 2
+    const steps = [
+      {
+        index: 0,
+        slug: 'selection',
+        label: 'Kurs auswählen',
+      },
+      {
+        index: 1,
+        slug: 'booking',
+        label: 'Kurs buchen',
+      },
+      {
+        index: 2,
+        slug: 'complete',
+        label: 'Fertig!',
+      },
+    ]
+
+    Alpine.data(key, () => ({
+      currentStep,
+      step: steps[currentStep],
+      steps,
+    }))
+  })
+</script>

@@ -1,11 +1,9 @@
 ---
-import { fetchStories } from '../storyblok/utils/fetchStories'
-import Page from '../layouts/Page.astro'
-import FormSteps from '../components/FormSteps.astro'
-import BookingSelection from '../components/BookingSelection.astro'
-import BookingRegistration from '../components/BookingRegistration.astro'
-import BookingConfirmation from '../components/BookingConfirmation.astro'
-import BookingPayment from '../components/BookingPayment.astro'
+import { fetchStories } from '@/storyblok/utils/fetchStories'
+import Page from '@/layouts/Page.astro'
+import FormSteps from '@/components/FormSteps.astro'
+import BookingSelection from '@/components/BookingSelection.astro'
+import BookingRegistration from '@/components/BookingRegistration.astro'
 
 const categoryOrder = ['Beginner', 'Junior_Champion', 'Champion']
 
@@ -111,7 +109,13 @@ const disciplines = {
 ---
 
 <Page title="Kursbuchung" description="" className="bg-gray-50">
-  <form x-data={key} class="box py-10" name="booking" netlify>
+  <form
+    x-data={key}
+    class="box py-10"
+    name="booking"
+    data-netlify="true"
+    action="/buchung/erfolgreich"
+  >
     <FormSteps />
     <div class="mt-10">
       <BookingSelection stepSlug="selection" />
@@ -178,9 +182,6 @@ const disciplines = {
       // ...testKid,
     }
 
-    console.log(defaultkid)
-    console.log(testCategory)
-
     const steps = [
       {
         index: 0,
@@ -215,16 +216,14 @@ const disciplines = {
       disciplines,
       courseCategories,
       courses,
-      contact: {
-        salutation: '',
-        firstname: '',
-        lastname: '',
-        email: '',
-        phone: '',
-        address: '',
-        postalCode: '',
-        city: '',
-      },
+      salutation: '',
+      firstname: '',
+      lastname: '',
+      email: '',
+      phone: '',
+      address: '',
+      postalCode: '',
+      city: '',
       kids: [],
       addKid() {
         this.kids.push({
