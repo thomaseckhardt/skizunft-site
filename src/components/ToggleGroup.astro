@@ -1,18 +1,19 @@
 ---
 import Toggle from './Toggle.astro'
 
-const { xModel } = Astro.props
+const { xModel, name } = Astro.props
 ---
 
 <div class="flex items-center">
   <slot>
-    <Toggle xModel={xModel} />
+    <Toggle xModel={xModel} name={name} />
   </slot>
   <span class="ml-3 text-sm leading-tight" id="annual-billing-label">
-    <span class="font-medium text-gray-900"
-      ><span x-show="kid.firstname" x-text="kid.firstname"></span><span x-show="!kid.firstname">Kind</span> ist
-      Vereinsmitglied</span
-    >
+    <span class="font-medium text-gray-900">
+      <span x-show="kid.firstname" x-text="kid.firstname"></span>
+      <span x-show="!kid.firstname">Kind</span>
+       ist Vereinsmitglied
+    </span>
     <span class="text-gray-500"> (Spare 10 € pro Kurs)</span>
   </span>
 </div>

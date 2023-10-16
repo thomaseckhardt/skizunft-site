@@ -65,22 +65,25 @@ const { stepSlug } = Astro.props
         >
           <div class="relative space-y-6">
             <RadioCardGroup
+              name={`'kid_discipline_' + kidIndex`}
               label="Für welchen Kurs möchtest du ein Kind anmelden?"
               xoptions="disciplines"
               xmodel="kid.discipline"
-              name={`'kid_discipline_' + kidIndex`}
             />
             <TextField
+              name="'kid_firstname_' + kidIndex"
               label="Vorname"
               xModel="kid.firstname"
               placeholder="des Kindes"
             />
             <TextField
+              name="'kid_lastname_' + kidIndex"
               label="Nachname"
               xModel="kid.lastname"
               placeholder="des Kindes"
             />
             <TextField
+              name="'kid_age_' + kidIndex"
               type="number"
               min="3"
               max="100"
@@ -99,7 +102,10 @@ const { stepSlug } = Astro.props
                 Wir bieten Skikurse für Kinder ab 3 bis einschließlich 13 Jahren
               </p>
             </TextField>
-            <ToggleGroup xModel="kid.isMember" />
+            <ToggleGroup
+              xModel="kid.isMember"
+              name="'kid_member_' + kidIndex"
+            />
             <SkillLevelGroup
               x-show="getCategoriesOptions(kid).length > 1"
               class="!mt-12"

@@ -1,6 +1,6 @@
 ---
 import clsx from 'clsx'
-const { xModel, label } = Astro.props
+const { xModel, label, name } = Astro.props
 
 // How to set initialy 'true'
 ---
@@ -11,19 +11,25 @@ const { xModel, label } = Astro.props
   x-data="{on: false}"
   x-bind:class="{ 'bg-sky-600': on, 'bg-gray-200': !(on) }"
 >
-  <input type="checkbox" x-model={xModel} class="sr-only" x-on:change="on = $event.target.checked" />
+  <input
+    type="checkbox"
+    name={name}
+    x-model={xModel}
+    class="sr-only"
+    x-on:change="on = $event.target.checked"
+  />
   <span class="sr-only">{label}</span>
   <span
     class={clsx(
-      'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5',
+      'pointer-events-none relative inline-block h-5 w-5 translate-x-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
     )}
     x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !(on) }"
   >
     <span
       class={clsx(
-        'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity opacity-0 duration-100 ease-out',
+        'absolute inset-0 flex h-full w-full items-center justify-center opacity-0 transition-opacity duration-100 ease-out',
       )}
-      x-bind:class="{ 'opacity-0 duration-100 ease-out': on, 'opacity-100 duration-200 ease-in': !(on) }"
+      x-bind:class="{ 'opacity-0 ease-out': on, 'opacity-100 ease-in': !(on) } duration-100 duration-200"
       aria-hidden="true"
     >
       <svg class="h-3 w-3 text-gray-400" fill="none" viewBox="0 0 12 12">
@@ -37,9 +43,9 @@ const { xModel, label } = Astro.props
     </span>
     <span
       class={clsx(
-        'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity opacity-100 duration-200 ease-in',
+        'absolute inset-0 flex h-full w-full items-center justify-center opacity-100 transition-opacity duration-200 ease-in',
       )}
-      x-bind:class="{ 'opacity-100 duration-200 ease-in': on, 'opacity-0 duration-100 ease-out': !(on) }"
+      x-bind:class="{ 'opacity-100 ease-in': on, 'opacity-0 ease-out': !(on) } duration-100 duration-200"
       aria-hidden="true"
     >
       <svg class="h-3 w-3 text-sky-600" fill="currentColor" viewBox="0 0 12 12">
