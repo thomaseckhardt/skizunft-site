@@ -111,26 +111,13 @@ const disciplines = {
 ---
 
 <Page title="Kursbuchung" description="" className="bg-gray-50">
-  <div x-data={key} class="box py-10">
+  <form x-data={key} class="box py-10" name="booking" netlify>
     <FormSteps />
     <div class="mt-10">
       <BookingSelection stepSlug="selection" />
-      <BookingRegistration stepSlug="registration" />
-      <BookingPayment stepSlug="confirmation" />
-      <div x-show.transition="step.slug === 'complete'">
-        <div>complete</div>
-        <div class="mt-6 flex justify-end">
-          <button
-            type="submit"
-            class="min-w-[20%] rounded-full border border-transparent bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
-            @click="nextStep()"
-          >
-            Weiter
-          </button>
-        </div>
-      </div>
+      <BookingRegistration stepSlug="booking" />
     </div>
-  </div>
+  </form>
 </Page>
 
 <script
@@ -183,12 +170,12 @@ const disciplines = {
     testKid.dates = getDates(testKid, courses)?.map((date) => date.slug)
 
     const defaultkid = {
-      // discipline: Discipline.Ski,
-      // age: 6,
-      // isMember: false,
-      // skillLevel: 'Beginner',
-      // dates: [],
-      ...testKid,
+      discipline: Discipline.Ski,
+      age: 6,
+      isMember: false,
+      skillLevel: 'Beginner',
+      dates: [],
+      // ...testKid,
     }
 
     console.log(defaultkid)
@@ -198,26 +185,26 @@ const disciplines = {
       {
         index: 0,
         slug: 'selection',
-        label: 'Kurse auswählen',
+        label: 'Kurs auswählen',
       },
       {
         index: 1,
-        slug: 'registration',
-        label: 'Anmelden',
+        slug: 'booking',
+        label: 'Kurs buchen',
       },
+      // {
+      //   index: 2,
+      //   slug: 'confirmation',
+      //   label: 'Bestätigen',
+      // },
       {
         index: 2,
-        slug: 'confirmation',
-        label: 'Bestätigen',
-      },
-      {
-        index: 3,
         slug: 'complete',
         label: 'Fertig!',
       },
     ]
 
-    const currentStep = 1
+    const currentStep = 0
 
     Alpine.data(key, () => ({
       discountPercentage: 0.1,
@@ -341,9 +328,6 @@ const disciplines = {
       init() {
         console.log('init')
         this.addKid()
-        setTimeout(() => {
-          this.addKid()
-        }, 0)
       },
     }))
   })

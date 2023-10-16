@@ -5,13 +5,20 @@ const { ...props } = Astro.props
 <nav aria-label="Progress" {...props}>
   <ol role="list" class="flex items-center justify-center">
     <template x-for="(item, index) in steps" :key="item.slug">
-      <li class="relative" :class="index < steps.length - 1 && 'pr-14 sm:pr-20'">
+      <li
+        class="relative"
+        :class="index < steps.length - 1 && 'pr-16 sm:pr-24'"
+      >
         <div
           x-show="index < steps.length - 1"
-          class="absolute top-4 left-0 right-0 flex items-center"
+          class="absolute left-0 right-0 top-4 flex items-center"
           aria-hidden="true"
         >
-          <div class="h-0.5 w-full" :class="index < step.index ? 'bg-brandblue-600' : 'bg-gray-200'"></div>
+          <div
+            class="h-0.5 w-full"
+            :class="index < step.index ? 'bg-brandblue-600' : 'bg-gray-200'"
+          >
+          </div>
         </div>
         <a
           href="#"
@@ -21,22 +28,31 @@ const { ...props } = Astro.props
         >
           <div
             x-show="index < step.index"
-            class="flex h-8 w-8 items-center justify-center rounded-full transition bg-brandblue-600 hover:bg-brandblue-900"
+            class="flex h-8 w-8 items-center justify-center rounded-full bg-brandblue-600 transition hover:bg-brandblue-900"
           >
-            <svg class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <svg
+              class="h-5 w-5 text-white"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
               <path
                 fill-rule="evenodd"
                 d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
                 clip-rule="evenodd"></path>
             </svg>
-            <span x-show="index == step.index" class="h-2.5 w-2.5 rounded-full bg-brandblue-600" aria-hidden="true"
-            ></span>
+            <span
+              x-show="index == step.index"
+              class="h-2.5 w-2.5 rounded-full bg-brandblue-600"
+              aria-hidden="true"></span>
           </div>
           <div
             x-show="index == step.index"
             class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-brandblue-600 bg-white"
           >
-            <span class="h-2.5 w-2.5 rounded-full bg-brandblue-600" aria-hidden="true"></span>
+            <span
+              class="h-2.5 w-2.5 rounded-full bg-brandblue-600"
+              aria-hidden="true"></span>
           </div>
           <div
             x-show="index > step.index"
@@ -44,7 +60,7 @@ const { ...props } = Astro.props
           >
           </div>
           <div
-            class="text-xs md:text-sm leading-tight pt-1 absolute top-full left-1/2 -translate-x-1/2 text-center md:whitespace-nowrap"
+            class="absolute left-1/2 top-full -translate-x-1/2 pt-1 text-center text-xs leading-tight md:whitespace-nowrap md:text-sm"
           >
             <div x-text="item.label"></div>
           </div>
