@@ -1,0 +1,221 @@
+---
+import TextField from '../components/TextField.astro'
+import Icon from '../components/Icon.astro'
+
+const { stepSlug } = Astro.props
+---
+
+<div x-show.transition={`step.slug === '${stepSlug}'`}>
+  <div class="grid grid-cols-1 gap-x-8 gap-y-8 py-10 md:grid-cols-3">
+    <div class="px-4 sm:px-0">
+      <div class="sticky top-4">
+        <div class="mt-10 lg:mt-0">
+          <h2 class="text-lg font-medium text-gray-900">Zusammenfassung</h2>
+
+          <div class="mt-4">
+            <h3 class="sr-only">Kurse in deinem Warenkorb</h3>
+            <ul role="list" class="divide-y divide-gray-200">
+              <template x-for="(kid, index) in kids" :key="kid.id">
+                <li class="py-6">
+                  <div class="min-w-0 flex-1">
+                    <h4 class="flex gap-x-1 text-sm">
+                      <span
+                        class="truncate font-medium text-gray-700"
+                        x-text="kid.firstname + ' ' + kid.lastname"></span>
+                      <span class="flex-none" x-text="'('+kid.age+' Jahre)'"
+                      ></span>
+                    </h4>
+                    <div class="mt-1">
+                      <template x-for="date in kid.dates" :key="date">
+                        <p class="text-sm text-gray-500" x-text="date"></p>
+                      </template>
+                    </div>
+                  </div>
+                  <div class="mt-1 flex justify-end gap-x-2 text-right text-sm">
+                    <p v-show="kid.isMember" class="text-gray-500">
+                      Vereinsmitglied
+                    </p>
+                    <p
+                      class="font-medium text-gray-900"
+                      x-text="formatPrice(getPriceFinal(kid))"
+                    >
+                    </p>
+                  </div>
+                </li>
+              </template>
+            </ul>
+
+            <dl class="space-y-6 border-t border-gray-200 py-6">
+              <div class="flex items-center justify-between">
+                <dt class="text-sm">Zwischensumme</dt>
+                <dd
+                  class="text-sm font-medium text-gray-900"
+                  x-text="formatPrice(getSubtotal())"
+                >
+                </dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="text-sm">
+                  Rabatt <span class="text-gray-500">(10% Brettlemarkt)</span>
+                </dt>
+                <dd
+                  class="text-sm font-medium text-gray-900"
+                  x-text="formatPrice(getDiscount())"
+                >
+                </dd>
+              </div>
+              <div
+                class="flex items-center justify-between border-t border-gray-200 pt-6 text-sky-600"
+              >
+                <dt class="text-base font-semibold md:text-lg">
+                  Fälliger Betrag
+                </dt>
+                <dd
+                  class="text-base font-semibold md:text-lg"
+                  x-text="formatPrice(getTotal())"
+                >
+                </dd>
+              </div>
+              <div
+                class="mt-6 rounded border border-sky-600 bg-sky-50 p-4 text-sm text-sky-700"
+              >
+                Bitte überweise den fälligen Betrag bis spätestens <strong
+                  class="whitespace-nowrap">5 Tage</strong
+                > vor Kursbeginn auf unser Bankkonto. Alle Infor­mationen
+                bekommst du in der Buchungs­bestätigung per Mail.
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="md:col-span-2">
+      <div class="sticky top-4 space-y-10">
+        <div
+          class="rounded bg-white px-4 py-6 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl sm:p-8"
+        >
+          <h2 class="text-lg font-semibold leading-6 text-gray-900">
+            Deine Daten
+          </h2>
+          <div class="prose prose-sm prose-gray mt-2">
+            <p>
+              Du bist unser Vertragspartner und Kontaktperson, an die wir uns
+              den Kursbetrieb betreffend, wenden.
+            </p>
+          </div>
+          <div class="relative mt-6 grid gap-x-6 gap-y-6 sm:grid-cols-2">
+            <TextField label="Dein Vorname" xModel="contact.firstname" />
+            <TextField label="Dein Nachname" xModel="contact.lastname" />
+            <TextField
+              type="email"
+              className="sm:col-span-2"
+              startIcon="mail-24-regular"
+              label="Deine E-Mail"
+              name="email"
+              xModel="contact.email"
+              description="An diese E-Mail wird die Buchungsbestätigung geschickt. Darüber hinaus nehmen wir nur Kontakt auf, sofern es Kursrelevante Informationen gibt."
+            />
+            <TextField
+              className="sm:col-span-2"
+              startIcon="phone-24-regular"
+              label="Deine Telefonnummer"
+              xModel="contact.phone"
+              placeholder="z.B. 01601234567"
+              description="Eine Telefonnummer unter der wir dich auch am Tag des Kurses gut erreichen können."
+            />
+          </div>
+          <div class="mt-12">
+            <h2 class="text-lg font-semibold leading-6 text-gray-900">
+              Rechnungsadresse
+            </h2>
+            <div class="relative mt-4 grid gap-x-6 gap-y-4 sm:grid-cols-3">
+              <TextField
+                label="Adresse"
+                xModel="contact.address"
+                className="sm:col-span-3"
+              />
+              <TextField label="PLZ" xModel="contact.postalCode" />
+              <TextField
+                label="Stadt"
+                xModel="contact.city"
+                className="sm:col-span-2"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="space-y-6 md:col-span-2 md:col-start-2">
+          <div class="relative flex items-start">
+            <div class="flex h-6 items-center">
+              <input
+                id="agb"
+                aria-describedby="agb-description"
+                name="agb"
+                type="checkbox"
+                class="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-600"
+              />
+            </div>
+            <div class="ml-3 text-sm leading-6">
+              <label for="agb" class="font-medium text-gray-900"
+                >Allgemeine Geschäftbedingungen</label
+              >
+              <p
+                id="agb-description"
+                class="prose prose-sm prose-gray text-gray-500"
+              >
+                Ich bestätige, dass ich die <a href="/agb/" target="_blank"
+                  >Allgemeinen Geschäftsbedingungen</a
+                > der Skischule Oberstaufen gelesen habe und mit ihnen
+                einverstanden bin.
+              </p>
+            </div>
+          </div>
+          <div class="relative flex items-start">
+            <div class="flex h-6 items-center">
+              <input
+                id="privacy"
+                aria-describedby="privacy-description"
+                name="privacy"
+                type="checkbox"
+                class="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-600"
+              />
+            </div>
+            <div class="ml-3 text-sm leading-6">
+              <label for="privacy" class="font-medium text-gray-900"
+                >Datenschutzerklärung</label
+              >
+              <p
+                id="privacy-description"
+                class="prose prose-sm prose-gray text-gray-500"
+              >
+                Ich habe die <a href="/datenschutz/" target="_blank"
+                  >Datenschutzerklärung</a
+                > zur Kenntnis genommen. Ich stimme zu, dass meine Angaben und
+                Daten zur Beantwortung meiner Anfrage elektronisch erhoben und
+                gespeichert werden. Hinweis: Sie können Ihre Einwilligung
+                jederzeit für die Zukunft widerrufen, per E-Mail an
+                info@szkollnau.de
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-x-4">
+          <!-- <button
+            type="submit"
+            class="flex-1 rounded-full bg-white px-3.5 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 md:min-w-[20%] md:flex-none"
+            @click="prevStep()"
+          >
+            Zurück
+          </button> -->
+          <button
+            type="submit"
+            class="w-full max-w-md flex-1 rounded-full border border-transparent bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 md:min-w-[20%] md:flex-none"
+            @click="nextStep()"
+          >
+            Kursbuchung senden
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

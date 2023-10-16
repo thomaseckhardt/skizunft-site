@@ -1,0 +1,37 @@
+---
+import clsx from 'clsx'
+
+const {
+  href = '#',
+  className,
+  day,
+  month,
+  title,
+  time,
+  location,
+  ...props
+} = Astro.props
+---
+
+<a
+  href={href}
+  class={clsx(
+    'group flex items-center transition duration-300 ease-in-out hovers:hover:-translate-y-0.5',
+    className,
+  )}
+  {...props}
+>
+  <div
+    class="relative z-10 h-20 w-20 flex-none items-center rounded-lg bg-white py-2 text-center text-sky-700 shadow transition hovers:group-hover:shadow-lg"
+  >
+    <div class="-mt-0.5 font-hero text-6xl leading-none">{day}</div>
+    <div class="-mt-1 text-xs font-semibold leading-none">{month}</div>
+  </div>
+  <div
+    class="-ml-4 flex-1 rounded-br-lg rounded-tr-lg bg-sky-50 py-2 pl-8 pr-4 text-sm leading-snug text-sky-800 shadow-sm transition hovers:group-hover:shadow-md"
+  >
+    <div class="font-semibold">{title}</div>
+    {time && <div>{time}</div>}
+    {location && <div>{location}</div>}
+  </div>
+</a>

@@ -1,12 +1,11 @@
 ---
-import type { Code } from 'astro:components'
 import { fetchStories } from '../storyblok/utils/fetchStories'
-import CourseDateGroup from '../components/CourseDateGroup.astro'
-import RadioCardGroup from '../components/RadioCardGroup.astro'
-import TextField from '../components/TextField.astro'
-import ToggleGroup from '../components/ToggleGroup.astro'
 import Page from '../layouts/Page.astro'
-import SkillLevelGroup from '../components/SkillLevelGroup.astro'
+import FormSteps from '../components/FormSteps.astro'
+import BookingSelection from '../components/BookingSelection.astro'
+import BookingRegistration from '../components/BookingRegistration.astro'
+import BookingConfirmation from '../components/BookingConfirmation.astro'
+import BookingPayment from '../components/BookingPayment.astro'
 
 const categoryOrder = ['Beginner', 'Junior_Champion', 'Champion']
 
@@ -26,7 +25,8 @@ const courseCategoryStories = await fetchStories({
 })
 const courseCategories = courseCategoryStories
   .map((story) => {
-    const { price, priceMember, minAge, maxAge, ...storyContent } = story.content
+    const { price, priceMember, minAge, maxAge, ...storyContent } =
+      story.content
 
     return {
       ...storyContent,
@@ -40,7 +40,10 @@ const courseCategories = courseCategoryStories
       slug: story.slug,
     }
   })
-  .sort((a, b) => categoryOrder.indexOf(a.skillLevel) - categoryOrder.indexOf(b.skillLevel))
+  .sort(
+    (a, b) =>
+      categoryOrder.indexOf(a.skillLevel) - categoryOrder.indexOf(b.skillLevel),
+  )
 const courseCategoriesById = courseCategories.reduce((acc, category) => {
   acc[category.id] = category
   return acc
@@ -54,7 +57,12 @@ const courseStories = await fetchStories({
 const courses = courseStories.map((story) => {
   const startDate = new Date(`${story.content.startDate}+0000`)
   const endDate = new Date(`${story.content.endDate}+0000`)
-  const { category: categoryId, closed = false, canceled = false, ...storyContent } = story.content
+  const {
+    category: categoryId,
+    closed = false,
+    canceled = false,
+    ...storyContent
+  } = story.content
 
   return {
     canceled,
@@ -103,244 +111,240 @@ const disciplines = {
 ---
 
 <Page title="Kursbuchung" description="" className="bg-gray-50">
-  <div x-data={key} class="box">
-    <template x-for="(kid, kidIndex) in kids" :key="kidIndex">
-      <div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3 py-10">
-        <div class="px-4 sm:px-0">
-          <div class="sticky top-4">
-            <h3 class="text-xl font-semibold leading-7 text-gray-900"><span x-text="kidIndex + 1"></span>. Kind</h3>
-            <div x-show="kid.firstname" class="mt-1 text-lg text-sky-500 hidden md:block">
-              <div>
-                <template x-if="kid.firstname"><span x-text="kid.firstname"></span></template>
-                <template x-if="kid.age"><span>, <span x-text="kid.age"></span> Jahre</span></template>
-              </div>
-              <div class="text-gray-500">
-                <template x-if="kid.discipline">
-                  <span> macht einen <span x-text="disciplines[kid.discipline].label"></span></span>
-                </template>
-              </div>
-            </div>
-            <!-- <pre class="text-xs" x-text="JSON.stringify(kid, null, 2)"></pre> -->
-            <!-- <pre class="text-xs" x-text="JSON.stringify(getCategoriesOptions(kid), null, 2)"></pre> -->
-            <!-- <pre class="text-xs" x-text="JSON.stringify(getDateOptions(kid), null, 2)"></pre> -->
-          </div>
-        </div>
-
-        <div class="md:col-span-2 space-y-10">
-          <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
-            <div class="px-4 py-6 sm:p-8 space-y-6">
-              <RadioCardGroup
-                label="Für welchen Kurs möchtest du dich anmelden?"
-                xoptions="disciplines"
-                xmodel="kid.discipline"
-                name={`'kid_discipline_' + kidIndex`}
-              />
-              <TextField label="Vorname" xModel="kid.firstname" />
-              <TextField label="Nachname" xModel="kid.lastname" />
-              <TextField
-                type="number"
-                min="3"
-                max="100"
-                step="1"
-                variant="number"
-                label="Alter"
-                xModel="kid.age"
-                description="true"
-                xError="getCategoriesOptions(kid).length === 0"
-                xErrorMessage="Für dieses Alter bieten wir keine Kurse an."
-              >
-                <p slot="description" x-text="disciplines[kid.discipline].description">
-                  Wir bieten Skikurse für Kinder ab 3 bis einschließlich 13 Jahren
-                </p>
-              </TextField>
-              <ToggleGroup xModel="kid.isMember" />
-              <SkillLevelGroup
-                x-show="getCategoriesOptions(kid).length > 1"
-                label="Könnensstufe"
-                model="kid.categoryId"
-                name="'kid_skillLevel_' + kidIndex"
-              >
-                <div slot="introduction" class="text-sm mt-2 max-w-xl">
-                  <p>
-                    Du bist unsicher welche Könnensstufe du auswählen sollst? Erfahre hier was du für welche Könnenstufe
-                    mitbringen solltest und was du lernen wirst.
-                  </p>
-                </div>
-              </SkillLevelGroup>
-              <!-- <div x-show="getCategoriesOptions(kid).length === 0" class="mt-4 relative text-sm text-red-600">
-                Für dieses Alter bieten wir keine Kurse an.
-              </div> -->
-              <fieldset x-show="getCategoriesOptions(kid).length > 0">
-                <legend class="text-base font-semibold leading-6 text-gray-900">Kurstermine</legend>
-                <div class="mt-4 flex items-baseline gap-x-2 text-sm">
-                  <div
-                    x-text="getSelectedCategory(kid)?.priceFormatted"
-                    :class="kid.isMember && 'line-through'"
-                    class="text-lg font-semibold"
-                  >
-                  </div>
-                  <div
-                    x-show="kid.isMember"
-                    x-text="getSelectedCategory(kid)?.priceMemberFormatted"
-                    class="text-lg font-semibold text-sky-500"
-                  >
-                  </div>
-                  <div>pro Kurs</div>
-                </div>
-                <CourseDateGroup
-                  x-show="getDateOptions(kid).length > 0"
-                  xoptions="getDateOptions(kid)"
-                  model="kid.dates"
-                  name="'kid_dates_' + kidIndex"
-                />
-                <div
-                  x-show="getDateOptions(kid).length === 0"
-                  class="mt-4 relative flex items-center justify-center rounded-lg bg-white p-4 text-sm text-gray-500 border border-dashed border-gray-200"
-                >
-                  <div x-show="kid.categoryId">Für deine Auswahl konnten wir leider keine Termine finden.</div>
-                  <div x-show="!kid.categoryId">
-                    Bitte wähle zunächst eine Könnensstufe aus, um die Termine zu sehen.
-                  </div>
-                </div>
-                <div class="mt-6">
-                  <div class="flex items-baseline justify-end gap-x-6 text-base font-semibold leading-6 text-gray-900">
-                    <div>Gesamtbetrag</div>
-                    <div class="text-2xl">
-                      <div x-show="kid.isMember" x-text="getPriceMember(kid)"></div>
-                      <div x-show="!kid.isMember" x-text="getPrice(kid)"></div>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-            </div>
-          </div>
+  <div x-data={key} class="box py-10">
+    <FormSteps />
+    <div class="mt-10">
+      <BookingSelection stepSlug="selection" />
+      <BookingRegistration stepSlug="registration" />
+      <BookingPayment stepSlug="confirmation" />
+      <div x-show.transition="step.slug === 'complete'">
+        <div>complete</div>
+        <div class="mt-6 flex justify-end">
+          <button
+            type="submit"
+            class="min-w-[20%] rounded-full border border-transparent bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+            @click="nextStep()"
+          >
+            Weiter
+          </button>
         </div>
       </div>
-    </template>
-    <div>
-      <button
-        @click="createkid()"
-        type="button"
-        class="relative block w-full rounded-lg border border-dashed border-gray-300 p-6 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
-      >
-        <div
-          class="inline-flex items-center rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
-        >
-          <svg class="-ml-0.5 mr-1.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path
-              d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"
-            ></path>
-          </svg>
-           Kind hinzufügen
-        </div>
-      </button>
     </div>
   </div>
 </Page>
 
-<script is:inline define:vars={{ key, Discipline, disciplines, courses, courseCategories }}>
-document.addEventListener('alpine:init', () => {
-  const currencyFormat = new Intl.NumberFormat('de-DE', {
-    style: 'currency',
-    currency: 'EUR',
-  })
-
-  const getCategories = (kid, categories) => {
-    const availableCategories = categories.filter((category) => {
-      return (
-        category.discipline === kid.discipline &&
-        parseInt(category.minAge) <= parseInt(kid.age) &&
-        parseInt(category.maxAge) >= parseInt(kid.age)
-      )
+<script
+  is:inline
+  define:vars={{ key, Discipline, disciplines, courses, courseCategories }}
+>
+  document.addEventListener('alpine:init', () => {
+    const currencyFormat = new Intl.NumberFormat('de-DE', {
+      style: 'currency',
+      currency: 'EUR',
     })
 
-    return availableCategories
-  }
-
-  const getDates = (kid, dates) => {
-    return dates.filter((date) => date.categoryId === kid.categoryId)
-  }
-
-  const defaultkid = {
-    discipline: Discipline.Ski,
-    age: 6,
-    isMember: false,
-    skillLevel: 'Beginner',
-    dates: [],
-  }
-
-  Alpine.data('kid', () => ({
-    ...defaultkid,
-    init() { },
-  }))
-
-  Alpine.data(key, () => ({
-    currencyFormat,
-    disciplines,
-    courseCategories,
-    courses,
-    createkid() {
-      this.kids.push({
-        ...defaultkid,
+    const getCategories = (kid, categories) => {
+      const availableCategories = categories.filter((category) => {
+        return (
+          category.discipline === kid.discipline &&
+          parseInt(category.minAge) <= parseInt(kid.age) &&
+          parseInt(category.maxAge) >= parseInt(kid.age)
+        )
       })
-    },
-    kids: [
+
+      return availableCategories
+    }
+
+    const getDates = (kid, dates) => {
+      return dates.filter((date) => date.categoryId === kid.categoryId)
+    }
+
+    // console.log(
+    //   getDates(
+    //     {categoryId: { age: 6, discipline: Discipline.Ski, skillLevel: 'Beginner' },
+    //     courses,
+    //   ),
+    // )
+
+    // getCategories
+
+    const testKid = {
+      discipline: Discipline.Ski,
+      firstname: 'Marie-Luise',
+      lastname: 'Westermann von der What',
+      isMember: true,
+      age: 6,
+      skillLevel: 'Beginner',
+      dates: ['ski-beginner-1', 'ski-beginner-2'],
+    }
+
+    const [testCategory] = getCategories(testKid, courseCategories)
+    testKid.categoryId = testCategory?.id
+    testKid.dates = getDates(testKid, courses)?.map((date) => date.slug)
+
+    const defaultkid = {
+      // discipline: Discipline.Ski,
+      // age: 6,
+      // isMember: false,
+      // skillLevel: 'Beginner',
+      // dates: [],
+      ...testKid,
+    }
+
+    console.log(defaultkid)
+    console.log(testCategory)
+
+    const steps = [
       {
-        ...defaultkid,
+        index: 0,
+        slug: 'selection',
+        label: 'Kurse auswählen',
       },
-    ],
-    isAgeValid(kid) {
-      const discipline = disciplines.find((discipline) => discipline.value === kid.discipline)
-      return kid.age >= discipline?.age && kid.age <= discipline?.maxAge
-    },
-    getSelectedCategory(kid) {
-      const category = courseCategories.find((category) => category.id === kid.categoryId)
-      return category
-    },
-    getCategories(kid) {
-      kid.categoryId = undefined
-      kid.dates = []
-      return getCategories(kid, courseCategories)
-    },
-    getCategoriesOptions(kid) {
-      const categories = getCategories(kid, courseCategories).map((category) => ({
-        ...category,
-        label: category.name,
-        value: category.id,
-      }))
+      {
+        index: 1,
+        slug: 'registration',
+        label: 'Anmelden',
+      },
+      {
+        index: 2,
+        slug: 'confirmation',
+        label: 'Bestätigen',
+      },
+      {
+        index: 3,
+        slug: 'complete',
+        label: 'Fertig!',
+      },
+    ]
 
-      kid.dates = []
-      kid.categoryId = categories?.[0]?.id
-      return categories
-    },
-    getDateOptions(kid) {
-      return getDates(kid, courses).map((date) => {
-        return {
-          ...date,
-          label: date.name,
-          value: date.slug,
+    const currentStep = 1
 
-          state: 'wenige Plätze',
-          // state: 'ausgebucht',
-          // state: 'abgesagt',
-          // disabled: true,
-          // closed: true,
+    Alpine.data(key, () => ({
+      discountPercentage: 0.1,
+      currentStep,
+      step: steps[currentStep],
+      steps,
+      currencyFormat,
+      disciplines,
+      courseCategories,
+      courses,
+      contact: {
+        salutation: '',
+        firstname: '',
+        lastname: '',
+        email: '',
+        phone: '',
+        address: '',
+        postalCode: '',
+        city: '',
+      },
+      kids: [],
+      addKid() {
+        this.kids.push({
+          id: Date.now(),
+          ...defaultkid,
+        })
+      },
+      removeKid(kid) {
+        this.kids = this.kids.filter((k) => k.id !== kid.id)
+      },
+      isAgeValid(kid) {
+        const discipline = disciplines.find(
+          (discipline) => discipline.value === kid.discipline,
+        )
+        return kid.age >= discipline?.age && kid.age <= discipline?.maxAge
+      },
+      getSelectedCategory(kid) {
+        const category = courseCategories.find(
+          (category) => category.id === kid.categoryId,
+        )
+        return category
+      },
+      getCategories(kid) {
+        // kid.categoryId = undefined
+        // kid.dates = []
+        return getCategories(kid, courseCategories)
+      },
+      getCategoriesOptions(kid) {
+        const categories = getCategories(kid, courseCategories).map(
+          (category) => ({
+            ...category,
+            label: category.name,
+            value: category.id,
+          }),
+        )
+
+        // kid.dates = []
+        // kid.categoryId = categories?.[0]?.id
+        return categories
+      },
+      getDateOptions(kid) {
+        return getDates(kid, courses).map((date) => {
+          return {
+            ...date,
+            label: date.name,
+            value: date.slug,
+
+            state: 'wenige Plätze',
+            // state: 'ausgebucht',
+            // state: 'abgesagt',
+            // disabled: true,
+            // closed: true,
+          }
+        })
+      },
+      formatPrice(price) {
+        return this.currencyFormat.format(price)
+      },
+      getPriceFinal(kid) {
+        return kid.isMember ? this.getPriceMember(kid) : this.getPrice(kid)
+      },
+      getPriceMember(kid) {
+        const price = this.getSelectedCategory(kid)?.priceMember ?? 0
+        const total = kid.dates?.length * price
+        return total
+      },
+      getPrice(kid) {
+        const price = this.getSelectedCategory(kid)?.price ?? 0
+        const total = kid.dates?.length * price
+        return total
+      },
+      getSubtotal() {
+        const total = this.kids.reduce((acc, kid) => {
+          const price = this.getPriceFinal(kid)
+          return price + acc
+        }, 0)
+        return total
+      },
+      getDiscount() {
+        return this.getSubtotal() * this.discountPercentage
+      },
+      getTotal() {
+        return this.getSubtotal() * (1 - this.discountPercentage)
+      },
+      nextStep() {
+        const step = this.currentStep + 1
+        if (step < this.steps.length) {
+          this.gotoStep(step)
         }
-      })
-    },
-    getPriceMember(kid) {
-      const price = this.getSelectedCategory(kid)?.priceMember ?? 0
-      const total = kid.dates?.length * price
-      return this.currencyFormat.format(total)
-    },
-    getPrice(kid) {
-      const price = this.getSelectedCategory(kid)?.price ?? 0
-      const total = kid.dates?.length * price
-      return this.currencyFormat.format(total)
-    },
-    init() {
-      console.log('init')
-    },
-  }))
-})
+      },
+      prevStep() {
+        const step = this.currentStep - 1
+        if (step >= 0) {
+          this.gotoStep(step)
+        }
+      },
+      gotoStep(index) {
+        this.currentStep = index
+        this.step = steps[index]
+      },
+      init() {
+        console.log('init')
+        this.addKid()
+        setTimeout(() => {
+          this.addKid()
+        }, 0)
+      },
+    }))
+  })
 </script>

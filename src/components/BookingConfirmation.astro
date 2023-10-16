@@ -1,0 +1,95 @@
+---
+import TextField from '../components/TextField.astro'
+import Icon from '../components/Icon.astro'
+
+const { stepSlug } = Astro.props
+---
+
+<div x-show.transition={`step.slug === '${stepSlug}'`}>
+  <div class="grid grid-cols-1 gap-x-8 gap-y-8 py-10 md:grid-cols-3">
+    <div class="px-4 sm:px-0">
+      <div class="sticky top-4">
+        <h3 class="text-xl font-semibold leading-7 text-gray-900">
+          Deine Daten
+        </h3>
+        <div class="prose prose-sm prose-gray mt-2">
+          <p>
+            Du bist unser Vertragspartner und Kontaktperson, an die wir uns den
+            Kursbetrieb betreffend, wenden.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-6 md:col-span-2 md:col-start-2">
+      <div class="relative flex items-start">
+        <div class="flex h-6 items-center">
+          <input
+            id="agb"
+            aria-describedby="agb-description"
+            name="agb"
+            type="checkbox"
+            class="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-600"
+          />
+        </div>
+        <div class="ml-3 text-sm leading-6">
+          <label for="agb" class="font-medium text-gray-900"
+            >Allgemeine Geschäftbedingungen</label
+          >
+          <p
+            id="agb-description"
+            class="prose prose-sm prose-gray text-gray-500"
+          >
+            Ich bestätige, dass ich die <a href="/agb/" target="_blank"
+              >Allgemeinen Geschäftsbedingungen</a
+            > der Skischule Oberstaufen gelesen habe und mit ihnen einverstanden
+            bin.
+          </p>
+        </div>
+      </div>
+      <div class="relative flex items-start">
+        <div class="flex h-6 items-center">
+          <input
+            id="privacy"
+            aria-describedby="privacy-description"
+            name="privacy"
+            type="checkbox"
+            class="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-600"
+          />
+        </div>
+        <div class="ml-3 text-sm leading-6">
+          <label for="privacy" class="font-medium text-gray-900"
+            >Datenschutzerklärung</label
+          >
+          <p
+            id="privacy-description"
+            class="prose prose-sm prose-gray text-gray-500"
+          >
+            Ich habe die <a href="/datenschutz/" target="_blank"
+              >Datenschutzerklärung</a
+            > zur Kenntnis genommen. Ich stimme zu, dass meine Angaben und Daten
+            zur Beantwortung meiner Anfrage elektronisch erhoben und gespeichert
+            werden. Hinweis: Sie können Ihre Einwilligung jederzeit für die
+            Zukunft widerrufen, per E-Mail an info@szkollnau.de
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex gap-x-4 md:justify-end">
+    <button
+      type="submit"
+      class="flex-1 rounded-full bg-white px-3.5 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 md:min-w-[20%] md:flex-none"
+      @click="prevStep()"
+    >
+      Zurück
+    </button>
+    <button
+      type="submit"
+      class="flex-1 rounded-full border border-transparent bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 md:min-w-[20%] md:flex-none"
+      @click="nextStep()"
+    >
+      Weiter
+    </button>
+  </div>
+</div>

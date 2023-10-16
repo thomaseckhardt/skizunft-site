@@ -3,7 +3,7 @@ const { items, value, label, name, xmodel, xoptions, ...props } = Astro.props
 ---
 
 <fieldset {...props}>
-  <legend class="text-base font-semibold leading-6 text-gray-900">{label}</legend>
+  <legend class="text-lg font-semibold leading-6 text-gray-900">{label}</legend>
   <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4 lg:grid-cols-3">
     <template {...{ 'x-for': `(item, index) in ${xoptions}` }} x-bind:key="index">
       <label class="relative flex cursor-pointer rounded-lg bg-white p-4 shadow-sm focus:outline-none">
@@ -13,12 +13,9 @@ const { items, value, label, name, xmodel, xoptions, ...props } = Astro.props
             <span id="project-type-0-label" class="block text-sm font-medium text-gray-900" x-text="item.label"></span>
             <span
               id="project-type-0-description-0"
-              class="mt-1 flex items-center text-sm text-gray-500"
+              class="mt-1 flex items-center text-sm leading-normal text-gray-500"
               x-text="item.description"
             >
-            </span>
-            <span id="project-type-0-description-1" class="hidden mt-6 text-sm font-medium text-gray-900">
-              621 users
             </span>
           </span>
         </span>

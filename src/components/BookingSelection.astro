@@ -1,0 +1,211 @@
+---
+import CourseDateGroup from '../components/CourseDateGroup.astro'
+import RadioCardGroup from '../components/RadioCardGroup.astro'
+import TextField from '../components/TextField.astro'
+import ToggleGroup from '../components/ToggleGroup.astro'
+import SkillLevelGroup from '../components/SkillLevelGroup.astro'
+import Icon from '../components/Icon.astro'
+
+const { stepSlug } = Astro.props
+---
+
+<div x-show.transition={`step.slug === '${stepSlug}'`}>
+  <template x-for="(kid, kidIndex) in kids" :key="kid.id">
+    <div class="grid grid-cols-1 gap-x-8 gap-y-8 py-10 md:grid-cols-3">
+      <div class="px-4 sm:px-0">
+        <div class="sticky top-4">
+          <h3 class="text-xl font-semibold leading-7 text-gray-900">
+            <span x-text="kidIndex + 1"></span>. Kind
+          </h3>
+          <div
+            x-show="kid.firstname"
+            class="mt-1 hidden text-lg text-sky-500 md:block"
+          >
+            <div>
+              <template x-if="kid.firstname"
+                ><span x-text="kid.firstname"></span></template
+              >
+              <template x-if="kid.age"
+                ><span>, <span x-text="kid.age"></span> Jahre</span></template
+              >
+            </div>
+            <div class="text-gray-500">
+              <template x-if="kid.discipline">
+                <span>
+                  macht einen <span x-text="disciplines[kid.discipline].label"
+                  ></span></span
+                >
+              </template>
+            </div>
+          </div>
+          <div class="mt-2">
+            <button
+              x-show="kids.length > 1"
+              @click="removeKid(kid)"
+              type="button"
+              class="inline-flex items-center py-2 text-sm font-semibold text-gray-900 transition hovers:hover:text-red-500"
+            >
+              <Icon
+                name="person-delete-24-regular"
+                className="-ml-0.5 mr-1.5"
+              />
+               nicht anmelden
+            </button>
+          </div>
+          <pre x-text="JSON.stringify(kid.id,null,2)"></pre>
+          <!-- <pre class="text-xs" x-text="JSON.stringify(kid, null, 2)"></pre> -->
+          <!-- <pre class="text-xs" x-text="JSON.stringify(getCategoriesOptions(kid), null, 2)"></pre> -->
+          <!-- <pre class="text-xs" x-text="JSON.stringify(getDateOptions(kid), null, 2)"></pre> -->
+        </div>
+      </div>
+
+      <div class="space-y-10 md:col-span-2">
+        <div
+          class="rounded bg-white px-4 py-6 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl sm:p-8"
+        >
+          <div class="relative space-y-6">
+            <RadioCardGroup
+              label="Für welchen Kurs möchtest du ein Kind anmelden?"
+              xoptions="disciplines"
+              xmodel="kid.discipline"
+              name={`'kid_discipline_' + kidIndex`}
+            />
+            <TextField
+              label="Vorname"
+              xModel="kid.firstname"
+              placeholder="des Kindes"
+            />
+            <TextField
+              label="Nachname"
+              xModel="kid.lastname"
+              placeholder="des Kindes"
+            />
+            <TextField
+              type="number"
+              min="3"
+              max="100"
+              step="1"
+              variant="number"
+              label="Alter"
+              xModel="kid.age"
+              description="true"
+              xError="getCategoriesOptions(kid).length === 0"
+              xErrorMessage="Für dieses Alter bieten wir keine Kurse an."
+            >
+              <p
+                slot="description"
+                x-text="disciplines[kid.discipline].description"
+              >
+                Wir bieten Skikurse für Kinder ab 3 bis einschließlich 13 Jahren
+              </p>
+            </TextField>
+            <ToggleGroup xModel="kid.isMember" />
+            <SkillLevelGroup
+              x-show="getCategoriesOptions(kid).length > 1"
+              class="!mt-12"
+              label="Könnensstufe"
+              model="kid.categoryId"
+              name="'kid_skillLevel_' + kidIndex"
+            >
+              <div slot="introduction" class="mt-2 max-w-xl text-sm">
+                <p>
+                  Du bist unsicher welche Könnensstufe du auswählen sollst?
+                  Erfahre hier was du für welche Könnenstufe mitbringen solltest
+                  und was du lernen wirst.
+                </p>
+              </div>
+            </SkillLevelGroup>
+            <fieldset
+              x-show="getCategoriesOptions(kid).length > 0"
+              class="!mt-12"
+            >
+              <legend class="text-lg font-semibold leading-6 text-gray-900"
+                >Kurstermine</legend
+              >
+              <div class="mt-4 flex items-baseline gap-x-2 text-sm">
+                <div
+                  x-text="getSelectedCategory(kid)?.priceFormatted"
+                  :class="kid.isMember && 'line-through'"
+                  class="text-lg font-semibold"
+                >
+                </div>
+                <div
+                  x-show="kid.isMember"
+                  x-text="getSelectedCategory(kid)?.priceMemberFormatted"
+                  class="text-lg font-semibold text-sky-500"
+                >
+                </div>
+                <div>pro Kurs</div>
+              </div>
+              <CourseDateGroup
+                x-show="getDateOptions(kid).length > 0"
+                xoptions="getDateOptions(kid)"
+                model="kid.dates"
+                name="'kid_dates_' + kidIndex"
+              />
+              <div
+                x-show="getDateOptions(kid).length === 0"
+                class="relative mt-4 flex items-center justify-center rounded-lg border border-dashed border-gray-200 bg-white p-4 text-sm text-gray-500"
+              >
+                <div x-show="kid.categoryId">
+                  Für deine Auswahl konnten wir leider keine Termine finden.
+                </div>
+                <div x-show="!kid.categoryId">
+                  Bitte wähle zunächst eine Könnensstufe aus, um die Termine zu
+                  sehen.
+                </div>
+              </div>
+              <div class="mt-6">
+                <div
+                  class="flex items-baseline justify-end gap-x-6 text-base font-semibold leading-6 text-gray-900"
+                >
+                  <div>Gesamtbetrag</div>
+                  <div class="text-2xl">
+                    <div x-text="getPriceFinal(kid)"></div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <button
+              x-show="kids.length > 1"
+              type="button"
+              class="absolute right-0 top-0 !mt-0"
+              title="Kind nicht anmelden"
+              @click="removeKid(kid)"
+            >
+              <Icon
+                name="delete-24-regular"
+                className="-ml-0.5 mr-1.5 text-red-500"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+  <div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
+    <div class="md:col-span-2 md:col-start-2">
+      <button
+        @click="addKid()"
+        type="button"
+        class="relative block w-full rounded-lg border border-dashed border-gray-300 p-6 text-center"
+      >
+        <div
+          class="inline-flex items-center rounded-full bg-white px-3.5 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+        >
+          <Icon name="person-add-24-regular" className="-ml-0.5 mr-1.5" />
+           Weiteres Kind anmelden
+        </div>
+      </button>
+    </div>
+  </div>
+  <div class="mt-6 flex gap-x-4 md:justify-end">
+    <button
+      type="submit"
+      class="flex-1 rounded-full border border-transparent bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 md:min-w-[20%] md:flex-none"
+      @click="nextStep()"
+    >
+      Weiter
+    </button>
+  </div>
+</div>

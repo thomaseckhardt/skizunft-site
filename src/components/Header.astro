@@ -30,10 +30,10 @@ const nav = [
 ---
 
 <!-- <HeaderBanner /> -->
-<header class="bg-white">
+<header>
   <nav class="mx-auto flex max-w-7xl items-center justify-between gap-x-6 p-6 lg:px-8" aria-label="Global">
     <div class="flex lg:flex-1">
-      <a href="#" class="-m-1.5 p-1.5">
+      <a href="/" class="-m-1.5 p-1.5">
         <span class="sr-only">Skizunft Kollnau</span>
         <Logo className="h-18 w-auto text-brandblue-800" />
       </a>
@@ -41,7 +41,7 @@ const nav = [
     <div class="hidden lg:flex lg:gap-x-12">
       {
         nav.map((item) => (
-          <a href={item.href} class="font-hero text-2xl text-brandblue-800 hover:text-brandblue-500">
+          <a href={item.href} class="font-hero_ text-2xl_ text-base text-brandblue-800 hover:text-brandblue-500">
             {item.title}
           </a>
         ))
@@ -51,7 +51,7 @@ const nav = [
       <a href="/dsv-skischule/kursbuchung/" class="block">
         <div
           class={clsx(
-            'rounded-full font-hero px-6 py-2 text-xl font-semibold shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
+            'rounded-full px-6 py-2 font-hero_ text-xl_ text-base font-semibold shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
             'text-white bg-brandred-600  focus-visible:outline-brandred-600',
             'transition ease-in-out',
             'hovers:hover:bg-brandred-500 hovers:hover:-translate-y-0.5 hovers:hover:shadow-lg',

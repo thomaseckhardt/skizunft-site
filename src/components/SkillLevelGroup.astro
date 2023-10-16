@@ -3,7 +3,7 @@ const { name, label, model, ...props } = Astro.props
 ---
 
 <fieldset {...props}>
-  <legend class="text-base font-semibold leading-6 text-gray-900">{label}</legend>
+  <legend class="text-lg font-semibold leading-6 text-gray-900">{label}</legend>
   <slot name="introduction" />
 
   <div class="mt-4 space-y-4">

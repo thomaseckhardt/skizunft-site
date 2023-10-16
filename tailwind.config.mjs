@@ -64,6 +64,7 @@ export default {
       },
       spacing: {
         18: '4.5rem',
+        22: '5.5rem',
         header: 'var(--header-height)',
         '-header': 'calc(var(--header-height) * -1)',
       },
@@ -74,6 +75,12 @@ export default {
         //   ["Mona Sans", ...defaultTheme.fontFamily.sans],
         //   { fontVariationSettings: '"wdth" 125' },
         // ],
+      },
+      aspectRatio: {
+        '1/1': '1/1',
+        '16/9': '16/9',
+        '4/3': '4/3',
+        '3/2': '3/2',
       },
       typography: ({ theme }) => ({
         DEFAULT: {
