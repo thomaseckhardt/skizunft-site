@@ -71,19 +71,19 @@ const { stepSlug } = Astro.props
               xmodel="kid.discipline"
             />
             <TextField
-              name="'kid_firstname_' + kidIndex"
+              xName="'kid_firstname_' + kidIndex"
               label="Vorname"
               xModel="kid.firstname"
               placeholder="des Kindes"
             />
             <TextField
-              name="'kid_lastname_' + kidIndex"
+              xName="'kid_lastname_' + kidIndex"
               label="Nachname"
               xModel="kid.lastname"
               placeholder="des Kindes"
             />
             <TextField
-              name="'kid_age_' + kidIndex"
+              xName="'kid_age_' + kidIndex"
               type="number"
               min="3"
               max="100"
@@ -104,7 +104,7 @@ const { stepSlug } = Astro.props
             </TextField>
             <ToggleGroup
               xModel="kid.isMember"
-              name="'kid_member_' + kidIndex"
+              xName="'kid_member_' + kidIndex"
             />
             <SkillLevelGroup
               x-show="getCategoriesOptions(kid).length > 1"

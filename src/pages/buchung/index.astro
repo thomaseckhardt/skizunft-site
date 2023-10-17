@@ -113,8 +113,8 @@ const disciplines = {
     x-data={key}
     class="box py-10"
     name="booking"
-    data-netlify="true"
     action="/buchung/erfolgreich"
+    @submit="submit"
   >
     <FormSteps />
     <div class="mt-10">
@@ -127,7 +127,13 @@ const disciplines = {
 
 <script
   is:inline
-  define:vars={{ key, Discipline, disciplines, courses, courseCategories }}
+  define:vars={{
+    key,
+    Discipline,
+    disciplines,
+    courses,
+    courseCategories,
+  }}
 >
   document.addEventListener('alpine:init', () => {
     const currencyFormat = new Intl.NumberFormat('de-DE', {
@@ -325,10 +331,49 @@ const disciplines = {
       gotoStep(index) {
         this.currentStep = index
         this.step = steps[index]
+        window.scrollTo(0, 0)
       },
       init() {
         console.log('init')
         this.addKid()
+      },
+      submit(event) {
+        event.preventDefault()
+        console.log('submit', event)
+
+        const data = {
+          ...Object.fromEntries(new FormData(event.target).entries()),
+          kids: this.kids,
+          firstname: this.firstname,
+          lastname: this.lastname,
+          email: this.email,
+          phone: this.phone,
+          address: this.address,
+          postalCode: this.postalCode,
+          city: this.city,
+        }
+        const formData = window.serializeFormdata(data)
+        console.log(
+          'data',
+          data,
+          formData.get('firstname'),
+          formData.get('kids'),
+        )
+
+        fetch('http://localhost:9999/api/book', {
+          method: 'POST',
+          body: data,
+        })
+          // .then(() => navigate('/thank-you/'))
+          .catch((error) => alert(error))
+
+        // fetch('/', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        //   body: new URLSearchParams(formData).toString(),
+        // })
+        //   .then(() => navigate('/thank-you/'))
+        //   .catch((error) => alert(error))
       },
     }))
   })

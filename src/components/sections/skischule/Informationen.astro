@@ -1,0 +1,86 @@
+---
+import Icon from '@/components/Icon.astro'
+
+const items = [
+  {
+    icon: 'people-error-24-regular',
+    headline: `Mindestteilnehmerzahl`,
+    content: `5 Personen pro Kurs. Kann ein Kurs auf Grund zu weniger Teilnehmer nicht statt fiunden, so werden keine Kursgebühren berechnet.`,
+  },
+  {
+    icon: 'payment-24-regular',
+    headline: `Zahlung`,
+    content: `Bitte überweise die Kursgebühren bis spätestens 5 Tage vor Kursbeginn per Banküberweisung auf unser Bankkonto. Alle Infor­mationen bekommst du in der Buchungs­bestätigung per Mail.`,
+  },
+  {
+    icon: 'calendar-question-mark-24-regular',
+    headline: `Kursverlegung und Ausweichtermine`,
+    content: `Bei unsicherer Schneelage auf dem Kandel werden die Kurse (außer Bambini Kurse) automatisch in ein umliegendes Skigebiet verlegt. Ob und wo ein Kurs statt findet, geben wir idR. 2 Tage vor Kursbeginn gegen 20 Uhr auf unserer Website bekannt. Kursbeginn bei einer Verlegung ist 9:00 Uhr, der jeweilige Treffpunkt wird rechtzeitig bekannt gegeben.`,
+  },
+  {
+    icon: 'weather-blowing-snow-24-regular',
+    headline: `Höhere Gewalt`,
+    content: `Muss ein Kurs aufgrund höherer Gewalt (fehlender Schnee, kritische Wetterlage wie Sturm) komplett entfallen, wird die Kursgebühr abzüglich der Bearbeitungsgebühr in Höhe von 5 € zurückerstattet. Kann mindestens ein Kurstag stattfinden, wird die gesamte Kursgebühr einbehalten.`,
+  },
+  {
+    icon: 'calendar-cancel-24-regular',
+    headline: `Stornierung`,
+    content: `Eine Stornierung ist grundsätzlich bis 5 Tage vor Kursbeginn möglich. Die Bearbeitungsgebühr von 5 € wird einbehalten. Bei Nichterscheinen ohne rechtzeitige Stornierung wird die komplette Kursgebühr berechnet`,
+  },
+  {
+    icon: 'briefcase-medical-24-regular',
+    headline: `Krankheitsfall`,
+    content: `Die Teilnahme an unseren Kursen ist nur ohne gesundheitliche Einschränkungen möglich. Stornierungen im Krankheitsfall sind gegen Vorlage eines ärztlichen Attest, bis Freitag vor Kursbeginn 14 Uhr per E-Mail an skischule@szkollnau.de möglich. Die Bearbeitungsgebühr von 5 € wird einbehalten.`,
+  },
+  {
+    icon: 'shield-task-24-regular',
+    headline: `Versicherung`,
+    content: `Alle Vereinsmitglieder sind über die Dauer des Kurses versichert. Falls du kein Mitglied bist, besteht während der Kursdauer nur bedingter Versicherungsschutz. Wir empfehlen dir daher ausdrücklich den Abschluss einer entsprechenden Versicherung über den Deutschen Skiverband.`,
+  },
+  {
+    icon: 'building-government-24-regular',
+    headline: `Haftung`,
+    content: `Wir lehnen jegliche Haftung für Schäden oder Krankheiten ab, die während des Kursbetriebs entstehen.`,
+  },
+]
+---
+
+<div class="bg-white py-24 sm:py-32">
+  <div class="box">
+    <div class="max-w-2xl md:mx-auto md:text-center">
+      <h2 class="text-base font-semibold leading-7 text-sky-600">Buchung</h2>
+      <p
+        class="mt-2 text-3xl font-bold tracking-tight text-gray-900 md:text-4xl"
+      >
+        Alle Infos zur Buchung unserer Kurse
+      </p>
+      <p class="mt-6 text-lg leading-8 text-gray-600">
+        Quis tellus eget adipiscing convallis sit sit eget aliquet quis.
+        Suspendisse eget egestas a elementum pulvinar et feugiat blandit at. In
+        mi viverra elit nunc.
+      </p>
+    </div>
+    <div class="mx-auto mt-16 lg:mt-24">
+      <dl
+        class="grid max-w-xl grid-cols-1 gap-x-16 gap-y-10 md:max-w-none md:grid-cols-2 md:gap-y-16 lg:grid-cols-3"
+      >
+        {
+          items.map((item) => (
+            <div class="relative pl-16">
+              <dt class="text-base font-semibold leading-7 text-gray-900">
+                <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-sky-600 text-white">
+                  <Icon name={item.icon} />
+                </div>
+                {item.headline}
+              </dt>
+              <dd
+                class="mt-2 text-base leading-7 text-gray-600"
+                set:html={item.content}
+              />
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</div>

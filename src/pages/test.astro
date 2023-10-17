@@ -1,39 +1,23 @@
-<div x-data="list">
-  <template x-for="(item, index) in items" :key="index">
-    <div>
-      <select x-for="$parent.categories" value="item.category">
-        <template x-for="(item, index) in items" :key="index">
-          <option x-text="item" :value="item" :selected="item === $parent.items[index].category"></option>
-        </template>
-      </select>
-      <div x-text="settings[]"></div>
-    </div>
-  </template>
-</div>
+---
+import { serialize } from 'object-to-formdata'
 
-<script is:inline>
-document.addEventListener('alpine:init', () => {
-  Alpine.data('list', () => ({
-    categories: ['category_1', 'category_2', 'category_3'],
-    settings: {
-      category_1: {
-        name: 'Setting 1',
-      },
-      category_2: {
-        name: 'Setting 2',
-      },
-      category_3: {
-        name: 'Setting 3',
-      },
-    },
-    items: [
-      {
-        category: 'category_3',
-      },
-      {
-        category: 'category_1',
-      },
-    ],
-  }))
+const one = [{ hello: 'world' }]
+const two = [0, 1, 2, 3]
+const three = { hello: 'world' }
+
+// const data = new FormData()
+// data.append('one', one)
+// data.append('two',two)
+// data.append('three', three)
+
+// const body = new URLSearchParams(data).toString()
+
+const formData = serialize({
+  one,
+  two,
+  three,
 })
-</script>
+console.log(formData)
+---
+
+<pre>{JSON.stringify(formData)}</pre>

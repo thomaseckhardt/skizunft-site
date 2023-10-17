@@ -6,7 +6,7 @@
   "singleQuote": true,
   "trailingComma": "all",
   "endOfLine": "lf",
-  "tailwindAttributes": ["class", "className", ":class", "x-bind:class"],
+  "tailwindAttributes": ["class", "className"],
   "tailwindFunctions": ["clsx"],
   "plugins": [
     "prettier-plugin-astro",

@@ -1,0 +1,24 @@
+---
+import CheckoutPage from '@/layouts/CheckoutPage.astro'
+---
+
+<CheckoutPage title="Kursbuchung" description="" className="bg-gray-50">
+  <form
+    class="kwes-form"
+    action="https://kwesforms.com/api/foreign/forms/mF4pTKg4kEs5fMYc7lkG"
+  >
+    <label for="name">Your Name</label>
+    <input type="text" name="name" rules="required|max:255" />
+
+    <fieldset repeater name="unique_name">
+      <div repeater-group>
+        <label for="name">Your Name</label>
+        <input type="text" name="name" rules="required|max:255" />
+      </div>
+    </fieldset>
+
+    <button type="submit">Submit</button>
+  </form>
+</CheckoutPage>
+
+<script src="https://kwesforms.com/v2/kwes-script.js" defer></script>

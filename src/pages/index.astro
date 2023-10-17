@@ -4,6 +4,7 @@ import HeroHome from '../components/HeroHome.astro'
 import Icon from '../components/Icon.astro'
 import Page from '../layouts/Page.astro'
 import DsvSkischule from '../images/dsv-skischule.svg'
+import clsx from 'clsx'
 ---
 
 <Page title="Skizunft Kollnau e.V." description="">
@@ -18,94 +19,36 @@ import DsvSkischule from '../images/dsv-skischule.svg'
     </AlertSection> -->
     <HeroHome />
     <div class="box mt-5">
-      <div class="flex justify-center mb-4">
-        <img src={DsvSkischule.src} alt="DSV Skischule Skizunft Kollnau e.V." class="w-auto h-[24px]" />
+      <div class="mb-4 flex justify-center">
+        <img
+          src={DsvSkischule.src}
+          alt="DSV Skischule Skizunft Kollnau e.V."
+          class="h-[24px] w-auto"
+        />
       </div>
-      <h2 class="font-hero text-5xl md:text-7xl leading-none text-center">
+      <h2 class="text-center font-hero text-5xl leading-none md:text-7xl">
         Wir bieten Ski- und Snowboardkurse<br />für Kinder ab 4 Jahren.
       </h2>
-    </div>
-    <div class="mt-40 mx-auto max-w-7xl px-6 lg:px-8" id="kurshinweise">
-      <div class="mx-auto max-w-2xl lg:max-w-none prose prose-h2:font-hero prose-h2:text-5xl prose-h2:leading-none">
-        <h2 class="text-center">Aktuelle Hinweise zu unseren Ski- und Snowboardkursen</h2>
-        <div class="space-y-6">
-          <div class="md:flex bg-sky-50 rounded-4xl shadow py-5">
-            <div class="px-[5%] flex items-center justify-center">
-              <div class="text-center font-hero text-5xl leading-none">
-                <div class="text-7xl tracking-tight leading-none">6.&&thinsp;7.</div>
-                <div>Januar</div>
-              </div>
-            </div>
-            <div class="flex-1 prose prose-td:align-top prose-td:px-4">
-              <table class="">
-                <tr>
-                  <td class="w-[10em]">Bambini</td>
-                  <td>
-                    <span class="inline-flex gap-x-2 text-green-800">
-                      <Icon name="checkmark-circle-24-regular" className="text-green-500" /> findet statt
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Beginner</td>
-                  <td>
-                    <span class="inline-flex gap-x-2 text-green-800">
-                      <Icon name="checkmark-circle-24-regular" className="text-green-500" /> findet statt
-                    </span>
-                  </td>
-                </tr><tr>
-                  <td>Junior Champions</td>
-                  <td>
-                    <span class="inline-flex gap-x-2 text-yellow-800">
-                      <Icon name="warning-24-regular" className="text-yellow-500" /> verlegt auf 24./25. Januar
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Champions</td>
-                  <td>
-                    <span class="inline-flex gap-x-2 text-red-800">
-                      <Icon name="error-circle-24-regular" className="text-red-500" /> abgesagt
-                    </span>
-                  </td>
-                </tr>
-              </table>
-            </div>
+      <p class="mx-auto mt-6 max-w-xl text-lg leading-8">
+        Wir sind deine zertifizierte DSV-Skischule auf dem Kandel und bieten dir
+        Kinderkurse für unterschiedliche Könnensstufen.
+      </p>
+      <div class="mt-6 flex items-center justify-center gap-x-6">
+        <a href="/buchung/" class="block">
+          <div
+            class={clsx(
+              'rounded-full px-6 py-2 text-sm font-semibold shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
+              'bg-brandred-600 text-white  focus-visible:outline-brandred-600',
+              'transition ease-in-out',
+              'hovers:hover:-translate-y-0.5 hovers:hover:bg-brandred-500 hovers:hover:shadow-lg',
+            )}
+          >
+            Kurs buchen
           </div>
-          <div class="md:flex bg-sky-50 rounded-4xl shadow py-5">
-            <div class="px-[5%] flex items-center justify-center">
-              <div class="text-center font-hero text-3xl leading-none">
-                <div class="font-hero text-5xl leading-none tracking-tight">13.&&thinsp;14.</div>
-                <div>Januar</div>
-              </div>
-            </div>
-            <div class="px-[5%]">
-              <p>Informationen folgen Zeitnah in der Woche der Kurse</p>
-            </div>
-          </div>
-          <div class="md:flex bg-sky-50 rounded-4xl shadow py-5">
-            <div class="px-[5%] flex items-center justify-center">
-              <div class="text-center font-hero text-3xl leading-none">
-                <div class="font-hero text-5xl leading-none tracking-tight">27.&&thinsp;28.</div>
-                <div>Januar</div>
-              </div>
-            </div>
-            <div class="px-[5%]">
-              <p>Informationen folgen Zeitnah in der Woche der Kurse</p>
-            </div>
-          </div>
-        </div>
-
-        <p>Alle Kurse am Wochenende können wie geplant auf dem Kandel durchgeführt werden. Wir freuen uns auf euch!</p>
-        <p>
-          Das sind die Kurse, die am 14./15. Januar wegen Schneemangels verschoben werden mussten. Alle Kursteilnehmer
-          sind automatisch angemeldet. Teilnehmer die nicht können melden sich bitte per E-Mail an info@szkollnau.de –
-          vielen Dank.
-        </p>
-        <p>
-          Bitte beachtet die Informationen zu unserem generellen <a href="/">Kursablauf</a> und zur richtigen Ausrüstung
-          der Kursteilnehmer.
-        </p>
+        </a>
+        <a href="/skischule/" class="text-sm font-semibold leading-6">
+          Mehr erfahren <span aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
   </main>

@@ -9,6 +9,7 @@ const {
   placeholder,
   label,
   name,
+  xName,
   id,
   description,
   error,
@@ -67,6 +68,7 @@ const isNumber = type === 'number'
       )}
       placeholder={placeholder}
       name={name}
+      :name={xName}
       {...isNumber ? { 'x-model.number': xModel } : { 'x-model': xModel }}
     />
     {

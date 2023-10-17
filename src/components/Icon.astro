@@ -1,6 +1,5 @@
 ---
-import { Icon } from 'astro-icon'
-import type { Code } from 'astro:components'
+import { Icon as AstroIcon } from 'astro-icon'
 import clsx from 'clsx'
 
 const {
@@ -23,5 +22,9 @@ const iconProps = filename
 ---
 
 <!-- <span class={clsx(className)}> -->
-<Icon {...iconProps} class={clsx('flex-none', className, sizeClass)} {...props} />
+<AstroIcon
+  {...iconProps}
+  class={clsx('flex-none', className, sizeClass)}
+  {...props}
+/>
 <!-- </span> -->

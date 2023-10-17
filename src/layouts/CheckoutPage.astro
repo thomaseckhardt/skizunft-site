@@ -1,13 +1,10 @@
 ---
-import type { CollectionEntry } from 'astro:content'
 import BaseHead from '../components/BaseHead.astro'
 import Footer from '../components/Footer.astro'
 import clsx from 'clsx'
 import HeaderCheckout from '@/components/HeaderCheckout.astro'
 
-type Props = CollectionEntry<'blog'>['data']
-
-const { title, description, className } = Astro.props
+const { title, description, className = '' } = Astro.props
 ---
 
 <html lang="de">
@@ -23,6 +20,9 @@ const { title, description, className } = Astro.props
       import Alpine from 'alpinejs'
       import collapse from '@alpinejs/collapse'
       import persist from '@alpinejs/persist'
+      import { serialize } from 'object-to-formdata'
+
+      window.serializeFormdata = serialize
 
       Alpine.plugin(collapse)
       // Alpine.plugin(persist)

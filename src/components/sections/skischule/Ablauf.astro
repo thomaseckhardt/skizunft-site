@@ -1,0 +1,111 @@
+---
+import { startContainer } from 'node_modules/astro/dist/core/dev'
+import clsx from 'clsx'
+import Icon from '@/components/Icon.astro'
+
+const flow = [
+  {
+    icon: 'tag-reset-24-regular',
+    bgColor: 'bg-gray-400',
+    content: `Du möchtest erstmal gebrauchte Ski- oder Snowboard-Ausrüstung kaufen? Dann besuche doch einen der zahlreichen Skimärkte in der Region. Unser <a href="/brettlemarkt/" class="font-semibold text-gray-900 underline">Brettlemarkt</a> findet immer im Oktober statt.`,
+    fullWidth: true,
+  },
+  {
+    icon: 'calendar-checkmark-24-regular',
+    bgColor: 'bg-green-500',
+    content: `Du <a href="/buchung/" class="font-semibold text-gray-900 underline">buchst</a> einen Kurs bei uns.`,
+    note: undefined,
+  },
+  {
+    icon: 'mail-24-regular',
+    bgColor: 'bg-gray-400',
+    content: `Du erhälst eine Bestätigung deiner Buchung und weitere Infos an deine E-Mail-Adresse.`,
+    note: 'wenige Minuten später',
+  },
+  {
+    icon: 'money-24-regular',
+    bgColor: 'bg-gray-400',
+    content: `Du überweist die Kursgebühren auf unser Konto.`,
+    note: 'mindestens 5 Tage vor Kursbeginn',
+  },
+  {
+    icon: 'info-24-regular',
+    bgColor: 'bg-sky-400',
+    content: `Du richtest und überprüfst deine Ausrüstung. Beachte, das bei unseren Kursen Helmpflicht besteht. Hier kann dir auch, dass <a href="https://sportarmin.de/" class="font-semibold text-gray-900 underline" target="_blank" rel="noreferrer">Sporthaus Armin</a> behilflich sein.`,
+    note: 'in der Woche vor Kursbeginn',
+  },
+  {
+    icon: 'info-24-regular',
+    bgColor: 'bg-sky-400',
+    content: `Auf unserer Website informieren wir dich über die Durchführung des Kurses.`,
+    note: 'ab Donnerstag 20 Uhr vor Kursbeginn',
+  },
+  {
+    icon: 'clock-alarm-24-regular',
+    bgColor: 'bg-gray-400',
+    content: `Du hast deine Sachen gepackt und bist startklar. Bedenke auch das du genug zu Trinken, ein Vesper und Geld für eine <a href="/skigebiete/"  class="font-semibold text-gray-900 underline">Liftkarte</a> benötigst.`,
+    note: 'am Morgen des Kurstages',
+  },
+  {
+    icon: 'location-24-regular',
+    bgColor: 'bg-gray-400',
+    content: `Du bist am <a href="skischule/treffpunkt/" class="font-semibold text-gray-900 underline">Treffpunkt</a> deines Kurses.`,
+    note: '15 Minuten vor Kursbeginn',
+  },
+  {
+    icon: 'emoji-24-regular',
+    bgColor: 'bg-green-500',
+    content: `Es kann los gehen. Hab' eine schöne Zeit!`,
+  },
+]
+---
+
+<div class="box">
+  <h2 class="md:mx-auto md:max-w-2xl md:text-center">
+    <div class="text-base font-semibold leading-7 text-sky-600">Ablauf</div>
+    <div class="text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
+      Von der Buchung bis zum Kurs
+    </div>
+  </h2>
+  <div class="mx-auto mt-8 flow-root max-w-3xl md:mt-12">
+    <ul role="list" class="-mb-8">
+      {
+        flow.map((item, index) => (
+          <li>
+            <div class="relative pb-8">
+              {index < flow.length - 1 && (
+                <span
+                  class="absolute left-5 top-5 -ml-px h-full w-0.5 bg-gray-200"
+                  aria-hidden="true"
+                />
+              )}
+              <div class="relative flex space-x-3">
+                <div>
+                  <span
+                    class={clsx(
+                      'flex h-10 w-10 items-center justify-center rounded-full text-white ring-8 ring-white',
+                      item.bgColor,
+                    )}
+                  >
+                    <Icon name={item.icon} />
+                  </span>
+                </div>
+                <div class="flex min-w-0 flex-1 flex-col justify-between gap-y-2 pt-2 md:space-x-16">
+                  <div class={clsx(!item.fullWidth && 'max-w-md')}>
+                    <p set:html={item.content} />
+                  </div>
+                  {item.note && (
+                    <div
+                      class="text-right text-sm leading-snug text-gray-500 md:whitespace-nowrap"
+                      set:html={item.note}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
