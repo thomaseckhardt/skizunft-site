@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets'
+
+import ImageLandscapeSm from '@/images/skischule-landscape-sm.png'
+import ImageLandscapeLg from '@/images/skischule-landscape-lg.png'
+import ImageLandscapeXl from '@/images/skischule-landscape-xl.png'
+import DsvSkischule from '@/images/dsv-skischule.svg'
+---
+
+<div class="pointer-events-none relative z-0 -mt-header h-[460px] md:h-[880px]">
+  <Image
+    src={ImageLandscapeSm}
+    alt=""
+    class="absolute inset-0 h-full w-full object-cover object-bottom md:hidden"
+  />
+  <Image
+    src={ImageLandscapeLg}
+    alt=""
+    class="3xlplus:hidden absolute inset-0 hidden h-full w-full object-cover object-bottom md:block"
+  />
+  <Image
+    src={ImageLandscapeXl}
+    alt=""
+    class="3xlplus:block absolute inset-0 hidden h-full w-full object-cover object-bottom"
+  />
+  <div class="box absolute inset-0 mt-header pt-3 md:pt-8">
+    <div>
+      <img
+        src={DsvSkischule.src}
+        alt="DSV Skischule Skizunft Kollnau e.V."
+        class="mx-auto mb-3 h-4 w-auto md:mb-4 md:h-6"
+      />
+      <h1
+        class="mx-auto max-w-md text-center font-hero text-4xl leading-none tracking-tight md:text-7xl md:leading-none"
+      >
+        Deine DSV-Skischule <br />auf dem Kandel
+      </h1>
+    </div>
+  </div>
+</div>
+<!-- <div class="box bg-[#EEF8FF]">
+  <div
+    class="text-center text-4xl font-bold leading-tight tracking-tight md:text-6xl"
+  >
+    DSV-Skischule<br class="sm:hidden" />Kollnau
+  </div>
+</div> -->

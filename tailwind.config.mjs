@@ -24,6 +24,8 @@ export default {
     },
     extend: {
       screens: {
+        '3xl': '1920px',
+        '3xlplus': '1921px',
         hovers: { raw: '(hover: hover)' },
         hoversnot: { raw: '(hover: none)' },
       },
@@ -80,6 +82,9 @@ export default {
         '16/9': '16/9',
         '4/3': '4/3',
         '3/2': '3/2',
+      },
+      zIndex: {
+        header: 1000,
       },
       typography: ({ theme }) => ({
         DEFAULT: {
