@@ -12,23 +12,28 @@
     "astro": "astro",
     "test": "vitest --ui",
     "coverage": "vitest run --coverage",
-    "sb-login": "storyblok login",
-    "sb-pull-components": "dotenv -e ./.env.local cross-var storyblok pull-components --space %STORYBLOK_SPACE%",
-    "sb-generate-types": "dotenv -e ./.env.local cross-var storyblok-generate-ts source=./components.%STORYBLOK_SPACE%.json target=./src/types/storyblok-component-types.d.ts",
-    "sb-graphiql": "dotenv -e ./.env.local cross-var open https://gapi-browser.storyblok.com/?token=%STORYBLOK_TOKEN%",
-    "tailwindcss": "npx tailwindcss -i ./src/styles/base.css -o ./tailwind/base.css --watch"
+    "tailwindcss": "npx tailwindcss -i ./src/styles/base.css -o ./tailwind/base.css --watch",
+    "cms-login": "storyblok login",
+    "cms-pull-components": "dotenv -e ./.env.local cross-var storyblok pull-components --space %STORYBLOK_SPACE%",
+    "cms-types": "dotenv -e ./.env.local cross-var storyblok-generate-ts source=./components.%STORYBLOK_SPACE%.json target=./src/types/storyblok-component-types.d.ts",
+    "cms-graphiql": "dotenv -e ./.env.local cross-var open https://gapi-browser.storyblok.com/?token=%STORYBLOK_TOKEN%",
+    "db-types": "npx supabase gen types typescript --local > ./src/database.types.ts"
   },
   "dependencies": {
     "@alpinejs/collapse": "^3.13.1",
     "@alpinejs/persist": "^3.13.1",
     "@astrojs/mdx": "^1.1.1",
+    "@astrojs/react": "^3.0.3",
     "@astrojs/rss": "^3.0.0",
     "@astrojs/sitemap": "^3.0.1",
     "@astrojs/tailwind": "^5.0.1",
     "@storyblok/astro": "^3.0.1",
+    "@supabase/supabase-js": "^2.38.1",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.6",
     "@tailwindcss/typography": "^0.5.10",
+    "@types/react": "^18.2.29",
+    "@types/react-dom": "^18.2.14",
     "alpinejs": "^3.13.1",
     "astro": "^3.2.3",
     "astro-icon": "^0.8.1",
@@ -37,15 +42,19 @@
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.0",
     "prettier-plugin-tailwindcss": "^0.5.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "storyblok-rich-text-astro-renderer": "^1.4.1",
     "tailwindcss": "^3.3.3",
     "vite": "^4.4.11"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.2.0",
     "cross-var": "^1.1.0",
     "dotenv-cli": "^7.3.0",
     "prettier-plugin-organize-attributes": "^1.0.0",
     "prettier-plugin-organize-imports": "^3.2.3",
-    "prettier-plugin-style-order": "^0.2.2"
+    "prettier-plugin-style-order": "^0.2.2",
+    "supabase": "^1.106.1"
   }
 }

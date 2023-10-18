@@ -66,3 +66,13 @@ Check out [our documentation](https://docs.astro.build) or jump into our [Discor
 ## Credit
 
 This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+
+## Supabase Skizunft
+
+### Supabase setup
+
+1. `npx supabase init`
+2. `npx supabase start`
+3. `npx supabase migration new starting-ddl`
+4. `npx supabase stop`
+5. `npx supabase start`
