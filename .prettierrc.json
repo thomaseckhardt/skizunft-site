@@ -10,7 +10,6 @@
   "tailwindFunctions": ["clsx"],
   "plugins": [
     "prettier-plugin-astro",
-    "prettier-plugin-organize-imports",
     "prettier-plugin-organize-attributes",
     "prettier-plugin-style-order",
     "prettier-plugin-tailwindcss"
