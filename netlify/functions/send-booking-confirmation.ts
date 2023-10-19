@@ -25,10 +25,12 @@ const handler: Handler = async function (event) {
       },
       method: 'POST',
       body: JSON.stringify({
-        from: 'skischule@szkollnau.de',
-        to: data.emai,
+        // from: 'skischule@szkollnau.de',
+        // to: data.email,
+        from: 'mail@thomaseckhardt.com',
+        to: 'mail@thomaseckhardt.com',
         subject: 'Deine Buchung ist bestätigt. Wir freuen uns!',
-        parameters: event.body,
+        parameters: JSON.parse(event.body),
       }),
     },
   )

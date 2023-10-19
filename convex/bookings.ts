@@ -11,9 +11,11 @@ export const add = mutation({
     country: v.string(),
     email: v.string(),
     phone: v.string(),
+    priceTotal: v.number(),
     legalConfirmed: v.boolean(),
     privacyConfirmed: v.boolean(),
     newsletterConfirmed: v.boolean(),
+    returningCustomer: v.boolean(),
   },
   handler: async (ctx, args) => {
     const boookingId = await ctx.db.insert('bookings', {
@@ -25,9 +27,11 @@ export const add = mutation({
       country: args.country,
       email: args.email,
       phone: args.phone,
+      priceTotal: args.priceTotal,
       legalConfirmed: args.legalConfirmed,
       privacyConfirmed: args.privacyConfirmed,
       newsletterConfirmed: args.newsletterConfirmed,
+      returningCustomer: args.returningCustomer,
     })
     return boookingId
   },

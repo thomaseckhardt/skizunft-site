@@ -4,7 +4,6 @@ import { api } from '../../convex/_generated/api'
 import { faker } from '@faker-js/faker'
 import { v4 as uuidv4 } from 'uuid'
 import { useForm, useFieldArray } from 'react-hook-form'
-import Icon from '@/components/Icon'
 import BookingSteps from '@/components/booking/BookingSteps'
 import BookingSelection from '@/components/booking/BookingSelection'
 import BookingConfirmation from '@/components/booking/BookingConfirmation'
@@ -92,9 +91,9 @@ export default function BookingForm({
   courses,
   courseCategories,
 }) {
-  // console.log('disciplines', disciplines)
-  // console.log('courses', courses)
-  // console.log('courseCategories', courseCategories)
+  console.log('disciplines', disciplines)
+  console.log('courses', courses)
+  console.log('courseCategories', courseCategories)
 
   const [bookingStep, setBookingStep] = useState(bookingSteps[0])
 
@@ -201,7 +200,11 @@ export default function BookingForm({
   })
   const { register, control, handleSubmit, watch, formState } = form
   const { errors } = formState
-  const attendeeFieldArray = useFieldArray({
+  const {
+    fields: attendeeFields,
+    append: appendAttendee,
+    remove: removeAttendee,
+  } = useFieldArray({
     control,
     name: 'attendees',
   })
@@ -213,6 +216,9 @@ export default function BookingForm({
 
   // --------------------------------------------------
 
+  const getCategoriesOptions = () => {
+    return []
+  }
   const nextStep = () => {
     console.log('nextStep')
   }
@@ -221,17 +227,54 @@ export default function BookingForm({
     <form onSubmit={handleSubmit(submit)} noValidate>
       <BookingSteps steps={bookingSteps} currentStep={bookingStep} />
       <div className="mt-10">
-        <BookingSelection
-          disciplines={disciplines}
-          defaultAttendeeValues={defaultAttendeeValues}
-          attendeeFieldArray={attendeeFieldArray}
-          register={register}
-          errors={errors}
-          control={control}
-          nextStep={nextStep}
-          courses={courses}
-          courseCategories={courseCategories}
-        />
+        <section className="space-y-10">
+          <div className="space-y-10">
+            {/* Attendee */}
+            {attendeeFields.map((field, index) => (
+              <section key={field.id}>
+                <div>
+                  <label htmlFor="age">Alter</label>
+                  <input
+                    id="age"
+                    type="number"
+                    {...register(`attendees.${index}.age` as const, {
+                      valueAsNumber: true,
+                    })}
+                  />
+                  <p>{errors.firstName?.message}</p>
+                </div>
+                <div>
+                  {[
+                    { value: 'ski-beginner-1', name: 'Ski Beginner 1' },
+                    { value: 'ski-beginner-2', name: 'Ski Beginner 2' },
+                  ].map((course) => (
+                    <label key={course.value}>
+                      <input
+                        type="checkbox"
+                        value={course.value}
+                        {...register(`attendees.${index}.courses` as const)}
+                      />
+                      {course.name}
+                    </label>
+                  ))}
+                </div>
+                <button type="button" onClick={() => removeAttendee(index)}>
+                  Remove Attendee
+                </button>
+              </section>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() =>
+              appendAttendee({
+                ...defaultAttendeeValues,
+              })
+            }
+          >
+            Add Attendee
+          </button>
+        </section>
         <hr />
         <section>
           <div>
@@ -249,7 +292,13 @@ export default function BookingForm({
             <p>{errors.firstName?.message}</p>
           </div>
         </section>
-        {/* 
+        {/* <BookingSelection
+          attendees={attendees}
+          addAttendee={addAttendee}
+          removeAttendee={removeAttendee}
+          nextStep={nextStep}
+          getCategoriesOptions={getCategoriesOptions}
+        />
         <BookingConfirmation /> */}
         <button type="submit">Submit</button>
       </div>

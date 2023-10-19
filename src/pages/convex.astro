@@ -1,0 +1,12 @@
+---
+import BookingPage from '@/components/BookingPage'
+import Page from '@/layouts/Page.astro'
+---
+
+<Page title="Convex Booking" description="">
+  <main>
+    <div class="box mt-5">
+      <BookingPage client:load />
+    </div>
+  </main>
+</Page>

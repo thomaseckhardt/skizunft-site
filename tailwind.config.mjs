@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
+import colors from 'tailwindcss/colors'
 import tailwindcssContainerQueries from '@tailwindcss/container-queries'
 import tailwindcssForms from '@tailwindcss/forms'
 import tailwindcssTypography from '@tailwindcss/typography'
@@ -56,6 +57,8 @@ export default {
           900: '#811a34',
           950: '#480917',
         },
+        error: colors.red[600],
+        'error-icon': colors.red[500],
       },
       listStyleImage: {
         checkmark: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M4.53 12.97a.75.75 0 0 0-1.06 1.06l4.5 4.5a.75.75 0 0 0 1.06 0l11-11a.75.75 0 0 0-1.06-1.06L8.5 16.94l-3.97-3.97Z"%2F%3E%3C%2Fsvg%3E')`,

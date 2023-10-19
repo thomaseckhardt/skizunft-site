@@ -19,7 +19,7 @@
       <mj-section padding="0px"></mj-section>
     </mj-attributes>
   </mj-head>
-  <mj-body background-color="##f9fafb">
+  <mj-body background-color="#f9fafb">
     <mj-section padding="10px 0 20px 0">
       <mj-column>
         <mj-text align="center" color="#9B9B9B" font-size="11px"
@@ -27,66 +27,132 @@
         >
       </mj-column>
     </mj-section>
-    <mj-section padding="20px 20px 0 20px" background-color="#FFFFFF">
-      <mj-column width="35%">
-        <mj-text align="left" font-size="20px" font-weight="500"
-          >// BR&amp;AND</mj-text
-        >
+    <mj-section
+      padding="20px 20px 0 20px"
+      background-color="#FFFFFF"
+      border-radius="16px 16px 0px 0px"
+    >
+      <mj-column width="50%">
         <mj-image
-          src="http://go.mailjet.com/tplimg/mtrq/b/ox8s/mg1q9.png"
-          alt="header image"
+          src="https://deploy-preview-1--skizunftkollnau.netlify.app/mailing/logo-skizunft-mailing.png"
+          alt="Skizunft Kollnau"
+          width="62px"
+          height="48px"
           padding="0px"
+          align="left"
         ></mj-image>
       </mj-column>
-      <mj-column width="65%">
-        <mj-text align="right" font-size="11px"
-          ><a href="#" style="color: #000000; text-decoration: none">HOME</a
-          >&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<a
-            href="#"
-            style="color: #000000; text-decoration: none"
-            >SERVICE</a
-          >&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<a
-            href="#"
-            style="color: #000000; text-decoration: none"
-            >THIRD</a
-          ></mj-text
-        >
+      <mj-column width="50%">
+        <mj-image
+          src="https://deploy-preview-1--skizunftkollnau.netlify.app/mailing/dsv-skischule-kollnau-mailing.png"
+          alt="DSV-Skischule Skizunft Kollnau"
+          width="259px"
+          height="48px"
+          padding="0px"
+          align="right"
+        ></mj-image>
       </mj-column>
     </mj-section>
     <mj-section padding="20px 20px 0 20px" background-color="#FFFFFF">
       <mj-column>
+        <mj-text
+          align="center"
+          font-weight="500"
+          font-size="24px"
+          line-height="32px"
+          padding="40px 25px 10px 25px"
+        >
+          Vielen Dank {{firstName}}!
+        </mj-text>
         <mj-text
           align="center"
           font-weight="300"
-          padding="30px 40px 10px 40px"
-          font-size="32px"
-          line-height="40px"
-          color="#5FA91D"
-          >Free Advertising For Your Online Business.</mj-text
+          font-size="24px"
+          line-height="32px"
+          padding="10px 25px 40px 25px"
         >
-      </mj-column>
-    </mj-section>
-    <mj-section padding="10px 20px" background-color="#FFFFFF">
-      <mj-column>
-        <mj-divider
-          width="30px"
-          border-width="3px"
-          border-color="#9B9B9B"
-        ></mj-divider>
-      </mj-column>
-    </mj-section>
-    <mj-section padding="0 20px 20px 20px" background-color="#FFFFFF">
-      <mj-column width="80%">
-        <mj-text
-          align="center"
-          padding-top="10px"
-          font-weight="500"
-          padding="0px"
-          >A Right Media Mix Can Make The Difference.</mj-text
-        >
+          Deine Buchung f&uuml;r unsere Ski- und Snowboardkurse ist
+          best&auml;tigt.
+        </mj-text>
       </mj-column>
     </mj-section>
     <mj-section background-color="#FFFFFF">
+      <mj-column width="100%">
+        <mj-text font-weight="300" font-size="24px" line-height="32px">
+          Buchungs&uuml;bersicht
+        </mj-text>
+      </mj-column>
+      {{#each attendees}}
+      <mj-column width="100%">
+        <mj-text
+          padding="5px 25px"
+          font-weight="600"
+          font-size="14px"
+          line-height="20px"
+        >
+          {{firstName}} {{lastName}} ({{age}} Jahre)
+        </mj-text>
+        {{#each courses}}
+        <mj-text
+          padding="5px 25px"
+          font-weight="400"
+          font-size="14px"
+          line-height="20px"
+        >
+          {{name}} am {{date}}
+        </mj-text>
+        {{/each}}
+        <mj-text
+          padding="5px 25px"
+          font-weight="400"
+          font-size="14px"
+          line-height="20px"
+          align="right"
+        >
+          {{#if member}}Vereinsmitglied {{/if}} {{price}}<br />
+        </mj-text>
+        <mj-divider border-width="1px" border-color="lightgrey" />
+      </mj-column>
+      {{/each}}
+    </mj-section>
+
+    <mj-section background-color="#ffffff">
+      <mj-spacer height="80px" />
+    </mj-section>
+
+    <mj-section background-color="#FFFFFF">
+      <mj-column width="100%">
+        <mj-text font-weight="300" font-size="24px" line-height="32px">
+          Kundeninformationen
+        </mj-text>
+      </mj-column>
+      <mj-column width="50%">
+        <mj-text
+          padding="5px 25px"
+          font-weight="400"
+          font-size="14px"
+          line-height="20px"
+        >
+          {{firstName}} {{lastName}}<br />
+          {{street}}<br />
+          {{zip}} {{city}}<br />
+          {{country}}
+        </mj-text>
+      </mj-column>
+      <mj-column width="50%">
+        <mj-text
+          padding="5px 25px"
+          font-weight="400"
+          font-size="14px"
+          line-height="20px"
+        >
+          {{email}}<br />
+          {{phone}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#FFFFFF" border-radius="0px 0px 16px 16px">
       <mj-column width="100%">
         <mj-text align="center" padding="50px 40px 0 40px" font-weight="300"
           >Marketers/advertisers usually focus their efforts on the people
@@ -107,6 +173,7 @@
         >
       </mj-column>
     </mj-section>
+
     <mj-section padding="10px 0 20px 0">
       <mj-column>
         <mj-text align="center" color="#9B9B9B" font-size="11px"

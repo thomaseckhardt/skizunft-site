@@ -1,12 +1,125 @@
 ---
 import BookingPage from '@/components/BookingPage'
+import BookingForm from '@/components/BookingForm'
 import Page from '@/layouts/Page.astro'
+import { fetchStories } from '@/storyblok/utils/fetchStories'
+
+const categoryOrder = ['Beginner', 'Junior_Champion', 'Champion']
+
+const dateFormat = new Intl.DateTimeFormat('de-DE', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+})
+const dateShortFormat = new Intl.DateTimeFormat('de-DE', {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+})
+const currencyFormat = new Intl.NumberFormat('de-DE', {
+  style: 'currency',
+  currency: 'EUR',
+})
+
+const courseCategoryStories = await fetchStories({
+  content_type: 'CourseCategory',
+  per_page: 50,
+})
+const courseCategories = courseCategoryStories
+  .map((story) => {
+    const { price, priceMember, minAge, maxAge, ...storyContent } =
+      story.content
+
+    return {
+      ...storyContent,
+      price: parseFloat(price),
+      priceMember: parseFloat(priceMember),
+      priceFormatted: currencyFormat.format(price),
+      priceMemberFormatted: currencyFormat.format(priceMember),
+      minAge: parseInt(minAge),
+      maxAge: parseInt(maxAge),
+      id: story.uuid,
+      slug: story.slug,
+    }
+  })
+  .sort(
+    (a, b) =>
+      categoryOrder.indexOf(a.skillLevel) - categoryOrder.indexOf(b.skillLevel),
+  )
+const courseCategoriesById = courseCategories.reduce((acc, category) => {
+  acc[category.id] = category
+  return acc
+}, {})
+
+const courseStories = await fetchStories({
+  content_type: 'Course',
+  per_page: 50,
+  sort_by: 'content.startDate:asc',
+})
+const courses = courseStories.map((story) => {
+  const startDate = new Date(`${story.content.startDate}+0000`)
+  const endDate = new Date(`${story.content.endDate}+0000`)
+  const {
+    category: categoryId,
+    closed = false,
+    canceled = false,
+    ...storyContent
+  } = story.content
+
+  return {
+    canceled,
+    closed,
+    disabled: closed || canceled,
+    state: undefined,
+    stateColor: undefined,
+    // price: category.price,
+    //         priceMember: category.priceMember,
+    ...storyContent,
+    catgeory: courseCategoriesById[categoryId],
+    categoryId,
+    id: story.uuid,
+    name: story.name,
+    slug: story.slug,
+    startDate,
+    endDate,
+    dateFormatted: dateFormat.formatRange(startDate, endDate),
+    dateShortFormatted: dateShortFormat.formatRange(startDate, endDate),
+  }
+})
+// .sort((a, b) => a.startDate - b.startDate)
+
+const Discipline = {
+  Ski: 'Ski',
+  Snowboard: 'Snowboard',
+}
+
+const disciplines = {
+  [Discipline.Ski]: {
+    value: Discipline.Ski,
+    label: 'Skikurs',
+    description: 'Für Kinder ab 4 bis einschließlich 13 Jahren',
+    minAge: 4,
+    maxAge: 13,
+  },
+  [Discipline.Snowboard]: {
+    value: Discipline.Snowboard,
+    label: 'Snowboardkurs',
+    description: 'Für Kinder ab 6 bis einschließlich 13 Jahren',
+    minAge: 6,
+    maxAge: 13,
+  },
+}
 ---
 
 <Page title="Convex Booking" description="">
   <main>
     <div class="box mt-5">
-      <BookingPage client:load />
+      <BookingPage
+        client:load
+        disciplines={disciplines}
+        courses={courses}
+        courseCategories={courseCategories}
+      />
     </div>
   </main>
 </Page>
