@@ -1,12 +1,45 @@
 ---
-import UnderConstruction from '@/components/UnderConstruction.astro'
 import Page from '@/layouts/Page.astro'
 ---
 
 <Page title="Datenschutz" description="">
-  <main>
-    <div class="box mt-5">
-      <UnderConstruction />
+  <main class="box mt-5">
+    <div class="mx-auto max-w-3xl text-base leading-7 text-gray-700">
+      <h1
+        class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
+      >
+        Impressum
+      </h1>
+      <div class="prose mt-10 max-w-2xl">
+        <p>Diensteanbieter im Sinne des § 5 Abs. 1 Telemediengesetz (TMG):</p>
+      </div>
+      <div class="mt-10 flex flex-wrap gap-x-40 gap-y-10">
+        <div class="prose max-w-2xl">
+          <h2>Skizunft Kollnau e.V.</h2>
+          <p>
+            Friedrichstraße 8a, 79183 Waldkirch<br />
+             info@szkollnau.de
+          </p>
+          <dl>
+            <dt>Vorsitzender:</dt>
+            <dd>Thomas Eckhardt</dd>
+            <dt>Stellvtr. Vorsitzende:</dt>
+            <dd>Sabrina Armbruster</dd>
+            <dt>Geschäftsführer:</dt>
+            <dd>Dieter Schaller</dd>
+            <dt>Kassenwart</dt>
+            <dd>Benjamin Fischer</dd>
+          </dl>
+        </div>
+        <div class="prose max-w-2xl">
+          <h2>DSV-Skischule</h2>
+          <p>dsvskischule@szkollnau.de</p>
+          <dl>
+            <dt>Leitung</dt>
+            <dd>Simone Fechti und Theresa Schaller</dd>
+          </dl>
+        </div>
+      </div>
     </div>
   </main>
 </Page>

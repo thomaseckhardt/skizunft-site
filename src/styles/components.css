@@ -1,10 +1,15 @@
 @tailwind components;
 
-@import "./typography.css";
+@import './typography.css';
 
 .box {
   @apply mx-auto;
   @apply max-w-7xl;
   @apply px-6;
   @apply lg:px-8;
+}
+
+.prose dd {
+  margin-top: 0;
+  padding-left: 0;
 }
