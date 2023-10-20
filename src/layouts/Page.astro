@@ -1,12 +1,9 @@
 ---
-import type { CollectionEntry } from 'astro:content'
 import BaseHead from '../components/BaseHead.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
-import FloatingBanner from '../components/FloatingBanner.astro'
+// import FloatingBanner from '../components/FloatingBanner.astro'
 import clsx from 'clsx'
-
-type Props = CollectionEntry<'blog'>['data']
 
 const { title, description, className } = Astro.props
 ---
@@ -19,7 +16,7 @@ const { title, description, className } = Astro.props
   <body class={clsx(className)}>
     <Header />
     <slot />
-    <!-- <Footer /> -->
+    <Footer />
     <script>
       import Alpine from 'alpinejs'
       import collapse from '@alpinejs/collapse'
