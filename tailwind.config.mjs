@@ -31,6 +31,7 @@ export default {
         hoversnot: { raw: '(hover: none)' },
       },
       colors: {
+        ...colors,
         brandblue: {
           50: '#f5f7fa',
           100: '#e9eef5',

@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useMutation } from 'convex/react'
-import { api } from '../../convex/_generated/api'
+import { api } from '../../../convex/_generated/api'
 import { faker } from '@faker-js/faker'
 import { v4 as uuidv4 } from 'uuid'
 import { useForm, useFieldArray } from 'react-hook-form'
+import Icon from '@/components/Icon'
 import BookingSteps from '@/components/booking/BookingSteps'
 import BookingSelection from '@/components/booking/BookingSelection'
 import BookingConfirmation from '@/components/booking/BookingConfirmation'
@@ -91,9 +92,9 @@ export default function BookingForm({
   courses,
   courseCategories,
 }) {
-  console.log('disciplines', disciplines)
-  console.log('courses', courses)
-  console.log('courseCategories', courseCategories)
+  // console.log('disciplines', disciplines)
+  // console.log('courses', courses)
+  // console.log('courseCategories', courseCategories)
 
   const [bookingStep, setBookingStep] = useState(bookingSteps[0])
 
@@ -200,11 +201,7 @@ export default function BookingForm({
   })
   const { register, control, handleSubmit, watch, formState } = form
   const { errors } = formState
-  const {
-    fields: attendeeFields,
-    append: appendAttendee,
-    remove: removeAttendee,
-  } = useFieldArray({
+  const attendeeFieldArray = useFieldArray({
     control,
     name: 'attendees',
   })
@@ -216,9 +213,6 @@ export default function BookingForm({
 
   // --------------------------------------------------
 
-  const getCategoriesOptions = () => {
-    return []
-  }
   const nextStep = () => {
     console.log('nextStep')
   }
@@ -227,79 +221,19 @@ export default function BookingForm({
     <form onSubmit={handleSubmit(submit)} noValidate>
       <BookingSteps steps={bookingSteps} currentStep={bookingStep} />
       <div className="mt-10">
-        <section className="space-y-10">
-          <div className="space-y-10">
-            {/* Attendee */}
-            {attendeeFields.map((field, index) => (
-              <section key={field.id}>
-                <div>
-                  <label htmlFor="age">Alter</label>
-                  <input
-                    id="age"
-                    type="number"
-                    {...register(`attendees.${index}.age` as const, {
-                      valueAsNumber: true,
-                    })}
-                  />
-                  <p>{errors.firstName?.message}</p>
-                </div>
-                <div>
-                  {[
-                    { value: 'ski-beginner-1', name: 'Ski Beginner 1' },
-                    { value: 'ski-beginner-2', name: 'Ski Beginner 2' },
-                  ].map((course) => (
-                    <label key={course.value}>
-                      <input
-                        type="checkbox"
-                        value={course.value}
-                        {...register(`attendees.${index}.courses` as const)}
-                      />
-                      {course.name}
-                    </label>
-                  ))}
-                </div>
-                <button type="button" onClick={() => removeAttendee(index)}>
-                  Remove Attendee
-                </button>
-              </section>
-            ))}
-          </div>
-          <button
-            type="button"
-            onClick={() =>
-              appendAttendee({
-                ...defaultAttendeeValues,
-              })
-            }
-          >
-            Add Attendee
-          </button>
-        </section>
-        <hr />
-        <section>
-          <div>
-            <label htmlFor="firstName">Vorname</label>
-            <input
-              type="text"
-              id="firstName"
-              {...register('firstName', {
-                required: {
-                  value: true,
-                  message: 'firstName is required',
-                },
-              })}
-            />
-            <p>{errors.firstName?.message}</p>
-          </div>
-        </section>
-        {/* <BookingSelection
-          attendees={attendees}
-          addAttendee={addAttendee}
-          removeAttendee={removeAttendee}
+        <BookingSelection
+          disciplines={disciplines}
+          defaultAttendeeValues={defaultAttendeeValues}
+          attendeeFieldArray={attendeeFieldArray}
+          register={register}
+          errors={errors}
+          control={control}
           nextStep={nextStep}
-          getCategoriesOptions={getCategoriesOptions}
+          courses={courses}
+          courseCategories={courseCategories}
         />
-        <BookingConfirmation /> */}
+
+        <BookingConfirmation />
         <button type="submit">Submit</button>
       </div>
     </form>
