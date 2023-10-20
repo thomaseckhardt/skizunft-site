@@ -8,6 +8,7 @@ export default function Icon({
   className = '',
   width = 24,
   height = 24,
+  size = undefined,
   ...props
 }) {
   const icon = filename ?? `${pack}:${name}`
@@ -16,8 +17,8 @@ export default function Icon({
     <ReactIcon
       icon={icon}
       className={clsx('flex-none', className)}
-      width={width}
-      height={height}
+      width={size ?? width}
+      height={size ?? height}
       {...props}
     />
   )

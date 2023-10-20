@@ -24,3 +24,31 @@ export const add = mutation({
     return attendeeId
   },
 })
+
+export const addMultiple = mutation({
+  args: {
+    bookingId: v.id('bookings'),
+    attendees: v.array(
+      v.object({
+        firstName: v.string(),
+        lastName: v.string(),
+        age: v.number(),
+        member: v.boolean(),
+        courses: v.array(v.string()),
+        priceTotal: v.number(),
+      }),
+    ),
+  },
+  handler: async (ctx, args) => {
+    const attendeeIds = await Promise.all(
+      args.attendees.map(async (attendee) => {
+        const attendeeId = await ctx.db.insert('attendees', {
+          bookingId: args.bookingId,
+          ...attendee,
+        })
+        return attendeeId
+      }),
+    )
+    return attendeeIds
+  },
+})

@@ -6,8 +6,10 @@ import MembershipToggle from './MembershipToggle'
 import DisciplineSelection from './DisciplineSelection'
 import CategorySelection from './CategorySelection'
 import clsx from 'clsx'
+import CourseSelection from './CourseSelection'
 
 export default function AttendeeSection({
+  errors,
   index,
   fields,
   remove,
@@ -60,6 +62,10 @@ export default function AttendeeSection({
 
   const handleChangeCategory = (value) => {
     setCatgeory(value)
+  }
+
+  const getError = (fieldName) => {
+    return errors?.attendees?.[index]?.[fieldName]?.message
   }
 
   return (
@@ -118,9 +124,10 @@ export default function AttendeeSection({
               input={register(`attendees.${index}.firstName` as const, {
                 required: {
                   value: true,
-                  message: 'Wie heißt das Kind mit Vornamen?',
+                  message: 'Bitte gib den Namens des Kindes an.',
                 },
               })}
+              error={getError('firstName')}
             />
             <TextField
               label="Nachname"
@@ -129,9 +136,10 @@ export default function AttendeeSection({
               input={register(`attendees.${index}.lastName` as const, {
                 required: {
                   value: true,
-                  message: 'Wie lautet der Nachnames des Kindes?',
+                  message: 'Bitte gib den Nachnamen des Kindes an.',
                 },
               })}
+              error={getError('lastName')}
             />
             <TextField
               label="Alter"
@@ -140,7 +148,12 @@ export default function AttendeeSection({
               id={`attendees.${index}.age`}
               input={register(`attendees.${index}.age` as const, {
                 valueAsNumber: true,
+                required: {
+                  value: true,
+                  message: 'Bitte das Alter des Kindes an.',
+                },
               })}
+              error={getError('age')}
             />
             <MembershipToggle
               attendeeNameField={`attendees.${index}.firstName`}
@@ -179,13 +192,18 @@ export default function AttendeeSection({
                       <div>pro Kurs</div>
                     </div>
 
-                    <pre>CourseDateGroup</pre>
+                    <CourseSelection
+                      register={register}
+                      errors={errors}
+                      courses={courses}
+                      name={`attendees.${index}.courses`}
+                    />
 
                     <div className="mt-6">
                       <div className="flex items-baseline justify-end gap-x-6 text-base font-semibold leading-6 text-gray-900">
                         <div>Gesamtbetrag</div>
                         <div className="text-2xl">
-                          <div __text__="formatPrice(getPriceFinal(attendee))"></div>
+                          <div>formatPrice(getPriceFinal(attendee))</div>
                         </div>
                       </div>
                     </div>

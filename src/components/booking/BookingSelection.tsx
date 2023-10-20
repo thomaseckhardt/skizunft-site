@@ -26,6 +26,7 @@ export default function BookingSelection({
           control={control}
           courses={courses}
           courseCategories={courseCategories}
+          errors={errors}
         />
       ))}
       <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">

@@ -40,7 +40,7 @@ export default function TextField({
       <div className={clsx('relative rounded-md shadow-sm', label && 'mt-1')}>
         {startIcon && (
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-            <Icon name={startIcon} sizeClass="w-5 h-5" />
+            <Icon name={startIcon} size={20} />
           </div>
         )}
         <input
@@ -64,12 +64,12 @@ export default function TextField({
         />
         {endIcon && !error && (
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-            <Icon name={endIcon} sizeClass="w-5 h-5" />
+            <Icon name={endIcon} size={20} />
           </div>
         )}
         {error && (
           <div className="text-error-icon pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-            <Icon name="error-circle-20-filled" width={20} height={20} />
+            <Icon name="error-circle-20-filled" size={20} />
           </div>
         )}
       </div>
