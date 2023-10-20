@@ -1,7 +1,9 @@
 import Icon from '@/components/Icon'
 import AttendeeSection from './AttendeeSection'
+import clsx from 'clsx'
 
 export default function BookingSelection({
+  className = '',
   register,
   errors,
   control,
@@ -11,11 +13,12 @@ export default function BookingSelection({
   disciplines = [],
   courses = [],
   courseCategories = [],
+  getAttendeeTotalPrice,
 }) {
   const { fields, append, remove } = attendeeFieldArray
 
   return (
-    <div>
+    <div className={clsx(className)}>
       {fields.map((field, index) => (
         <AttendeeSection
           key={field.id}
@@ -27,6 +30,7 @@ export default function BookingSelection({
           courses={courses}
           courseCategories={courseCategories}
           errors={errors}
+          getAttendeeTotalPrice={getAttendeeTotalPrice}
         />
       ))}
       <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">

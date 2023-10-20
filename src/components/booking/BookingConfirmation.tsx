@@ -1,15 +1,34 @@
+import { formatPrice } from '@/utils/format'
 import Icon from '../Icon'
 import TextField from './TextField'
+import clsx from 'clsx'
 
 export default function BookingConfirmation({
+  className = '',
   attendees = [],
   register,
   control,
   errors,
   formState,
+  getAttendeeTotalPrice,
+  getSubtotal,
+  getDiscount,
+  getTotalPrice,
+  courses = [],
+  prevStep,
 }) {
+  const getCourseDetails = (courseSlug) => {
+    const course = courses.find((course) => courseSlug === course.slug)
+    return `${course.name} · ${course.dateShortFormatted}`
+  }
+
   return (
-    <div className="grid grid-cols-1 gap-x-8 gap-y-8 py-10 md:grid-cols-3">
+    <div
+      className={clsx(
+        'grid grid-cols-1 gap-x-8 gap-y-8 py-10 md:grid-cols-3',
+        className,
+      )}
+    >
       <div className="px-4 sm:px-0">
         <div className="sticky top-4">
           <div className="mt-10 lg:mt-0">
@@ -20,20 +39,22 @@ export default function BookingConfirmation({
             <div className="mt-4">
               <h3 className="sr-only">Kurse in deinem Warenkorb</h3>
               <ul role="list" className="divide-y divide-gray-200">
-                {attendees.map((attendee) => (
-                  <li className="py-6">
+                {attendees.map((attendee, index) => (
+                  <li key={index} className="py-6">
                     <div className="min-w-0 flex-1">
                       <h4 className="flex gap-x-1 text-sm">
                         <span className="truncate font-medium text-gray-700">
-                          {attendee.firstname} {attendee.lastname}
+                          {attendee.firstName} {attendee.lastName}
                         </span>
                         <span className="flex-none">
                           ({attendee.age} Jahre)
                         </span>
                       </h4>
                       <div className="mt-1">
-                        {attendee.courses.map((course) => (
-                          <p className="text-sm text-gray-500">{course}</p>
+                        {attendee.courses.map((courseSlug) => (
+                          <p key={courseSlug} className="text-sm text-gray-500">
+                            {getCourseDetails(courseSlug)}
+                          </p>
                         ))}
                       </div>
                     </div>
@@ -42,7 +63,7 @@ export default function BookingConfirmation({
                         <p className="text-gray-500">Vereinsmitglied</p>
                       )}
                       <p className="font-medium text-gray-900">
-                        x-text="formatPrice(getPriceFinal(attendee))"
+                        {formatPrice(getAttendeeTotalPrice(attendee))}
                       </p>
                     </div>
                   </li>
@@ -53,7 +74,7 @@ export default function BookingConfirmation({
                 <div className="flex items-center justify-between">
                   <div className="text-sm">Zwischensumme</div>
                   <div className="text-sm font-medium text-gray-900">
-                    x-text="formatPrice(getSubtotal())"
+                    {formatPrice(getSubtotal(attendees))}
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
@@ -62,7 +83,7 @@ export default function BookingConfirmation({
                     <span className="text-gray-500">(10% Brettlemarkt)</span>
                   </div>
                   <div className="text-sm font-medium text-gray-900">
-                    x-text="formatPrice(getDiscount())"
+                    {formatPrice(getDiscount(attendees))}
                   </div>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-6 text-sky-600">
@@ -70,7 +91,7 @@ export default function BookingConfirmation({
                     Fälliger Betrag
                   </div>
                   <div className="text-base font-semibold md:text-lg">
-                    x-text="formatPrice(getTotal())"
+                    {formatPrice(getTotalPrice(attendees))}
                   </div>
                 </div>
                 <div className="mt-6 rounded border border-sky-600 bg-sky-50 p-4 text-sm text-sky-700">
@@ -283,10 +304,17 @@ export default function BookingConfirmation({
             </div>
           </div>
           <div>
-            <div className="flex gap-x-4">
+            <div className="flex flex-wrap  gap-x-4 gap-y-4">
+              <button
+                type="button"
+                className="w-full rounded-full bg-white px-8 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 md:w-auto md:flex-none"
+                onClick={() => prevStep()}
+              >
+                Zurück
+              </button>
               <button
                 type="submit"
-                className="w-full max-w-md flex-1 rounded-full border border-transparent bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 md:min-w-[20%] md:flex-none"
+                className="w-full max-w-md flex-1 rounded-full border border-transparent bg-sky-600 px-8 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 md:w-auto md:flex-none"
               >
                 Kursbuchung senden
               </button>
@@ -302,7 +330,7 @@ export default function BookingConfirmation({
                       Es gab {Object.keys(errors).length} Fehler bei deiner
                       Eingabe:
                     </h3>
-                    <div className="mt-2 text-sm text-red-700">
+                    <div className="mt-2 text-xs text-red-700 md:text-sm">
                       <ul role="list" className="list-disc space-y-1 pl-5">
                         {Object.entries(errors).map(([fieldName, error]) => (
                           <li key={fieldName}>{error.message}</li>

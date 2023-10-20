@@ -7,6 +7,7 @@ import DisciplineSelection from './DisciplineSelection'
 import CategorySelection from './CategorySelection'
 import clsx from 'clsx'
 import CourseSelection from './CourseSelection'
+import { formatPrice } from '@/utils/format'
 
 export default function AttendeeSection({
   errors,
@@ -17,6 +18,7 @@ export default function AttendeeSection({
   control,
   courses: allCourses,
   courseCategories: allCategories,
+  getAttendeeTotalPrice,
 }) {
   const [discipline, setDiscipline] = useState('Ski')
   const [category, setCatgeory] = useState()
@@ -34,6 +36,10 @@ export default function AttendeeSection({
   const attendeeMember = useWatch({
     control,
     name: `attendees.${index}.member`,
+  })
+  const attendeeCourses = useWatch({
+    control,
+    name: `attendees.${index}.courses`,
   })
 
   useEffect(() => {
@@ -58,10 +64,12 @@ export default function AttendeeSection({
 
   const handleChangeDicipline = (value) => {
     setDiscipline(value)
+    setCourses(undefined)
   }
 
   const handleChangeCategory = (value) => {
     setCatgeory(value)
+    setCourses(undefined)
   }
 
   const getError = (fieldName) => {
@@ -143,7 +151,7 @@ export default function AttendeeSection({
             />
             <TextField
               label="Alter"
-              description="Für Kinder ab 4 bis einschließlich 13 Jahren"
+              description="Für Kinder ab 4 bis einschließlich 13 Jahren. Snowboardkurse zwischen 6 und 13 Jahren."
               type="number"
               id={`attendees.${index}.age`}
               input={register(`attendees.${index}.age` as const, {
@@ -203,7 +211,12 @@ export default function AttendeeSection({
                       <div className="flex items-baseline justify-end gap-x-6 text-base font-semibold leading-6 text-gray-900">
                         <div>Gesamtbetrag</div>
                         <div className="text-2xl">
-                          <div>formatPrice(getPriceFinal(attendee))</div>
+                          {formatPrice(
+                            getAttendeeTotalPrice({
+                              courses: attendeeCourses,
+                              member: attendeeMember,
+                            }),
+                          )}
                         </div>
                       </div>
                     </div>

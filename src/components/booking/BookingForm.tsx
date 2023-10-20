@@ -2,11 +2,14 @@ import { useState } from 'react'
 import { useMutation } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
 import { faker } from '@faker-js/faker'
-import { useForm, useFieldArray } from 'react-hook-form'
+import { useForm, useFieldArray, useWatch } from 'react-hook-form'
 import BookingSteps from '@/components/booking/BookingSteps'
 import BookingSelection from '@/components/booking/BookingSelection'
 import BookingConfirmation from '@/components/booking/BookingConfirmation'
-import { formatPrice } from '@/utils/formats'
+import { formatPrice } from '@/utils/format'
+import { clsx } from 'clsx'
+
+const DISCOUNT = 0.1
 
 const bookingSteps = [
   {
@@ -40,6 +43,23 @@ const triggerConfirmationMail = async (data) => {
         }
         return typeof value === 'bigint' ? value.toString() : value
       }),
+    })
+    console.log('email', response)
+    return {
+      statusCode: 200,
+    }
+  } catch (error) {
+    console.log('error', error)
+    return error
+  }
+}
+
+const triggerNotificationMail = async (data) => {
+  console.log('triggerNotificationMail', data)
+  try {
+    const response = fetch(`/api/send-booking-notification`, {
+      method: 'POST',
+      body: JSON.stringify(data),
     })
     console.log('email', response)
     return {
@@ -85,6 +105,47 @@ export default function BookingForm({
 
   // --------------------------------------------------
 
+  const getAttendeeTotalPrice = (attendee) => {
+    return attendee.courses.reduce((total, courseSlug) => {
+      const course = courses.find((course) => courseSlug === course.slug)
+      const category = courseCategories.find(
+        (category) => course.categoryId === category.id,
+      ) ?? {
+        price: 0,
+        priceMember: 0,
+      }
+      const coursePrice = attendee.member
+        ? category.priceMember
+        : category.price
+      return total + coursePrice
+    }, 0)
+  }
+
+  const getSubtotal = (attendees) => {
+    const attendeePrices = attendees.map((attendee) =>
+      getAttendeeTotalPrice(attendee),
+    )
+    const total = attendeePrices.reduce((total, attendeePrice) => {
+      return total + attendeePrice
+    }, 0)
+
+    return total
+  }
+
+  const getDiscount = (attendees) => {
+    const subtotal = getSubtotal(attendees)
+    const discount = subtotal * DISCOUNT
+    return discount
+  }
+
+  const getTotalPrice = (attendees) => {
+    const subtotal = getSubtotal(attendees)
+    const total = subtotal * (1 - DISCOUNT)
+    return total
+  }
+
+  // --------------------------------------------------
+
   const defaultAttendeeValues = {
     firstName: '',
     lastName: '',
@@ -126,19 +187,7 @@ export default function BookingForm({
     console.log('SUBMIT', data)
 
     const attendeesData = data.attendees.map((attendee) => {
-      const priceTotal = attendee.courses.reduce((total, courseSlug) => {
-        const course = courses.find((course) => courseSlug === course.slug)
-        const category = courseCategories.find(
-          (category) => course.categoryId === category.id,
-        ) ?? {
-          price: 0,
-          priceMember: 0,
-        }
-        const coursePrice = attendee.member
-          ? category.priceMember
-          : category.price
-        return total + coursePrice
-      }, 0)
+      const priceTotal = getAttendeeTotalPrice(attendee)
 
       return {
         ...attendee,
@@ -146,9 +195,7 @@ export default function BookingForm({
       }
     })
 
-    const bookingTotalPrice = attendeesData.reduce((total, attendee) => {
-      return total + attendee.priceTotal
-    }, 0)
+    const bookingTotalPrice = getTotalPrice(attendeesData)
 
     const bookingData = {
       firstName: data.firstName,
@@ -185,6 +232,8 @@ export default function BookingForm({
       email: bookingData.email,
       phone: bookingData.phone,
       price: formatPrice(bookingData.priceTotal),
+      subtotal: formatPrice(getSubtotal(attendeesData)),
+      discount: formatPrice(getDiscount(attendeesData)),
       orderNumber,
 
       attendees: attendeesData.map((attendee) => {
@@ -207,14 +256,36 @@ export default function BookingForm({
       }),
     }
 
-    const email = await triggerConfirmationMail(mailingData)
-    console.log('email', email)
+    const notificationMail = await triggerNotificationMail(mailingData)
+    console.log('notificationMail', notificationMail)
+
+    const confirmationMail = await triggerConfirmationMail(mailingData)
+    console.log('confirmationMail', confirmationMail)
+
+    // window.location.replace('/buchung/erfolgreich')
   }
+
+  const attendees = useWatch({
+    control,
+    name: `attendees`,
+  })
 
   // --------------------------------------------------
 
+  const gotoStep = (index) => {
+    const nextStep = bookingSteps[index]
+    if (nextStep) {
+      setBookingStep(nextStep)
+      window.scrollTo(0, 0)
+    }
+  }
+
   const nextStep = () => {
-    console.log('nextStep')
+    gotoStep(bookingStep?.index + 1)
+  }
+
+  const prevStep = () => {
+    gotoStep(bookingStep?.index - 1)
   }
 
   const insertTestData = () => {
@@ -233,7 +304,7 @@ export default function BookingForm({
     form.setValue('zip', faker.location.zipCode())
     form.setValue('city', faker.location.city())
     form.setValue('country', faker.location.country())
-    form.setValue('email', faker.internet.email())
+    form.setValue('email', 'thomas.eckhardt@web.de')
     form.setValue('phone', faker.phone.imei())
     form.setValue('legalConfirmed', true)
     form.setValue('privacyConfirmed', true)
@@ -241,12 +312,17 @@ export default function BookingForm({
 
   return (
     <form onSubmit={handleSubmit(submit)} noValidate>
-      <button type="button" onClick={() => insertTestData()}>
+      <button
+        type="button"
+        onClick={() => insertTestData()}
+        className="absolute left-0 top-0 z-50 bg-purple-700 p-2 text-sm uppercase text-white"
+      >
         Insert Test Data
       </button>
       <BookingSteps steps={bookingSteps} currentStep={bookingStep} />
       <div className="mt-10">
         <BookingSelection
+          className={clsx(bookingStep?.slug !== 'selection' && 'sr-only')}
           disciplines={disciplines}
           defaultAttendeeValues={defaultAttendeeValues}
           attendeeFieldArray={attendeeFieldArray}
@@ -256,15 +332,22 @@ export default function BookingForm({
           nextStep={nextStep}
           courses={courses}
           courseCategories={courseCategories}
+          getAttendeeTotalPrice={getAttendeeTotalPrice}
         />
-
         <BookingConfirmation
+          className={clsx(bookingStep?.slug !== 'booking' && 'sr-only')}
+          courses={courses}
+          attendees={attendees}
           register={register}
           errors={errors}
           control={control}
           formState={formState}
+          getAttendeeTotalPrice={getAttendeeTotalPrice}
+          getSubtotal={getSubtotal}
+          getDiscount={getDiscount}
+          getTotalPrice={getTotalPrice}
+          prevStep={prevStep}
         />
-        <button type="submit">Submit</button>
       </div>
     </form>
   )

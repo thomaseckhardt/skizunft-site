@@ -29,7 +29,7 @@ export default function CourseSelection({
           />
           <div className="relative z-10 flex flex-1 items-center text-gray-900 peer-disabled:text-gray-500 peer-disabled:ring-gray-200">
             <div>
-              <div className="font-medium">{course.label}</div>
+              <div className="font-medium">{course.name}</div>
               <div>{course.dateFormatted}</div>
             </div>
           </div>

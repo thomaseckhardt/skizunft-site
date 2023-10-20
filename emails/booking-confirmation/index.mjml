@@ -23,7 +23,7 @@
     <mj-section padding="10px 0 20px 0">
       <mj-column>
         <mj-text align="center" color="#9B9B9B" font-size="11px">
-          Schifoan is' des Leiwandste
+          Wir freuen uns auf Dich und deine Familie.
         </mj-text>
       </mj-column>
     </mj-section>
@@ -119,6 +119,54 @@
       <mj-column width="70%">
         <mj-text
           padding="5px 25px"
+          font-weight="400"
+          font-size="14px"
+          line-height="20px"
+          align="right"
+        >
+          Zwischensumme
+        </mj-text>
+      </mj-column>
+      <mj-column width="30%">
+        <mj-text
+          padding="5px 25px"
+          font-weight="400"
+          font-size="14px"
+          line-height="20px"
+          align="right"
+        >
+          {{subtotal}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FFFFFF">
+      <mj-column width="70%">
+        <mj-text
+          padding="5px 25px"
+          font-weight="400"
+          font-size="14px"
+          line-height="20px"
+          align="right"
+        >
+          Rabatt
+        </mj-text>
+      </mj-column>
+      <mj-column width="30%">
+        <mj-text
+          padding="5px 25px"
+          font-weight="400"
+          font-size="14px"
+          line-height="20px"
+          align="right"
+        >
+          {{discount}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FFFFFF">
+      <mj-column width="70%">
+        <mj-text
+          padding="5px 25px"
           font-weight="600"
           font-size="14px"
           line-height="20px"
@@ -209,12 +257,13 @@
     </mj-section>
 
     <mj-section background-color="#FFFFFF" border-radius="0px 0px 16px 16px">
-      <mj-column width="100%">
+      <mj-column width="80%">
         <mj-text align="center" padding="50px 25px" font-weight="300">
           <p>
-            Wir freuen uns auf Dich und Deine Familie<br />und w&uuml;nschen Dir
-            viel Spa&szlig; bei unseren Kursen.
+            Wir freuen uns auf Dich und Deine Familie und w&uuml;nschen viel
+            Spa&szlig; bei unseren Kursen.
           </p>
+          <p style="font-size: 24px">🙌</p>
         </mj-text>
       </mj-column>
     </mj-section>

@@ -3,11 +3,6 @@ import BookingPage from '@/components/booking/BookingPage'
 import Page from '@/layouts/Page.astro'
 import { fetchStories } from '@/storyblok/utils/fetchStories'
 
-console.log(
-  'process.env.PUBLIC_BOOKING_ENABLED',
-  process.env.PUBLIC_BOOKING_ENABLED,
-)
-
 if (!process.env.PUBLIC_BOOKING_ENABLED) {
   return Astro.redirect('/buchung/geschlossen')
 }
