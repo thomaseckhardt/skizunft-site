@@ -1,3 +1,8 @@
+function generateOrderNumber() {
+  const randomNumber = Math.floor(Math.random() * 900000) + 100000
+  return `${randomNumber}`
+}
+
 import { v } from 'convex/values'
 import { mutation } from './_generated/server'
 
@@ -18,7 +23,8 @@ export const add = mutation({
     returningCustomer: v.boolean(),
   },
   handler: async (ctx, args) => {
-    const boookingId = await ctx.db.insert('bookings', {
+    const orderNumber = generateOrderNumber()
+    const bookingId = await ctx.db.insert('bookings', {
       firstName: args.firstName,
       lastName: args.lastName,
       address: args.address,
@@ -32,7 +38,8 @@ export const add = mutation({
       privacyConfirmed: args.privacyConfirmed,
       newsletterConfirmed: args.newsletterConfirmed,
       returningCustomer: args.returningCustomer,
+      orderNumber,
     })
-    return boookingId
+    return { bookingId, orderNumber }
   },
 })

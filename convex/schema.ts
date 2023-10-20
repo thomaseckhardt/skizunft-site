@@ -16,6 +16,7 @@ export default defineSchema({
     privacyConfirmed: v.boolean(),
     newsletterConfirmed: v.boolean(),
     returningCustomer: v.boolean(),
+    orderNumber: v.optional(v.string()),
   }),
   attendees: defineTable({
     bookingId: v.id('bookings'),

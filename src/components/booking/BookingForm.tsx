@@ -2,9 +2,7 @@ import { useState } from 'react'
 import { useMutation } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
 import { faker } from '@faker-js/faker'
-import { v4 as uuidv4 } from 'uuid'
 import { useForm, useFieldArray } from 'react-hook-form'
-import Icon from '@/components/Icon'
 import BookingSteps from '@/components/booking/BookingSteps'
 import BookingSelection from '@/components/booking/BookingSelection'
 import BookingConfirmation from '@/components/booking/BookingConfirmation'
@@ -80,80 +78,10 @@ export default function BookingForm({
   courses,
   courseCategories,
 }) {
-  // console.log('disciplines', disciplines)
-  // console.log('courses', courses)
-  // console.log('courseCategories', courseCategories)
-
   const [bookingStep, setBookingStep] = useState(bookingSteps[0])
 
-  const bookingData = {
-    firstName: faker.person.firstName(),
-    lastName: faker.person.lastName(),
-    address: faker.location.streetAddress(),
-    zip: faker.location.zipCode(),
-    city: faker.location.city(),
-    country: faker.location.country(),
-    email: faker.internet.email(),
-    phone: faker.phone.imei(),
-    legalConfirmed: true,
-    privacyConfirmed: true,
-    newsletterConfirmed: false,
-  }
-  const attendeesData = [
-    {
-      firstName: faker.person.firstName(),
-      lastName: faker.person.lastName(),
-      age: faker.number.bigInt({ min: 18, max: 99 }),
-      member: faker.datatype.boolean(),
-      courses: ['course-1', 'course-2'],
-    },
-  ]
-
   const insertBooking = useMutation(api.bookings.add)
-  const insertAttendee = useMutation(api.attendees.add)
   const insertAttendees = useMutation(api.attendees.addMultiple)
-  const testSubmit = async () => {
-    console.log('submit')
-    const bookingId = await insertBooking(bookingData)
-    console.log('bookingId', bookingId)
-
-    const attendeeData = attendeesData[0]
-    const attendeeId = await insertAttendee({
-      bookingId,
-      ...attendeeData,
-    })
-    console.log('attendeeId', attendeeId)
-
-    const mailingData = {
-      firstName: bookingData.firstName,
-      lastName: bookingData.lastName,
-      address: bookingData.address,
-      zip: bookingData.zip,
-      city: bookingData.city,
-      country: bookingData.country,
-      email: bookingData.email,
-      phone: bookingData.phone,
-      attendees: attendeesData.map((attendee) => {
-        const courses = attendee.courses.map((course, index) => {
-          return {
-            name: `Ski Beginner ${index + 1}`,
-            date: '13./14.01.2024',
-          }
-        })
-
-        return {
-          firstName: attendee.firstName,
-          lastName: attendee.lastName,
-          age: attendee.age,
-          member: attendee.member,
-          price: '98,00 €',
-          courses,
-        }
-      }),
-    }
-    const email = await triggerConfirmationMail(mailingData)
-    console.log('email', email)
-  }
 
   // --------------------------------------------------
 
@@ -238,6 +166,15 @@ export default function BookingForm({
       returningCustomer: false,
     }
 
+    const { bookingId, orderNumber } = await insertBooking(bookingData)
+    console.log('bookingId', bookingId)
+
+    const attendeeIds = await insertAttendees({
+      attendees: attendeesData,
+      bookingId,
+    })
+    console.log('attendeeIds', attendeeIds)
+
     const mailingData = {
       firstName: bookingData.firstName,
       lastName: bookingData.lastName,
@@ -248,6 +185,7 @@ export default function BookingForm({
       email: bookingData.email,
       phone: bookingData.phone,
       price: formatPrice(bookingData.priceTotal),
+      orderNumber,
 
       attendees: attendeesData.map((attendee) => {
         const attendeeCourses = attendee.courses.map((courseSlug, index) => {
@@ -269,15 +207,6 @@ export default function BookingForm({
       }),
     }
 
-    const bookingId = await insertBooking(bookingData)
-    console.log('bookingId', bookingId)
-
-    const attendeeIds = await insertAttendees({
-      attendees: attendeesData,
-      bookingId,
-    })
-    console.log('attendeeIds', attendeeIds)
-
     const email = await triggerConfirmationMail(mailingData)
     console.log('email', email)
   }
@@ -287,8 +216,6 @@ export default function BookingForm({
   const nextStep = () => {
     console.log('nextStep')
   }
-
-  console.log('Form errors', errors)
 
   const insertTestData = () => {
     form.setValue('attendees', [
