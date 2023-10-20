@@ -288,37 +288,37 @@ export default function BookingForm({
     gotoStep(bookingStep?.index - 1)
   }
 
-  const insertTestData = () => {
-    form.setValue('attendees', [
-      {
-        firstName: faker.person.firstName(),
-        lastName: faker.person.lastName(),
-        age: 6,
-        member: true,
-        courses: ['ski-beginner-1', 'ski-beginner-2'],
-      },
-    ])
-    form.setValue('firstName', faker.person.firstName())
-    form.setValue('lastName', faker.person.lastName())
-    form.setValue('address', faker.location.streetAddress())
-    form.setValue('zip', faker.location.zipCode())
-    form.setValue('city', faker.location.city())
-    form.setValue('country', faker.location.country())
-    form.setValue('email', 'thomas.eckhardt@web.de')
-    form.setValue('phone', faker.phone.imei())
-    form.setValue('legalConfirmed', true)
-    form.setValue('privacyConfirmed', true)
-  }
+  // const insertTestData = () => {
+  //   form.setValue('attendees', [
+  //     {
+  //       firstName: faker.person.firstName(),
+  //       lastName: faker.person.lastName(),
+  //       age: 6,
+  //       member: true,
+  //       courses: ['ski-beginner-1', 'ski-beginner-2'],
+  //     },
+  //   ])
+  //   form.setValue('firstName', faker.person.firstName())
+  //   form.setValue('lastName', faker.person.lastName())
+  //   form.setValue('address', faker.location.streetAddress())
+  //   form.setValue('zip', faker.location.zipCode())
+  //   form.setValue('city', faker.location.city())
+  //   form.setValue('country', faker.location.country())
+  //   form.setValue('email', 'thomas.eckhardt@web.de')
+  //   form.setValue('phone', faker.phone.imei())
+  //   form.setValue('legalConfirmed', true)
+  //   form.setValue('privacyConfirmed', true)
+  // }
 
   return (
     <form onSubmit={handleSubmit(submit)} noValidate>
-      <button
+      {/* <button
         type="button"
         onClick={() => insertTestData()}
         className="absolute left-0 top-0 z-50 bg-purple-700 p-2 text-sm uppercase text-white"
       >
         Insert Test Data
-      </button>
+      </button> */}
       <BookingSteps steps={bookingSteps} currentStep={bookingStep} />
       <div className="mt-10">
         <BookingSelection

@@ -33,7 +33,7 @@ const handler: Handler = async function (event) {
       method: 'POST',
       body: JSON.stringify({
         from: 'buchung@szkollnau.de',
-        to: 'mail@thomaseckhardt.com',
+        to: 'info@szkollnau.de',
         subject: `🚨 Kursbuchung: ${data.firstName} ${data.lastName} #${data.orderNumber}`,
         parameters: JSON.parse(event.body),
       }),
