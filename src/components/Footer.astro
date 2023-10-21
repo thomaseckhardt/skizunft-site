@@ -26,15 +26,15 @@ const socialLinks = []
 <footer class="bg-white">
   <div class="box overflow-hidden px-6 py-20 sm:py-24">
     <nav
-      class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"
+      class="-mb-6 sm:flex sm:justify-center sm:space-x-12"
       aria-label="Footer"
     >
       {
         links.map((link) => (
-          <div class="pb-6">
+          <div>
             <a
               href={link.href}
-              class="text-sm leading-6 text-gray-600 hover:text-gray-900"
+              class="block py-1 text-sm leading-6 text-gray-600 hover:text-gray-900"
             >
               {link.label}
             </a>
