@@ -100,16 +100,16 @@ const flow = [
                       <Icon name={item.icon} />
                     </span>
                   </div>
-                  <div class="flex min-w-0 flex-1 flex-col justify-between gap-y-2 pt-2 md:flex-row md:space-x-16">
-                    <div class={clsx(!item.fullWidth && 'max-w-md')}>
-                      <p set:html={item.content} />
-                    </div>
+                  <div class="flex min-w-0 flex-1 flex-col justify-between gap-y-2 pt-2 md:flex-row md:gap-x-16">
                     {item.note && (
                       <div
-                        class="text-right text-sm leading-snug text-gray-500 md:whitespace-nowrap"
+                        class="text-sm leading-snug text-gray-500 md:order-1 md:whitespace-nowrap md:text-right"
                         set:html={item.note}
                       />
                     )}
+                    <div class={clsx(!item.fullWidth && 'max-w-md')}>
+                      <p set:html={item.content} />
+                    </div>
                   </div>
                 </div>
               </div>
