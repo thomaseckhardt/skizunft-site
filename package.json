@@ -27,6 +27,8 @@
     "@astrojs/sitemap": "^3.0.1",
     "@astrojs/tailwind": "^5.0.1",
     "@faker-js/faker": "^8.2.0",
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.0.18",
     "@netlify/emails": "^1.1.0",
     "@netlify/functions": "^2.3.0",
     "@storyblok/astro": "^3.0.1",

@@ -1,6 +1,6 @@
 ---
 import BaseHead from '../components/BaseHead.astro'
-import Header from '../components/Header.astro'
+import HeaderNew from '../components/HeaderNew'
 import Footer from '../components/Footer.astro'
 // import FloatingBanner from '../components/FloatingBanner.astro'
 import clsx from 'clsx'
@@ -14,7 +14,7 @@ const { title, description, className } = Astro.props
   </head>
 
   <body class={clsx(className)}>
-    <Header />
+    <HeaderNew client:load />
     <slot />
     <Footer />
     <script>
