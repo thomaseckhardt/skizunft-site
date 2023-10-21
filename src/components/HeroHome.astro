@@ -7,17 +7,22 @@ import EventCard from './EventCard.astro'
 ---
 
 <div class="relative mx-auto flex max-w-[1600px] flex-col lg:block">
-  <div class="box order-1 max-w-full">
-    <div class="relative">
+  <div class="mb:box order-1 max-w-full">
+    <div class="relative py-10 lg:py-0">
       <div
-        class="flex max-w-full items-center gap-x-6 gap-y-4 overflow-auto py-10 lg:absolute lg:right-0 lg:top-0 lg:flex-col lg:items-stretch lg:overflow-visible lg:py-0"
+        class="px-6 font-hero text-xl leading-tight text-brandblue-600 lg:hidden"
+      >
+        Unsere nächsten Veranstaltungen
+      </div>
+      <div
+        class="scrollbar-hidden flex max-w-full items-center gap-x-6 gap-y-4 overflow-auto px-6 pb-4 pt-2 lg:absolute lg:right-0 lg:top-0 lg:flex-col lg:items-stretch lg:overflow-visible lg:pb-0 lg:pt-0"
       >
         <div
-          class="sticky left-0 font-hero text-xl leading-tight text-brandblue-600"
+          class="hidden font-hero text-xl leading-tight text-brandblue-600 lg:block"
         >
           Unsere nächsten Veranstaltungen
         </div>
-        <EventCard
+        <!-- <EventCard
           href="/brettlemarkt/"
           className="relative z-10 flex-none"
           day="20"
@@ -26,7 +31,7 @@ import EventCard from './EventCard.astro'
           title="Brettlemarkt"
           time="Annahme ab 12.30 Uhr"
           location="Festhalle, Kollnau"
-        />
+        /> -->
         <EventCard
           href="/wanderungen/"
           className="relative z-10 flex-none"
