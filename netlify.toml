@@ -4,6 +4,11 @@
   status = 200 # ok code
   force = true # ensure to always redirect
 
+[[redirects]]
+  from="/jhv"
+  to = "/jahreshauptversammlung"
+  status = 200
+
 [[plugins]]
   package = "@netlify/plugin-emails"
 
