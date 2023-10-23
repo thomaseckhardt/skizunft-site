@@ -3,56 +3,52 @@ import { Image } from 'astro:assets'
 
 import HeroHomeImage from '../images/hero-skikurse.png'
 import EventCard from './EventCard.astro'
-// import DsvSkischule from '../images/dsv-skischule.svg'
+import { fetchStories, getQueryDate, parseDate } from '@/storyblok/utils'
+
+const today = getQueryDate(new Date())
+
+const eventStories = await fetchStories({
+  content_type: 'Event',
+  per_page: 50,
+  sort_by: 'content.date:asc',
+  filter_query: {
+    date: {
+      gt_date: today,
+    },
+  },
+})
+const events = eventStories.map((story) => ({
+  ...story.content,
+  _key: story.uuid,
+  date: parseDate(story.content.date),
+}))
 ---
 
 <div class="relative mx-auto flex max-w-[1600px] flex-col lg:block">
-  <div class="mb:box order-1 max-w-full">
-    <div class="relative py-10 lg:py-0">
-      <div
-        class="px-6 font-hero text-xl leading-tight text-brandblue-600 lg:hidden"
-      >
-        Unsere nächsten Veranstaltungen
-      </div>
-      <div
-        class="scrollbar-hidden flex max-w-full items-center gap-x-6 gap-y-4 overflow-auto px-6 pb-4 pt-2 lg:absolute lg:right-0 lg:top-0 lg:flex-col lg:items-stretch lg:overflow-visible lg:pb-0 lg:pt-0"
-      >
-        <div
-          class="hidden font-hero text-xl leading-tight text-brandblue-600 lg:block"
-        >
-          Unsere nächsten Veranstaltungen
+  {
+    events.length > 0 && (
+      <div class="mb:box order-1 max-w-full">
+        <div class="relative py-10 lg:py-0">
+          <div class="px-6 font-hero text-xl leading-tight text-brandblue-600 lg:hidden">
+            Unsere nächsten Veranstaltungen
+          </div>
+          <div class="scrollbar-hidden flex max-w-full items-center gap-x-6 gap-y-4 overflow-auto px-6 pb-4 pt-2 lg:absolute lg:right-0 lg:top-0 lg:flex-col lg:items-stretch lg:overflow-visible lg:pb-0 lg:pt-0">
+            <div class="hidden font-hero text-xl leading-tight text-brandblue-600 lg:block">
+              Unsere nächsten Veranstaltungen
+            </div>
+            {events.map((event) => (
+              <EventCard
+                key={event._key}
+                href={event.link?.url}
+                className="relative z-10 flex-none"
+                {...event}
+              />
+            ))}
+          </div>
         </div>
-        <!-- <EventCard
-          href="/brettlemarkt/"
-          className="relative z-10 flex-none"
-          day="20"
-          month="Oktober"
-          today={true}
-          title="Brettlemarkt"
-          time="Annahme ab 12.30 Uhr"
-          location="Festhalle, Kollnau"
-        /> -->
-        <EventCard
-          href="/wanderungen/"
-          className="relative z-10 flex-none"
-          day="21"
-          month="Oktober"
-          title="Wurst-und-Wecken-Wanderung"
-          time="Treffpunkt um 10 Uhr"
-          location="Rathausplatz, Kollnau"
-        />
-        <EventCard
-          href="/jahreshauptversammlung/"
-          className="relative z-10 flex-none"
-          day="10"
-          month="November"
-          title="Jahreshauptversammlung"
-          time="20 Uhr"
-          location="Acqua-Mediterranes-Restaurant, Kollnau"
-        />
       </div>
-    </div>
-  </div>
+    )
+  }
   <div class="h-[400px] lg:h-[600px]">
     <Image
       src={HeroHomeImage}

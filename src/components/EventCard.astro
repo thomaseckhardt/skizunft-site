@@ -4,13 +4,16 @@ import clsx from 'clsx'
 const {
   href = '#',
   className,
-  day,
-  month,
   title,
-  time,
+  meetingPoint,
+  date,
   location,
+  description,
   ...props
 } = Astro.props
+
+const day = date?.getDate()
+const month = date?.toLocaleString('de-DE', { month: 'long' })
 ---
 
 <a
@@ -28,10 +31,11 @@ const {
     <div class="-mt-1 text-xs font-semibold leading-none">{month}</div>
   </div>
   <div
-    class="-ml-4 flex-1 rounded-br-lg rounded-tr-lg bg-sky-50 py-2 pl-8 pr-4 text-sm leading-snug text-sky-800 shadow-sm transition hovers:group-hover:shadow-md"
+    class="-ml-4 min-h-[4.625rem] flex-1 rounded-br-lg rounded-tr-lg bg-sky-50 py-2 pl-8 pr-4 text-sm leading-snug text-sky-800 shadow-sm transition hovers:group-hover:shadow-md"
   >
     <div class="font-semibold">{title}</div>
-    {time && <div>{time}</div>}
-    {location && <div>{location}</div>}
+    {description && <div class="whitespace-pre-line">{description}</div>}
+    <!-- {meetingPoint && <div>{meetingPoint}</div>} -->
+    <!-- {location && <div>{location}</div>} -->
   </div>
 </a>
