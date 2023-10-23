@@ -1,14 +1,3 @@
-[[redirects]]
-  from = "/api/*" # simplify all calls to serverless functions
-  to = "/.netlify/functions/:splat" # all function calls will go to this path
-  status = 200 # ok code
-  force = true # ensure to always redirect
-
-[[redirects]]
-  from="/jhv"
-  to = "/jahreshauptversammlung"
-  status = 200
-
 [[plugins]]
   package = "@netlify/plugin-emails"
 
@@ -18,3 +7,66 @@
 
 [dev]
   command = "npm run dev"
+
+[[redirects]]
+  from = "/api/*" # simplify all calls to serverless functions
+  to = "/.netlify/functions/:splat" # all function calls will go to this path
+  status = 200 # ok code
+  force = true # ensure to always redirect
+
+[[redirects]]
+  from="/jhv"
+  to = "/jahreshauptversammlung/"
+
+  [[redirects]]
+  from = "/dsv-skischule/kursangebot"
+  to = "/skischule/kurse/"
+
+[[redirects]]
+  from = "/dsv-skischule/kursbuchung"
+  to = "/buchung/"
+
+[[redirects]]
+  from = "/dsv-skischule/informationen"
+  to = "/skischule/"
+
+[[redirects]]
+  from = "/verein/brettlemarkt"
+  to = "/brettlemarkt/"
+
+[[redirects]]
+  from = "/verein/mitglieder"
+  to = "/mitglied/"
+
+[[redirects]]
+  from = "/fitness-freizeit"
+  to = "/fitness/"
+
+[[redirects]]
+  from = "/impressum"
+  to = "/kontakt/"
+
+[[redirects]]
+  from = "/dsv-skischule"
+  to = "/skischule/"
+
+[[redirects]]
+  from = "/fitness-freizeit/fitness-und-kindergymnastik"
+  to = "/fitness/"
+
+[[redirects]]
+  from = "/fitness-freizeit/outdoor-training"
+  to = "/fitness/"
+
+[[redirects]]
+  from = "/fitness-freizeit/wanderungen"
+  to = "/wanderungen/"
+
+[[redirects]]
+  from = "/verein/jahreshauptversammlung"
+  to = "/jahreshauptversammlung/"
+
+[[redirects]]
+  from = "/buchungssystem"
+  to = "/buchung/"
+
