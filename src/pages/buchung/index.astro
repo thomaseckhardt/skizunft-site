@@ -4,7 +4,7 @@ import Page from '@/layouts/Page.astro'
 import { fetchStories } from '@/storyblok/utils/fetchStories'
 
 if (!process.env.PUBLIC_BOOKING_ENABLED) {
-  return Astro.redirect('/buchung/geschlossen')
+  return Astro.redirect('/buchung/geschlossen/')
 }
 
 const categoryOrder = ['Beginner', 'Junior_Champion', 'Champion']
