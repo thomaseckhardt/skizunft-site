@@ -1,17 +1,23 @@
 ---
-import BookingPage from '@/components/booking/BookingPage'
-import Page from '@/layouts/Page.astro'
+import clsx from 'clsx'
 import { fetchStories } from '@/storyblok/utils/fetchStories'
 
-const bookingClosedRedirect = '/buchung/geschlossen/'
-const bookingEnabled = import.meta.env.PUBLIC_BOOKING_ENABLED
-const internalBookingKey = 'H7GFS8JHA91HFASLKWH7GFG'
-if (!bookingEnabled) {
-  return Astro.redirect(bookingClosedRedirect)
+const statuses = {
+  open: 'text-gray-600 bg-gray-50 ring-gray-500/10',
+  pending: 'text-sky-700 bg-sky-50 ring-sky-700/20',
+  go: 'text-green-700 bg-green-50 ring-green-600/20',
+  rescheduled: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20',
+  canceld: 'text-rose-700 bg-rose-50 ring-rose-700/20',
+}
+const statusesTitles = {
+  open: 'offen',
+  pending: 'ungewiss',
+  go: 'findet statt',
+  rescheduled: 'verschoben',
+  canceld: 'abgesagt',
 }
 
-const categoryOrder = ['Beginner', 'Junior_Champion', 'Champion']
-
+// TODO: Move to class
 const dateFormat = new Intl.DateTimeFormat('de-DE', {
   year: 'numeric',
   month: 'long',
@@ -22,14 +28,14 @@ const dateShortFormat = new Intl.DateTimeFormat('de-DE', {
   month: 'numeric',
   day: 'numeric',
 })
-const currencyFormat = new Intl.NumberFormat('de-DE', {
-  style: 'currency',
-  currency: 'EUR',
-})
-
+const categoryOrder = ['Beginner', 'Junior_Champion', 'Champion']
 const courseCategoryStories = await fetchStories({
   content_type: 'CourseCategory',
   per_page: 50,
+})
+const currencyFormat = new Intl.NumberFormat('de-DE', {
+  style: 'currency',
+  currency: 'EUR',
 })
 const courseCategories = courseCategoryStories
   .map((story) => {
@@ -56,7 +62,6 @@ const courseCategoriesById = courseCategories.reduce((acc, category) => {
   acc[category.id] = category
   return acc
 }, {})
-
 const courseStories = await fetchStories({
   content_type: 'Course',
   per_page: 50,
@@ -92,48 +97,46 @@ const courses = courseStories.map((story) => {
     dateShortFormatted: dateShortFormat.formatRange(startDate, endDate),
   }
 })
-// .sort((a, b) => a.startDate - b.startDate)
 
-const Discipline = {
-  Ski: 'Ski',
-  Snowboard: 'Snowboard',
-}
-
-const disciplines = {
-  [Discipline.Ski]: {
-    value: Discipline.Ski,
-    label: 'Skikurs',
-    description: 'Für Kinder ab 4 bis einschließlich 13 Jahren',
-    minAge: 4,
-    maxAge: 13,
-  },
-  [Discipline.Snowboard]: {
-    value: Discipline.Snowboard,
-    label: 'Snowboardkurs',
-    description: 'Für Kinder ab 6 bis einschließlich 13 Jahren',
-    minAge: 6,
-    maxAge: 13,
-  },
-}
+console.log('courses', courseStories)
 ---
 
-<Page title="Convex Booking" description="">
-  <main>
-    <div class="box mt-5">
-      <BookingPage
-        client:load
-        disciplines={disciplines}
-        courses={courses}
-        courseCategories={courseCategories}
-      />
+<div class="bg-white py-24 sm:py-32">
+  <div class="box">
+    <div class="max-w-2xl">
+      <div class="typo-overline text-left text-sky-600">
+        Aktualisiert am 01.01.2024 um 14.53 Uhr
+      </div>
+      <h2>
+        <div class="typo-headline">Findet mein Kurs statt?</div>
+      </h2>
     </div>
-  </main>
-</Page>
-<script
-  define:vars={{ bookingEnabled, internalBookingKey, bookingClosedRedirect }}
->
-  const urlSearchParams = new URLSearchParams(window.location.search)
-  if (!bookingEnabled && urlSearchParams.get('key') !== internalBookingKey) {
-    window.location.href = bookingClosedRedirect
-  }
-</script>
+
+    <ul role="list" class="mt-4 divide-y divide-gray-100">
+      {
+        courses.map((course) => (
+          <li class="flex items-center justify-between gap-x-6 py-5">
+            <div class="min-w-0">
+              <div class="flex items-start gap-x-3">
+                <p class="text-sm font-semibold leading-6 text-gray-900">
+                  {course.name}
+                </p>
+                <p
+                  class={clsx(
+                    statuses[course.status],
+                    'mt-0.5 whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
+                  )}
+                >
+                  {statusesTitles[course.status ?? 'open']}
+                </p>
+              </div>
+              <div class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+                {course.dateFormatted}
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>

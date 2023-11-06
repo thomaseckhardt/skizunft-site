@@ -10,7 +10,6 @@ export default function BookingSelection({
   attendeeFieldArray,
   defaultAttendeeValues,
   nextStep,
-  disciplines = [],
   courses = [],
   courseCategories = [],
   getAttendeeTotalPrice,

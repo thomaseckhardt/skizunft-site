@@ -65,7 +65,7 @@ const flow = [
     <!-- <h2 class="text-center font-hero text-5xl leading-none md:text-7xl">
       Wir bieten Ski- und Snowboardkurse<br />für Kinder ab 4 Jahren.
     </h2> -->
-    <h2>
+    <h2 id="ablauf">
       <div class="typo-overline">Von der Buchung zum Kurs</div>
       <div class="typo-hero">
         Wir bieten Ski- und Snowboardkurse<br />für Kinder ab 4 Jahren.
@@ -75,7 +75,7 @@ const flow = [
       <ul role="list" class="-mb-8">
         {
           flow.map((item, index) => (
-            <li>
+            <li id={`ablauf-${index + 1}`}>
               <div class="relative pb-8">
                 {index < flow.length - 1 && (
                   <span

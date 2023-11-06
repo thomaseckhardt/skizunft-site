@@ -5,6 +5,7 @@ export default function CategorySelection({
   name,
   onChange,
   categories,
+  introduction,
   ...props
 }) {
   console.log(categories)
@@ -13,7 +14,7 @@ export default function CategorySelection({
       <legend className="text-lg font-semibold leading-6 text-gray-900">
         {label}
       </legend>
-      <slot name="introduction" />
+      {introduction}
 
       <div className="mt-4 space-y-4">
         {categories.map((category) => (

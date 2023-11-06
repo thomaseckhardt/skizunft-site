@@ -89,6 +89,7 @@ export default {
       },
       zIndex: {
         header: 1000,
+        overlays: 2000,
       },
       typography: ({ theme }) => ({
         DEFAULT: {

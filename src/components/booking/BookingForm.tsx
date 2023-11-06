@@ -9,7 +9,9 @@ import BookingConfirmation from '@/components/booking/BookingConfirmation'
 import { formatPrice } from '@/utils/format'
 import { clsx } from 'clsx'
 
-const DISCOUNT = 0.1
+// TODO: Implement discount feature
+// const DISCOUNT = 0.1
+const DISCOUNT = 0
 
 const bookingSteps = [
   {
@@ -323,7 +325,6 @@ export default function BookingForm({
       <div className="mt-10">
         <BookingSelection
           className={clsx(bookingStep?.slug !== 'selection' && 'sr-only')}
-          disciplines={disciplines}
           defaultAttendeeValues={defaultAttendeeValues}
           attendeeFieldArray={attendeeFieldArray}
           register={register}

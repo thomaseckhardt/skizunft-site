@@ -8,8 +8,28 @@ const key = 'booking'
 <CheckoutPage title="Kursbuchung" description="" className="bg-gray-50">
   <div x-data={key}>
     <FormSteps />
-    <div class="mt-10">
-      <div>Fertig</div>
+    <div class="box mt-20 pb-24 sm:pb-32">
+      <div class="mx-auto max-w-2xl text-center">
+        <h1 class="typo-hero text-sky-600">Super!</h1>
+        <div class="typo-hero text-brandblue-700">
+          Deine Buchung war erfolgreich.
+        </div>
+        <div class="mt-6 font-hero text-2xl text-brandblue-700">
+          <p>In den nächsten Minuten erhälst du eine Bestätigung per E-Mail.</p>
+          <p>Bitte prüfe gegebenenfalls auch deinen SPAM-Ordner.</p>
+          <p class="mt-6">
+            Erfahre im Abschnitt <a
+              href="/skischule/#ablauf-4"
+              class="underline">Kursablauf</a
+            >, wie es un weiter geht und was du <a
+              href="/skischule/#informationen"
+              class="underline">vor und während des Kurs</a
+            >
+             beachten solltest.
+          </p>
+          <p class="mt-6 text-sky-600">Wir sehen uns auf dem Kandel!</p>
+        </div>
+      </div>
     </div>
   </div>
 </CheckoutPage>

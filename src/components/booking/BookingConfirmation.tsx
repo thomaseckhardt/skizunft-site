@@ -7,9 +7,7 @@ export default function BookingConfirmation({
   className = '',
   attendees = [],
   register,
-  control,
   errors,
-  formState,
   getAttendeeTotalPrice,
   getSubtotal,
   getDiscount,
@@ -246,12 +244,12 @@ export default function BookingConfirmation({
                   <a href="/agb/" target="_blank">
                     Allgemeinen Geschäftsbedingungen
                   </a>{' '}
-                  der Skischule Oberstaufen gelesen habe und mit ihnen
-                  einverstanden bin.
+                  der DSV-Skischule Skizunft Kollnau e.V. gelesen habe und mit
+                  ihnen einverstanden bin.
                 </p>
                 {errors?.legalConfirmed?.message && (
-                  <div className="text-error mt-1 flex gap-x-1 text-sm">
-                    <div className="text-error-icon mt-[0.125em] flex-none">
+                  <div className="mt-1 flex gap-x-1 text-sm text-error">
+                    <div className="mt-[0.125em] flex-none text-error-icon">
                       <Icon name="error-circle-20-filled" size={20} />
                     </div>
                     <p>{errors?.legalConfirmed?.message}</p>
@@ -293,8 +291,8 @@ export default function BookingConfirmation({
                   info@szkollnau.de
                 </p>
                 {errors?.privacyConfirmed?.message && (
-                  <div className="text-error mt-1 flex gap-x-1 text-sm">
-                    <div className="text-error-icon mt-[0.125em] flex-none">
+                  <div className="mt-1 flex gap-x-1 text-sm text-error">
+                    <div className="mt-[0.125em] flex-none text-error-icon">
                       <Icon name="error-circle-20-filled" size={20} />
                     </div>
                     <p>{errors?.privacyConfirmed?.message}</p>
@@ -322,7 +320,7 @@ export default function BookingConfirmation({
             {Object.keys(errors).length > 0 && (
               <div className="mt-4 rounded-md bg-red-50 p-4">
                 <div className="flex">
-                  <div className="text-error-icon mt-[0.125em] flex-shrink-0">
+                  <div className="mt-[0.125em] flex-shrink-0 text-error-icon">
                     <Icon name="error-circle-20-filled" size={20} />
                   </div>
                   <div className="ml-2">
