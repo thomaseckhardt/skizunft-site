@@ -6,9 +6,9 @@ import { fetchStories } from '@/storyblok/utils/fetchStories'
 const bookingClosedRedirect = '/buchung/geschlossen/'
 const bookingEnabled = import.meta.env.PUBLIC_BOOKING_ENABLED
 const internalBookingKey = 'H7GFS8JHA91HFASLKWH7GFG'
-if (!bookingEnabled) {
-  return Astro.redirect(bookingClosedRedirect)
-}
+// if (!bookingEnabled) {
+//   return Astro.redirect(bookingClosedRedirect)
+// }
 
 const categoryOrder = ['Beginner', 'Junior_Champion', 'Champion']
 
