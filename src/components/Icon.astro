@@ -1,5 +1,6 @@
 ---
 import { Icon as AstroIcon } from 'astro-icon'
+// import { Icon as AstroIcon } from 'astro-icon/components'
 import clsx from 'clsx'
 
 const {
@@ -7,7 +8,7 @@ const {
   name = 'warning-24-filled',
   filename,
   className = 'inline-block',
-  sizeClass = 'w-6 h-6',
+  size = 24,
   ...props
 } = Astro.props
 
@@ -19,12 +20,13 @@ const iconProps = filename
       pack,
       name,
     }
+
+console.log('#ICON#', name)
 ---
 
-<!-- <span class={clsx(className)}> -->
 <AstroIcon
   {...iconProps}
-  class={clsx('flex-none', className, sizeClass)}
+  class={clsx('flex-none', className)}
+  size={size}
   {...props}
 />
-<!-- </span> -->

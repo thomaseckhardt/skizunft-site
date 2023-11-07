@@ -10,12 +10,18 @@ const { model, xoptions, ...props } = Astro.props
   <template {...{ 'x-for': `(item, index) in ${xoptions}` }} :key="index">
     <!-- <pre class="absolute" x-text="JSON.stringify(item.catgeory.priceFormatted, null, 2)"></pre> -->
     <label
-      class="relative flex md:items-center rounded-lg bg-white p-4 shadow-sm focus:outline-none text-sm"
+      class="relative flex rounded-lg bg-white p-4 text-sm shadow-sm focus:outline-none md:items-center"
       :class="item.disabled ? 'cursor-not-allowed' : 'cursor-pointer'"
     >
-      <input type="checkbox" class="sr-only peer" x-model={model} :value="item.value" :disabled="item.disabled" />
+      <input
+        type="checkbox"
+        class="peer sr-only"
+        x-model={model}
+        :value="item.value"
+        :disabled="item.disabled"
+      />
       <div
-        class="flex-1 flex items-center relative z-10 text-gray-900 peer-disabled:text-gray-500 peer-disabled:ring-gray-200"
+        class="relative z-10 flex flex-1 items-center text-gray-900 peer-disabled:text-gray-500 peer-disabled:ring-gray-200"
       >
         <div>
           <div class="font-medium" x-text="item.label"></div>
@@ -29,14 +35,14 @@ const { model, xoptions, ...props } = Astro.props
       <Icon
         x-show="!item.disabled"
         name="checkmark-circle-20-filled"
-        className="ml-2 text-sky-600 invisible peer-checked:visible peer-disabled:hidden relative z-10"
-        sizeClass="h-5 w-5"
+        className="invisible relative z-10 ml-2 text-sky-600 peer-checked:visible peer-disabled:hidden"
+        size={20}
       />
       <span
         x-show="item.state"
         x-text="item.state"
         class={clsx(
-          'relative z-10 ml-5 pl-6 text-sm text-right',
+          'relative z-10 ml-5 pl-6 text-right text-sm',
           'peer-disabled:text-gray-500 peer-disabled:ring-gray-200',
           'peer-checked:hidden',
         )}
@@ -46,14 +52,14 @@ const { model, xoptions, ...props } = Astro.props
       <Icon
         x-show="!item.disabled && item.state"
         name="calendar-info-20-regular"
-        className="ml-2 text-gray-500 relative z-10 peer-checked:hidden"
-        sizeClass="h-5 w-5"
+        className="relative z-10 ml-2 text-gray-500 peer-checked:hidden"
+        size={20}
       />
       <Icon
         x-show="item.closed"
         name="warning-20-regular"
-        className="ml-2 text-gray-500 hidden peer-disabled:block relative z-10"
-        sizeClass="h-5 w-5"
+        className="relative z-10 ml-2 hidden text-gray-500 peer-disabled:block"
+        size={20}
       />
       <div
         class={clsx(
