@@ -34,7 +34,7 @@ const handler: Handler = async function (event) {
         method: 'POST',
         body: JSON.stringify({
           // FIXME: This is not working
-          from: process.env.BOOKING_EMAIL_FROM ?? 'buchung@szkollnau.de',
+          from: 'buchung@szkollnau.de',
           to: data.email,
           subject: 'Deine Buchung ist bestätigt 🥳',
           parameters: JSON.parse(event.body),

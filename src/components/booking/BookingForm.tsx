@@ -45,7 +45,7 @@ const triggerConfirmationMail = async (data) => {
         return typeof value === 'bigint' ? value.toString() : value
       }),
     })
-    // console.log('email', response)
+    console.log('triggerConfirmationMail', response)
     return {
       statusCode: 200,
     }
@@ -62,7 +62,7 @@ const triggerNotificationMail = async (data) => {
       method: 'POST',
       body: JSON.stringify(data),
     })
-    // console.log('email', response)
+    console.log('triggerNotificationMail', response)
     return {
       statusCode: 200,
     }
@@ -258,7 +258,11 @@ export default function BookingForm({
 
     const notificationMail = await triggerNotificationMail(mailingData)
 
+    console.log('notificationMail', notificationMail)
+
     const confirmationMail = await triggerConfirmationMail(mailingData)
+
+    console.log('confirmationMail', confirmationMail)
 
     setTimeout(() => {
       window.location.replace('/buchung/erfolgreich')
