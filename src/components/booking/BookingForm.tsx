@@ -264,7 +264,7 @@ export default function BookingForm({
     const confirmationMail = await triggerConfirmationMail(mailingData)
     console.log('confirmationMail', confirmationMail)
 
-    window.location.replace('/buchung/erfolgreich')
+    // window.location.replace('/buchung/erfolgreich')
   }
 
   const attendees = useWatch({
