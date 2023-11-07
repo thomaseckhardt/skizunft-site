@@ -184,6 +184,7 @@ export default function BookingForm({
   })
 
   const submit = async (data: FormValues, event) => {
+    if (formState.isSubmitted) return
     event.preventDefault()
     // console.log('SUBMIT', data)
 
@@ -338,13 +339,12 @@ export default function BookingForm({
           attendees={attendees}
           register={register}
           errors={errors}
-          control={control}
-          formState={formState}
           getAttendeeTotalPrice={getAttendeeTotalPrice}
           getSubtotal={getSubtotal}
           getDiscount={getDiscount}
           getTotalPrice={getTotalPrice}
           prevStep={prevStep}
+          formState={formState}
         />
       </div>
     </form>
