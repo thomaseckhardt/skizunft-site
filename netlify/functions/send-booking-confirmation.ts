@@ -42,7 +42,7 @@ const handler: Handler = async function (event) {
       },
     )
 
-    console.log('result', result)
+    // console.log('result', result)
 
     return {
       statusCode: 200,

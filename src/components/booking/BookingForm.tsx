@@ -32,7 +32,6 @@ const bookingSteps = [
 ]
 
 const triggerConfirmationMail = async (data) => {
-  console.log('triggerConfirmationMail', data)
   try {
     const response = fetch(`/api/send-booking-confirmation`, {
       method: 'POST',
@@ -40,13 +39,13 @@ const triggerConfirmationMail = async (data) => {
       // I used as attendee.age which is now a number
       // Leave code for reference
       body: JSON.stringify(data, (key, value) => {
-        if (typeof value === 'bigint') {
-          console.log('bigint', key, value)
-        }
+        // if (typeof value === 'bigint') {
+        //   console.log('bigint', key, value)
+        // }
         return typeof value === 'bigint' ? value.toString() : value
       }),
     })
-    console.log('email', response)
+    // console.log('email', response)
     return {
       statusCode: 200,
     }
@@ -57,13 +56,13 @@ const triggerConfirmationMail = async (data) => {
 }
 
 const triggerNotificationMail = async (data) => {
-  console.log('triggerNotificationMail', data)
+  // console.log('triggerNotificationMail', data)
   try {
     const response = fetch(`/api/send-booking-notification`, {
       method: 'POST',
       body: JSON.stringify(data),
     })
-    console.log('email', response)
+    // console.log('email', response)
     return {
       statusCode: 200,
     }
@@ -186,7 +185,7 @@ export default function BookingForm({
 
   const submit = async (data: FormValues, event) => {
     event.preventDefault()
-    console.log('SUBMIT', data)
+    // console.log('SUBMIT', data)
 
     const attendeesData = data.attendees.map((attendee) => {
       const priceTotal = getAttendeeTotalPrice(attendee)
@@ -216,13 +215,11 @@ export default function BookingForm({
     }
 
     const { bookingId, orderNumber } = await insertBooking(bookingData)
-    console.log('bookingId', bookingId)
 
     const attendeeIds = await insertAttendees({
       attendees: attendeesData,
       bookingId,
     })
-    console.log('attendeeIds', attendeeIds)
 
     const mailingData = {
       firstName: bookingData.firstName,
@@ -259,14 +256,12 @@ export default function BookingForm({
     }
 
     const notificationMail = await triggerNotificationMail(mailingData)
-    console.log('notificationMail', notificationMail)
 
     const confirmationMail = await triggerConfirmationMail(mailingData)
-    console.log('confirmationMail', confirmationMail)
 
-    // setTimeout(() => {
-    //   window.location.replace('/buchung/erfolgreich')
-    // }, 300)
+    setTimeout(() => {
+      window.location.replace('/buchung/erfolgreich')
+    }, 300)
   }
 
   const attendees = useWatch({

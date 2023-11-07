@@ -8,7 +8,6 @@ export default function CategorySelection({
   introduction,
   ...props
 }) {
-  console.log(categories)
   return (
     <fieldset {...props}>
       <legend className="text-lg font-semibold leading-6 text-gray-900">

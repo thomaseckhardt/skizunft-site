@@ -40,7 +40,7 @@ const handler: Handler = async function (event) {
         }),
       },
     )
-    console.log('result')
+    // console.log('result')
     return {
       statusCode: 200,
       body: JSON.stringify('Booking notification email sent!'),

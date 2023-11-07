@@ -50,7 +50,6 @@ export default function HeaderNew() {
   const [mobileMenuOpen, setMobileMenuOpen2] = useState(false)
 
   const setMobileMenuOpen = (open) => {
-    console.log('setMobileMenuOpen2', open)
     setMobileMenuOpen2(open)
   }
 
