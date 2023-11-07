@@ -24,26 +24,33 @@ const handler: Handler = async function (event) {
     }
   }
 
-  await fetch(
-    `${process.env.URL}/.netlify/functions/emails/booking-confirmation`,
-    {
-      headers: {
-        'netlify-emails-secret': process.env.NETLIFY_EMAILS_SECRET,
+  try {
+    const result = await fetch(
+      `${process.env.URL}/.netlify/functions/emails/booking-confirmation`,
+      {
+        headers: {
+          'netlify-emails-secret': process.env.NETLIFY_EMAILS_SECRET,
+        },
+        method: 'POST',
+        body: JSON.stringify({
+          // FIXME: This is not working
+          from: process.env.BOOKING_EMAIL_FROM ?? 'buchung@szkollnau.de',
+          to: data.email,
+          subject: 'Deine Buchung ist bestätigt 🥳',
+          parameters: JSON.parse(event.body),
+        }),
       },
-      method: 'POST',
-      body: JSON.stringify({
-        // FIXME: This is not working
-        from: process.env.BOOKING_EMAIL_FROM ?? 'buchung@szkollnau.de',
-        to: data.email,
-        subject: 'Deine Buchung ist bestätigt 🥳',
-        parameters: JSON.parse(event.body),
-      }),
-    },
-  )
+    )
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify('Booking confirmation email sent!'),
+    console.log('result', result)
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify('Booking confirmation email sent!'),
+    }
+  } catch (error) {
+    console.log('error', error)
+    return error
   }
 }
 
