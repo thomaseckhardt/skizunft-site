@@ -36,7 +36,7 @@ const handler: Handler = async function (event) {
           // FIXME: This is not working
           from: 'buchung@szkollnau.de',
           to: data.email,
-          subject: 'Deine Buchung ist bestätigt 🥳',
+          subject: `Deine Buchung ist bestätigt 🥳 #${data.orderNumber}`,
           parameters: JSON.parse(event.body),
         }),
       },

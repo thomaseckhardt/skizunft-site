@@ -1,12 +1,7 @@
 <mjml>
   <mj-head>
     <mj-title>Say hello to card</mj-title>
-    <!-- <mj-font
-      name="Roboto"
-      href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500"
-    ></mj-font> -->
     <mj-attributes>
-      <!-- <mj-all font-family="Montserrat, Helvetica, Arial, sans-serif"></mj-all> -->
       <mj-all
         font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
       ></mj-all>
