@@ -33,7 +33,6 @@ const handler: Handler = async function (event) {
         },
         method: 'POST',
         body: JSON.stringify({
-          // FIXME: This is not working
           from: 'buchung@szkollnau.de',
           to: data.email,
           subject: `Deine Buchung ist bestätigt 🥳 #${data.orderNumber}`,
