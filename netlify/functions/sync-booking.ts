@@ -143,8 +143,6 @@ export default async (event) => {
     // member: false,
     // priceTotal: 177
 
-    console.log(attendees[0])
-
     console.log('Save attendees to google sheet')
     await saveGoogleSheet({
       tabName: 'attendees',
@@ -242,7 +240,6 @@ export default async (event) => {
       .sort((a, b) => a.course.localeCompare(b.course))
       .sort((a, b) => getStatOrder(a.course) - getStatOrder(b.course))
 
-    console.log('stats', stats)
     saveGoogleSheet({
       tabName: 'overview',
       data: [
