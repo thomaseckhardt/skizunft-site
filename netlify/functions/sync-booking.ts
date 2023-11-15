@@ -125,7 +125,7 @@ export default async (event) => {
 
     console.log('Query attendees')
     const attendees = await httpClient.query(api.attendees.list)
-    console.log(`${attendees?.length || 0} attendees found}`)
+    console.log(`${attendees?.length || 0} attendees found`)
 
     // _creationTime: 1697840293766.5488,
     // _id: '3shjg6vek6d3k68kyj7xqvkn9k11jm8',
@@ -246,9 +246,14 @@ export default async (event) => {
           return [stat.course, stat.totalAttendees]
         }),
         [],
-        [`Aktualisiert am ${new Date().toLocaleString('de-DE')}`],
+        [
+          `Aktualisiert am ${new Date().toLocaleString('de-DE', {
+            timeZone: 'Europe/Berlin',
+          })}`,
+        ],
       ],
     })
+    console.log('Save stats to google sheet')
 
     // console.log('query', query)
     // const result = await fetch(
