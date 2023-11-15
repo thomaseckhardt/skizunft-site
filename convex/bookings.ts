@@ -1,10 +1,21 @@
+import { v } from 'convex/values'
+import { mutation, query } from './_generated/server'
+
 function generateOrderNumber() {
   const randomNumber = Math.floor(Math.random() * 900000) + 100000
   return `${randomNumber}`
 }
 
-import { v } from 'convex/values'
-import { mutation } from './_generated/server'
+export const list = query({
+  args: { },
+  handler: async (ctx, args) => {
+    const bookings = await ctx.db
+      .query("bookings")
+      .order("asc")
+      .take(1000);
+    return bookings;
+  },
+});
 
 export const add = mutation({
   args: {

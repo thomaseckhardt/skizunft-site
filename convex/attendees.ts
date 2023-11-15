@@ -1,5 +1,16 @@
 import { v } from 'convex/values'
-import { mutation } from './_generated/server'
+import { mutation, query } from './_generated/server'
+
+export const list = query({
+  args: { },
+  handler: async (ctx, args) => {
+    const attendees = await ctx.db
+      .query("attendees")
+      .order("asc")
+      .take(1000);
+    return attendees;
+  },
+});
 
 export const add = mutation({
   args: {

@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@db/*": ["convex/_generated/*"],
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"
