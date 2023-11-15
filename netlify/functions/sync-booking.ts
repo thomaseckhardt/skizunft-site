@@ -1,5 +1,3 @@
-import type { Handler } from '@netlify/functions'
-import { schedule } from '@netlify/functions'
 import { ConvexHttpClient } from 'convex/browser'
 import { api } from '@db/api'
 import { google } from 'googleapis'
@@ -8,7 +6,7 @@ import { google } from 'googleapis'
 // GOOGLE SHEET
 // ----------------------------------------------------------------------------
 
-const serviceAccountKeyFile = `./google-api-credentials.json`
+const serviceAccountKeyFile = `google-api-credentials.json`
 const sheetId = `1y_-G-GcrR_70YL3B1pOFRFiVKdNKEPHNZ5KVmRaKLlk`
 
 const getGoogleClient = async () => {
@@ -69,7 +67,7 @@ export default async (event) => {
 
     console.log('Query bookings')
     const bookings = await httpClient.query(api.bookings.list)
-    console.log(`${bookings?.length || 0} bookings found}`)
+    console.log(`${bookings?.length || 0} bookings found`)
 
     // {
     //   _creationTime: 1699815755564.7134,
