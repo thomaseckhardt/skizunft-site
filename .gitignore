@@ -1,3 +1,6 @@
+# Google files
+google-*.json
+
 # build output
 dist/
 # generated types
@@ -24,3 +27,4 @@ pnpm-debug.log*
 .netlify
 
 .env.local
+/logs

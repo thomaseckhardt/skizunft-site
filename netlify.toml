@@ -1,3 +1,6 @@
+[functions."sync-booking"]
+  included_files = ["google-api-credentials.json"]
+
 [[plugins]]
   package = "@netlify/plugin-emails"
 
