@@ -117,7 +117,9 @@ export default async (event) => {
           booking.email,
           booking.phone,
           booking.priceTotal,
-          new Date(booking._creationTime).toLocaleString('de-DE'),
+          new Date(booking._creationTime).toLocaleString('de-DE', {
+            timeZone: 'Europe/Berlin',
+          }),
           booking._id,
         ]),
       ],
@@ -167,7 +169,9 @@ export default async (event) => {
             attendee.age,
             attendee.member,
             attendee.courses.join(', '),
-            new Date(booking?._creationTime).toLocaleString('de-DE'),
+            new Date(booking?._creationTime).toLocaleString('de-DE', {
+              timeZone: 'Europe/Berlin',
+            }),
             booking?._id,
             attendee._id,
           ]
@@ -210,7 +214,9 @@ export default async (event) => {
               attendee.age,
               attendee.member,
               attendee.courses.join(', '),
-              new Date(booking?._creationTime).toLocaleString('de-DE'),
+              new Date(booking?._creationTime).toLocaleString('de-DE', {
+                timeZone: 'Europe/Berlin',
+              }),
               booking?._id,
               attendee._id,
             ]
@@ -254,28 +260,6 @@ export default async (event) => {
       ],
     })
     console.log('Save stats to google sheet')
-
-    // console.log('query', query)
-    // const result = await fetch(
-    //   `${process.env.URL}/.netlify/functions/emails/booking-notification`,
-    //   {
-    //     headers: {
-    //       'netlify-emails-secret': process.env.NETLIFY_EMAILS_SECRET,
-    //     },
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //       from: 'buchung@szkollnau.de',
-    //       to: 'info@szkollnau.de',
-    //       subject: `🚨 Kursbuchung: ${data.firstName} ${data.lastName} #${data.orderNumber}`,
-    //       parameters: JSON.parse(event.body),
-    //     }),
-    //   },
-    // )
-    // console.log('result')
-    // return {
-    //   statusCode: 200,
-    //   body: JSON.stringify('Booking sync successfull!'),
-    // }
   } catch (error) {
     console.log('error', error)
   }
