@@ -1,0 +1,63 @@
+---
+import { Image } from 'astro:assets'
+import Icon from '@/components/Icon.astro'
+import Page from '@/layouts/Page.astro'
+---
+
+<Page title="Ältestenrat" description="">
+  <main>
+    <div class="box mt-5">
+      <div class="grid gap-x-6 gap-y-10 pb-24 sm:pb-32 lg:grid-cols-5">
+        <div class="lg:col-span-3">
+          <h2
+            class="mt-2 font-hero text-4xl leading-none tracking-tight md:text-7xl"
+          >
+            Treffen der Senioren
+          </h2>
+          <div class="max-w-2xl">
+            <p class="mt-6 text-lg leading-8">
+              Der Ältestenrat lädt zum gemütlichen Beisammen sein alle Senioren
+              der Skizunft Kollnau ein, in den Kohlenbacher Hof zu Kuchen und
+              Kaffee.
+            </p>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-gray-600">
+            <p class="flex items-center gap-x-2">
+              <Icon name="calendar-24-regular" />
+              <span>
+                am
+                <span class="font-semibold">6. Dezember 2024</span>
+                 um 14 Uhr
+              </span>
+            </p>
+            <p class="flex items-center gap-x-2">
+              <Icon name="location-24-regular" />
+              <span>
+                im
+                <span class="font-semibold">Kohlenbacher Hof</span>
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="lg:col-span-2">
+          <figure>
+            <Image
+              src="https://a.storyblok.com/f/256004/4032x2268/f47a394ce2/aeltestenrat-seniorentreff-20230324.jpg"
+              width={4032}
+              height={2268}
+              alt=""
+            />
+            <figcaption class="mt-1 text-sm leading-normal text-gray-500">
+              <p>
+                Beachtenswert ist die Dimension der berühmten „Altersbacher
+                Schwarzwälder Kirschtorte“, angepasst an die Anzahl der
+                anwesenden Senioren der Skizunft. Na dann einen gesegneten
+                Appetit wünscht das Orga-Team des Ältestenrat.
+              </p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </main>
+</Page>
