@@ -1,12 +1,75 @@
 ---
 import UnderConstruction from '@/components/UnderConstruction.astro'
 import Page from '@/layouts/Page.astro'
+import Icon from '@/components/Icon.astro'
+import Page from '@/layouts/Page.astro'
+import clsx from 'clsx'
 ---
 
 <Page title="Treffpunkte für Skikurse und Snowboardkurse" description="">
-  <main>
-    <div class="box mt-5">
-      <UnderConstruction />
+  <main class="box">
+    <h2>
+      <div class="typo-overline">Hier finden unsere Kurse statt</div>
+      <div class="typo-hero">Skigebiete und Treffpunkte</div>
+    </h2>
+    <div class="prose mx-auto mt-8 flow-root max-w-3xl md:mt-12">
+      <p>
+        Wenn immer möglich, finden unsere Kurse auf dem Kandel statt. Sollte der
+        Schnee mal nicht reichen, versuchen wir in andere Skigebiete im
+        Schwarzwald auszuweichen. Mögliche Alternativen sind zum Beispiel
+        Muggenbrunn und der Feldberg.
+      </p>
+    </div>
+    <div class="mx-auto mt-8 flow-root max-w-3xl space-y-12 md:mt-16">
+      <div>
+        <h3 id="kandel">
+          <div class="typo-hero">Kandel</div>
+        </h3>
+      </div>
+
+      <div>
+        <h4>
+          <div class="typo-hero-xs">Treffpunkt 1: Berggasthaus Kandelhof</div>
+        </h4>
+        <div class="prose mt-3">
+          <p>
+            Unser Schild „DSV-Skischule Kandel Skizunft Kollnau“ am Berggasthaus
+            Kandelhof. Hier treffen sich alle Teilnehmer unserer <b
+              >Junior Champion</b
+            > und <b>Champion Skikurse</b>, sowie alle <b>Snowboard</b> Kurse.
+          </p>
+        </div>
+      </div>
+      <div>
+        <h4>
+          <div class="typo-hero-xs">Treffpunkt 2: Parkplatz</div>
+        </h4>
+        <div class="prose mt-3">
+          <p>
+            Der Parkplatz vor dem Wald in Richtung St. Peter. Hier treffen sich
+            alle Teilnehmer unserer <b>Bambini</b> und <b>Beginner Skikurse</b>.
+          </p>
+        </div>
+      </div>
+      <figure>
+        <div class="relative aspect-1/1 min-h-[480px] max-w-full">
+          <iframe
+            src="https://www.google.com/maps/d/embed?mid=1wJwIC4Jj4R_XCmMKjDjgYHwbFpyL26w&ehbc=2E312F&noprof=0"
+            width="640"
+            height="480"
+            class="absolute inset-0 h-full w-full"></iframe>
+        </div>
+        <figcaption class="mt-3 flex items-start gap-x-2 text-sm leading-snug">
+          <img
+            src="https://mt.google.com/vt/icon/name=icons/onion/SHARED-mymaps-container-bg_4x.png,icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1826-meeting-point_4x.png&highlight=ff000000,0288D1,ff000000&scale=2.0"
+            width="28"
+            height="28"
+            class="flex-0 relative -top-1"
+          />
+           Klicke auf die Markierungen für weitere Informationen zu den
+          Treffpunkten für unsere Ski und Snowboard Kurse.
+        </figcaption>
+      </figure>
     </div>
   </main>
 </Page>

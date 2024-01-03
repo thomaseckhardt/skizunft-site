@@ -1,0 +1,127 @@
+---
+import Icon from '@/components/Icon.astro'
+import clsx from 'clsx'
+
+const { class: className } = Astro.props
+---
+
+<div class={clsx('box', className)}>
+  <div class="mx-auto max-w-2xl">
+    <h2>
+      <div class="typo-hero text-left">Findet mein Kurs statt?</div>
+    </h2>
+    <p
+      class="mt-4 flex items-center gap-x-1 text-xs leading-tight text-sky-600 md:text-sm"
+    >
+      <Icon name="arrow-sync-circle-16-regular" />
+      <span>Aktualisiert am 03.01.2024 um 16.56 Uhr</span>
+    </p>
+  </div>
+  <div class="mx-auto mt-16 max-w-2xl space-y-16">
+    {
+      /*
+        <div>
+          <h3 class="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
+            <span class="typo-hero-xs">Kurse am 6./7. Januar 2023</span>
+
+            <span
+              class={clsx(
+                'bg-rose-50 text-rose-500 ring-rose-700/20',
+                'mt-0.5 inline-block whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
+              )}
+            >
+              abgesagt
+            </span>
+          </h3>
+          <div class="mt-4 max-w-2xl space-y-2 text-base">
+            <p>
+              Auf Grund der schlechten Schneesituation und den trüben Aussichten
+              können die Kurse am Wochenende leider nicht statt finden und sind
+              abgesagt. Die Kursgebühren werden erstattet.
+            </p>
+          </div>
+        </div>
+        */
+    }
+    <div>
+      <h3 class="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
+        <span class="typo-hero-xs">Kurse am 6./7. Januar 2023</span>
+
+        <span
+          class={clsx(
+            'bg-yellow-50 text-yellow-800 ring-yellow-600/20',
+            'mt-0.5 inline-block whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
+          )}
+        >
+          verlegt auf 3./4.02.2023
+        </span>
+      </h3>
+      <div class="mt-4 max-w-2xl space-y-2 text-base">
+        <p>
+          Auf Grund der schlechten Schneesituation und den trüben Aussichten
+          können die Kurse am Wochenende leider nicht statt finden. Alle Kurse
+          werden auf den <b>3./4. Februar 2023</b> verlegt. Alle Teilnehmer
+          werden automatisch auf das neue Datum umgebucht. Solltest du an diesem
+          Termin nicht können, melde dich bitte bei uns ab.
+        </p>
+        <p>Wir hoffen auf bessere Verhältnisse in der nächsten Woche.</p>
+      </div>
+    </div>
+    {
+      /* 
+        <div>
+          <h3 class="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
+            <span class="typo-hero-xs">Kurse am 13./14. Januar 2023</span>
+
+            <span
+              class={clsx(
+                'bg-sky-50 text-sky-700 ring-sky-700/20',
+                'mt-0.5 inline-block whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
+              )}
+            >
+              ungewiss
+            </span>
+          </h3>
+          <div class="mt-4 max-w-2xl space-y-2 text-base">
+            <p>Informationen folgen in der Woche vor dem Kurs.</p>
+          </div>
+        </div>
+        <div>
+          <h3 class="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
+            <span class="typo-hero-xs">Kurse am 27./28. Januar 2023</span>
+
+            <span
+              class={clsx(
+                'bg-sky-50 text-sky-700 ring-sky-700/20',
+                'mt-0.5 inline-block whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
+              )}
+            >
+              ungewiss
+            </span>
+          </h3>
+          <div class="mt-4 max-w-2xl space-y-2 text-base">
+            <p>Informationen folgen in der Woche vor dem Kurs.</p>
+          </div>
+        </div>
+        <div>
+          <h3 class="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
+            <span class="typo-hero-xs">Kurse am 3./4. Februar 2023</span>
+
+            <span
+              class={clsx(
+                'bg-sky-50 text-sky-700 ring-sky-700/20',
+                'mt-0.5 inline-block whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
+              )}
+            >
+              ungewiss
+            </span>
+          </h3>
+          <div class="mt-4 max-w-2xl space-y-2 text-base">
+            <p>Ersatztermin für die Kurse vom 6./7. Januar 2023.</p>
+            <p>Informationen folgen in der Woche vor dem Kurs.</p>
+          </div>
+        </div>
+        */
+    }
+  </div>
+</div>

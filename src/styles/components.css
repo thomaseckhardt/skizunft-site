@@ -66,10 +66,23 @@
   @apply md:text-5xl;
 }
 
+.typo-headline-sm {
+  @apply text-2xl;
+  @apply font-semibold;
+  @apply md:text-3xl;
+}
+
+.typo-headline-xs {
+  @apply text-xl;
+  @apply font-semibold;
+  @apply md:text-2xl;
+}
+
 .typo-overline {
   @apply mb-2;
   @apply text-center;
-  @apply text-base;
+  @apply text-sm;
+  @apply md:text-base;
   @apply font-semibold;
   @apply leading-tight;
   @apply text-brandblue-600;

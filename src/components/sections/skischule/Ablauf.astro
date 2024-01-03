@@ -7,55 +7,55 @@ const flow = [
   {
     icon: 'tag-reset-24-regular',
     bgColor: 'bg-gray-400',
-    content: `Du möchtest erstmal gebrauchte Ski- oder Snowboard-Ausrüstung kaufen? Dann besuche doch einen der zahlreichen Skimärkte in der Region. Unser <a href="/brettlemarkt/" class="font-semibold text-gray-900 underline">Brettlemarkt</a> findet immer im Oktober statt.`,
+    content: `<p>Du möchtest erstmal gebrauchte Ski- oder Snowboard-Ausrüstung kaufen? Dann besuche doch einen der zahlreichen Skimärkte in der Region. Unser <a href="/brettlemarkt/" class="font-semibold text-gray-900 underline">Brettlemarkt</a> findet immer im Oktober statt.</p>`,
     fullWidth: true,
   },
   {
     icon: 'calendar-checkmark-24-regular',
     bgColor: 'bg-green-500',
-    content: `Du <a href="/buchung/" class="font-semibold text-gray-900 underline">buchst</a> einen Kurs bei uns.`,
+    content: `<p>Du informierst dich über unser <a href="/skischule/kurse/" class="font-semibold text-gray-900 underline">Kursangebot</a> und <a href="/buchung/" class="font-semibold text-gray-900 underline">buchst</a> einen Kurs bei uns.</p>`,
     note: undefined,
   },
   {
     icon: 'mail-24-regular',
     bgColor: 'bg-gray-400',
-    content: `Du erhälst eine Bestätigung deiner Buchung und weitere Infos an deine E-Mail-Adresse.`,
+    content: `<p>Du erhälst eine Bestätigung deiner Buchung und weitere Infos an deine E-Mail-Adresse.</p>`,
     note: 'wenige Minuten später',
   },
   {
     icon: 'money-24-regular',
     bgColor: 'bg-gray-400',
-    content: `Du überweist die Kursgebühren auf unser Konto.`,
+    content: `<p>Du überweist die Kursgebühren auf unser Konto.</p>`,
     note: 'mindestens 5 Tage vor Kursbeginn',
   },
   {
     icon: 'info-24-regular',
     bgColor: 'bg-sky-400',
-    content: `Du richtest und überprüfst deine Ausrüstung. Beachte, das bei unseren Kursen Helmpflicht besteht. Hier kann dir auch, dass <a href="https://sportarmin.de/" class="font-semibold text-gray-900 underline" target="_blank" rel="noreferrer">Sporthaus Armin</a> behilflich sein.`,
+    content: `<p>Du richtest und überprüfst deine Ausrüstung. Beachte, das bei unseren Kursen Helmpflicht besteht. Hier kann dir auch, dass <a href="https://sportarmin.de/" class="font-semibold text-gray-900 underline" target="_blank" rel="noreferrer">Sporthaus Armin</a> behilflich sein.</p>`,
     note: 'in der Woche vor Kursbeginn',
   },
   {
     icon: 'info-24-regular',
     bgColor: 'bg-sky-400',
-    content: `Auf unserer Website informieren wir dich über die Durchführung des Kurses.`,
+    content: `<p>Auf unserer Website informieren wir dich über die <a href="/skischule/kurse/" class="font-semibold text-gray-900 underline">Durchführung des Kurses</a>.</p>`,
     note: 'ab Donnerstag 20 Uhr vor Kursbeginn',
   },
   {
     icon: 'clock-alarm-24-regular',
     bgColor: 'bg-gray-400',
-    content: `Du hast deine Sachen gepackt und bist startklar. Bedenke auch das du genug zu Trinken, ein Vesper und Geld für eine <a href="/skischule/skigebiete/" class="font-semibold text-gray-900 underline">Liftkarte</a> benötigst.`,
+    content: `<p>Du hast deine Sachen gepackt und bist startklar. Bedenke auch das du genug zu Trinken, ein Vesper und Geld für eine <a href="/skischule/skigebiete/" class="font-semibold text-gray-900 underline">Liftkarte</a> benötigst.</p>`,
     note: 'am Morgen des Kurstages',
   },
   {
     icon: 'location-24-regular',
     bgColor: 'bg-gray-400',
-    content: `Du bist am <a href="/skischule/treffpunkt/" class="font-semibold text-gray-900 underline">Treffpunkt</a> deines Kurses.`,
+    content: `<p>Du bist am <a href="/skischule/treffpunkt/" class="font-semibold text-gray-900 underline">Treffpunkt</a> deines Kurses.</p>`,
     note: '15 Minuten vor Kursbeginn',
   },
   {
     icon: 'emoji-24-regular',
     bgColor: 'bg-green-500',
-    content: `Es kann los gehen. Hab' eine schöne Zeit!`,
+    content: `<p>Es kann los gehen. Hab' eine schöne Zeit!</p>`,
   },
 ]
 ---
@@ -71,6 +71,25 @@ const flow = [
         Wir bieten Ski- und Snowboardkurse<br />für Kinder ab 4 Jahren.
       </div>
     </h2>
+    <div class="mx-auto mt-8 flow-root max-w-3xl md:mt-12">
+      <div class="flex items-center justify-center gap-x-6">
+        <a href="/buchung/" class="block">
+          <div
+            class={clsx(
+              'rounded-full px-6 py-2 text-sm font-semibold shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
+              'bg-brandred-600 text-white  focus-visible:outline-brandred-600',
+              'transition ease-in-out',
+              'hovers:hover:-translate-y-0.5 hovers:hover:bg-brandred-500 hovers:hover:shadow-lg',
+            )}
+          >
+            Kurs buchen
+          </div>
+        </a>
+        <a href="/skischule/kurse" class="text-sm font-semibold leading-6">
+          Übersicht aller Kurse <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
     <div class="mx-auto mt-8 flow-root max-w-3xl md:mt-12">
       <ul role="list" class="-mb-8">
         {
@@ -103,9 +122,10 @@ const flow = [
                         set:html={item.note}
                       />
                     )}
-                    <div class={clsx(!item.fullWidth && 'max-w-md')}>
-                      <p set:html={item.content} />
-                    </div>
+                    <div
+                      class={clsx(!item.fullWidth && 'max-w-md')}
+                      set:html={item.content}
+                    />
                   </div>
                 </div>
               </div>

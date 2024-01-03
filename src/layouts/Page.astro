@@ -4,6 +4,7 @@ import HeaderNew from '../components/HeaderNew'
 import Footer from '../components/Footer.astro'
 // import FloatingBanner from '../components/FloatingBanner.astro'
 import clsx from 'clsx'
+import HeaderBanner from '@/components/HeaderBanner.astro'
 
 const { title, description, className } = Astro.props
 ---
@@ -14,6 +15,7 @@ const { title, description, className } = Astro.props
   </head>
 
   <body class={clsx(className)}>
+    <HeaderBanner />
     <HeaderNew client:load />
     <slot />
     <Footer />

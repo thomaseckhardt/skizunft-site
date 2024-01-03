@@ -1,12 +1,107 @@
 ---
-import KurseStatus from '@/components/sections/skischule/KurseStatus.astro'
+import Icon from '@/components/Icon.astro'
+import StatusKurse from '@/components/sections/skischule/StatusKurse.astro'
 import Page from '@/layouts/Page.astro'
+
+const courses = [
+  {
+    title: 'Skikurs Bambini',
+    age: 'zwischen 4 und 5 Jahren',
+    description: `<p>Der Skikurs für die Kleinsten. Hier lernen die Kinder spielerisch das Skifahren.</p>`,
+    duration: '10.30 Uhr – 12 Uhr',
+    meetingPointTitle: 'Treffpunkt 2',
+    meetingPoint: 'Hinterer Parkplatz',
+  },
+  {
+    title: 'Skikurs Beginner',
+    age: 'zwischen 6 und 13 Jahren',
+    description: `<p>Unser Beginner Kurs richtet sich an Kinder, …</p><ul><li>die bisher noch keine Erfahrungen mit dem Skifahren gemacht haben.</li><li>die am Tag des Kurses zum ersten Mal auf dem Ski stehen.</li><li>die Spaß daran haben, sich im Schnee zu bewegen.</li></ul><p>Im Beginner Kurs lernt das Kind</p><ul><li>Sich sicher auf dem Ski zu bewegen</li><li>Punktuell und sicher zu bremsen.</li><li>Die ersten Pflugkurven im flachen Gelände zu fahren.</li></ul>`,
+    duration: '10 – 12 Uhr und 13 – 15 Uhr',
+    meetingPointTitle: 'Treffpunkt 2',
+    meetingPoint: 'Hinterer Parkplatz',
+  },
+  {
+    title: 'Skikurs Junior Champion',
+    age: 'zwischen 6 und 13 Jahren',
+    description: `<p>Unser Junior Champion Kurs richtet sich an Kinder,</p><ul><li>die sich bereits sicher auf dem Ski (fort)bewegen können.</li><li>die bremsen können.</li><li>für die aneinanderhängende Pflugkurven im flachen Gelände kein Problem sind.</li></ul><p>Im Junior Champion Kurs lernt das Kind</p><ul><li>Zu liften.</li><li>Kurven in paralleler Skistellung zu fahren.</li><li>In unterschiedlichen Hangneigungen parallel Ski zufahren.</li></ul>`,
+    duration: '10 – 12 Uhr und 13 – 15 Uhr',
+    meetingPointTitle: 'Treffpunkt 1',
+    meetingPoint: 'Berggasthaus Kandelhof',
+  },
+  {
+    title: 'Skikurs Champion',
+    age: 'zwischen 6 und 13 Jahren',
+    description: `<p>Unser Champion Kurs richtet sich an Kinder,</p><ul><li>die sicher liften können.</li><li>die Kurven überwiegend mit einer parallelen Skistellung fahren.</li><li>die sicher an unterschiedlichen Hangneigungen bremsen können.</li><li>die einen längeren Pistenabschnitt am Stück, ohne Pausen fahren können.</li><li>die sich beim Fahren in unterschiedlichen Hangneigungen sicher fühlen.</li></ul><p>Im Champion Kurs lernt das Kind</p><ul><li>In unterschiedlichen Geländeformen sicher zu fahren.</li><li>Durch den gezielten Einsatz komplexer Übungsformen, variabel Ski zu fahren.</li><li>Den Ski sportlich auf der Kante zu fahren (Carving).</li></ul>`,
+    duration: '10 – 12 Uhr und 13 – 15 Uhr',
+    meetingPointTitle: 'Treffpunkt 1',
+    meetingPoint: 'Berggasthaus Kandelhof',
+  },
+  {
+    title: 'Snowboardkurs',
+    age: 'zwischen 6 und 13 Jahren',
+    description: `<p>Unser Snowboardkurs richtet sich an Kinder, die bisher noch keine Erfahrungen mit dem Snowboarden gemacht haben.</p>`,
+    duration: '10.30 – 12.30 Uhr und 13.30 – 15.30 Uhr',
+    meetingPointTitle: 'Treffpunkt 1',
+    meetingPoint: 'Berggasthaus Kandelhof',
+  },
+]
 ---
 
 <Page title="Skikurse & Snowboardkurse auf dem Kandel" description="">
-  <main>
-    <div class="box mt-5">
-      <KurseStatus />
+  <main class="mt-5 space-y-24 md:space-y-32">
+    <StatusKurse />
+    <div class="box">
+      <!-- <h2 class="text-center font-hero text-5xl leading-none md:text-7xl">
+      Wir bieten Ski- und Snowboardkurse<br />für Kinder ab 4 Jahren.
+    </h2> -->
+      <h2>
+        <div class="typo-overline">Unser Kursangebot</div>
+        <div class="typo-hero">
+          Wir bieten Ski- und Snowboardkurse<br />für Kinder ab 4 Jahren.
+        </div>
+        <div class="prose mx-auto mt-12 max-w-3xl">
+          <p>
+            Die Kinder werden in kleinen Gruppen von ausgebildeten Skilehrern
+            betreut. Die Kurse gehen über 2 Tage und finden am Samstag und
+            Sonntag statt.
+          </p>
+        </div>
+      </h2>
+      <div class="mx-auto mt-8 flow-root max-w-3xl space-y-16 md:mt-16">
+        {
+          courses.map((course) => (
+            <div>
+              <h3 class="">
+                <div class="typo-hero-sm">{course.title}</div>
+                <div class="typo-hero-xs mt-2">{course.age}</div>
+              </h3>
+              <div class="prose mt-4 max-w-2xl">
+                <Fragment set:html={course.description} />
+                <p class="!mb-2 flex items-center gap-x-2">
+                  <Icon name="calendar-20-regular" />
+                  <span class="font-semibold">Dauer</span>
+                  <span>{course.duration}</span>
+                </p>
+                <p class="!mt-2 flex gap-x-2">
+                  <Icon name="location-20-regular" />
+                  <span class="flex flex-wrap items-center gap-x-2">
+                    <span class="font-semibold">
+                      {course.meetingPointTitle}
+                    </span>
+                    <span>{course.meetingPoint}</span>
+                    <a
+                      href="/skischule/treffpunkt/"
+                      class="text-xs font-semibold text-sky-600"
+                    >
+                      Wo ist das?
+                    </a>
+                  </span>
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </main>
 </Page>
