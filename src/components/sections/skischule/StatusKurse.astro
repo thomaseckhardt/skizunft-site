@@ -14,10 +14,40 @@ const { class: className } = Astro.props
       class="mt-4 flex items-center gap-x-1 text-xs leading-tight text-sky-600 md:text-sm"
     >
       <Icon name="arrow-sync-circle-16-regular" />
-      <span>Aktualisiert am 01.02.2024 um 12.00 Uhr</span>
+      <span>Aktualisiert am 22.02.2024 um 14.11 Uhr</span>
     </p>
   </div>
   <div class="mx-auto mt-16 max-w-2xl space-y-16">
+    <div>
+      <h3 class="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
+        <span class="typo-hero-xs">Kurse am 24./25. Februar 2024</span>
+
+        <span
+          class={clsx(
+            'bg-rose-50 text-rose-500 ring-rose-700/20',
+            'mt-0.5 inline-block whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
+          )}
+        >
+          abgesagt
+        </span>
+      </h3>
+      <div class="mt-4 max-w-2xl space-y-2 text-base">
+        <p>
+          Leider kam in den letzten Wochen kein Schnee mehr und die Aussichten{
+            ' '
+          }
+           sind für die restliche Saison leider auch nicht gut. Daher werden{
+            ' '
+          }
+          <strong>alle Kurse ersatzlos abgesagt.</strong> 😔
+        </p>
+        <p>Die Kursgebühren werden abzüglich einer Gebühr erstattet.</p>
+        <p>
+          Sollte es überraschender Weise noch mal Schnee geben und wir weitere
+          Kurse anbieten können, erfährst du es an dieser Stelle.
+        </p>
+      </div>
+    </div>
     <div>
       <h3 class="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
         <span class="typo-hero-xs">Kurse am 03./04. Februar 2024</span>
