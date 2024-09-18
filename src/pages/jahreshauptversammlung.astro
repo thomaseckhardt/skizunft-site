@@ -1,6 +1,8 @@
 ---
 import Icon from '@/components/Icon.astro'
 import Page from '@/layouts/Page.astro'
+
+const showDownload = false
 ---
 
 <Page title="Jahreshauptversammlung" description="">
@@ -13,7 +15,7 @@ import Page from '@/layouts/Page.astro'
             <div class="typo-headline">
               Jahreshaupt­versammlung
               <span class="sr-only">der Skizunft Kollnau e.V.</span>
-               2023
+               2024
             </div>
           </h1>
           <div
@@ -21,7 +23,7 @@ import Page from '@/layouts/Page.astro'
           >
             <p class="flex items-center gap-x-2">
               <Icon name="calendar-24-regular" />
-              <span>Freitag, 10. November 2023 um&nbsp;20&nbsp;Uhr</span>
+              <span>Freitag, 15. November 2024 um&nbsp;20&nbsp;Uhr</span>
             </p>
             <p class="flex items-center gap-x-2">
               <Icon name="location-24-regular" />
@@ -44,8 +46,8 @@ import Page from '@/layouts/Page.astro'
               <li>Begrüßung</li>
               <li>Gedenken an unsere verstorbenen Mitglieder</li>
               <li>Ordnungsgemäße Einberufung und Beschlussfähigkeit</li>
-              <li>Verlesen des Protokoll der JHV 2022</li>
-              <li>Geschäftsjahr 2022/2023</li>
+              <li>Verlesen des Protokoll der JHV 2023</li>
+              <li>Geschäftsjahr 2023/2024</li>
               <li>Ehrungen und Auszeichnungen</li>
               <li>Tätigkeitsbericht der Fachwarte</li>
               <li>Kassenbericht</li>
@@ -56,43 +58,51 @@ import Page from '@/layouts/Page.astro'
               <li>Anträge</li>
               <li>Verschiedenes</li>
             </ol>
-            <h3>Anhänge</h3>
-            <div class="not-prose text-sm text-gray-900">
-              <ul
-                role="list"
-                class="divide-y divide-gray-100 rounded-md border border-gray-200"
-              >
-                <li>
-                  <a
-                    class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"
-                    href="/downloads/Skizunft-Kollnau-JHV-2022-Protokoll.pdf"
-                    download
-                    target="_blank"
-                  >
-                    <div class="flex w-0 flex-1 items-center">
-                      <Icon name="attach-text-24-regular" size={20} />
-                      <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                        <span class="truncate font-medium">
-                          Skizunft-Kollnau-JHV-2022-Protokoll.pdf
-                        </span>
-                        <span class="flex-shrink-0 text-gray-400">1.4mb</span>
-                      </div>
-                    </div>
-                    <div class="ml-4 flex-shrink-0">
-                      <div class="font-medium text-sky-600 hover:text-sky-500">
-                        Download
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </div>
+            {
+              showDownload && (
+                <Fragment>
+                  <h3>Anhänge</h3>
+                  <div class="not-prose text-sm text-gray-900">
+                    <ul
+                      role="list"
+                      class="divide-y divide-gray-100 rounded-md border border-gray-200"
+                    >
+                      <li>
+                        <a
+                          class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"
+                          href="/downloads/Skizunft-Kollnau-JHV-2022-Protokoll.pdf"
+                          download
+                          target="_blank"
+                        >
+                          <div class="flex w-0 flex-1 items-center">
+                            <Icon name="attach-text-24-regular" size={20} />
+                            <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                              <span class="truncate font-medium">
+                                Skizunft-Kollnau-JHV-2022-Protokoll.pdf
+                              </span>
+                              <span class="flex-shrink-0 text-gray-400">
+                                1.4mb
+                              </span>
+                            </div>
+                          </div>
+                          <div class="ml-4 flex-shrink-0">
+                            <div class="font-medium text-sky-600 hover:text-sky-500">
+                              Download
+                            </div>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </Fragment>
+              )
+            }
             <h3>Anträge</h3>
             <p>
-              Bitte stelle deinen Antrag bis zum 8. November 2023 via E-Mail an
+              Bitte stelle deinen Antrag bis zum 13. November 2024 via E-Mail an
               unseren ersten Vorsitzenden Thomas Eckhardt:<br />
               <a
-                href="mailto:thomas.eckhardt@szkollnau.de?subject=Antrag%20JHV%202023"
+                href="mailto:thomas.eckhardt@szkollnau.de?subject=Antrag%20JHV"
                 target="_blank"
               >
                 thomas.eckhardt@szkollnau.de
