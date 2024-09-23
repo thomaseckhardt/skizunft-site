@@ -7,6 +7,8 @@ import clsx from 'clsx'
 import HeaderBanner from '@/components/HeaderBanner.astro'
 
 const { title, description, className } = Astro.props
+
+const showBanner = false
 ---
 
 <html lang="de">
@@ -15,14 +17,14 @@ const { title, description, className } = Astro.props
   </head>
 
   <body class={clsx(className)}>
-    <HeaderBanner />
+    {showBanner && <HeaderBanner />}
     <HeaderNew client:load />
     <slot />
     <Footer />
     <script>
       import Alpine from 'alpinejs'
       import collapse from '@alpinejs/collapse'
-      import persist from '@alpinejs/persist'
+      // import persist from '@alpinejs/persist'
 
       Alpine.plugin(collapse)
       // Alpine.plugin(persist)
