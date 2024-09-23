@@ -29,7 +29,7 @@
     >
       <mj-column width="50%">
         <mj-image
-          src="https://deploy-preview-1--skizunftkollnau.netlify.app/mailing/logo-skizunft-mailing.png"
+          src="https://skizunftkollnau.netlify.app/mailing/logo-skizunft-mailing.png"
           alt="Skizunft Kollnau"
           width="62px"
           height="48px"
@@ -39,7 +39,7 @@
       </mj-column>
       <mj-column width="50%">
         <mj-image
-          src="https://deploy-preview-1--skizunftkollnau.netlify.app/mailing/dsv-skischule-kollnau-mailing.png"
+          src="https://skizunftkollnau.netlify.app/mailing/dsv-skischule-kollnau-mailing.png"
           alt="DSV-Skischule Skizunft Kollnau"
           width="194px"
           height="36px"

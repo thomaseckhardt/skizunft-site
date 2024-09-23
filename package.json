@@ -11,6 +11,8 @@
     "build:preview": "PUBLIC_ENV=preview astro build",
     "preview": "astro preview --host",
     "astro": "astro",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
     "test": "vitest --ui",
     "coverage": "vitest run --coverage",
     "sb-login": "storyblok login",
@@ -31,7 +33,7 @@
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@netlify/emails": "^1.1.0",
-    "@netlify/functions": "^2.3.0",
+    "@netlify/functions": "^2.6.0",
     "@storyblok/astro": "^3.0.1",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.6",
@@ -63,7 +65,6 @@
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.0",
     "prettier-plugin-organize-attributes": "^1.0.0",
-    "prettier-plugin-organize-imports": "^3.2.3",
     "prettier-plugin-style-order": "^0.2.2",
     "prettier-plugin-tailwindcss": "^0.5.5"
   }
