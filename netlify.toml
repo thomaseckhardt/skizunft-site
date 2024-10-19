@@ -20,12 +20,13 @@
 [[redirects]]
   from="https://flyer.szkollnau.de/*"
   to = "/skischule/"
+  status = 301
 
 [[redirects]]
   from="/jhv"
   to = "/jahreshauptversammlung/"
 
-  [[redirects]]
+[[redirects]]
   from = "/dsv-skischule/kursangebot"
   to = "/skischule/kurse/"
 

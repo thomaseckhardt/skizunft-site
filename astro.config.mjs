@@ -5,7 +5,8 @@ import sitemap from '@astrojs/sitemap'
 import storyblok from '@storyblok/astro'
 import tailwind from '@astrojs/tailwind'
 import react from '@astrojs/react'
-// import icon from 'astro-icon'
+import icon from 'astro-icon'
+
 const env = loadEnv('', process.cwd(), 'STORYBLOK')
 const PUBLIC_ENV = loadEnv('', process.cwd(), 'PUBLIC_ENV')
 
@@ -41,6 +42,6 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     react(),
-    // icon(),
+    icon(),
   ],
 })
