@@ -178,7 +178,7 @@ export default function AttendeeSection({
               />
               <TextField
                 label="Alter"
-                description="Für Kinder ab 4 bis einschließlich 13 Jahren. Snowboardkurse zwischen 6 und 13 Jahren."
+                description="Skikurse ab 4 Jahren. Snowboardkurse für Kinder zwischen 6 und 13 Jahren."
                 type="number"
                 id={`attendees.${index}.age`}
                 input={register(`attendees.${index}.age` as const, {

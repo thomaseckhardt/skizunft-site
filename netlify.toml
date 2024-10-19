@@ -18,6 +18,10 @@
   force = true # ensure to always redirect
 
 [[redirects]]
+  from="https://flyer.szkollnau.de/*"
+  to = "/skischule/"
+
+[[redirects]]
   from="/jhv"
   to = "/jahreshauptversammlung/"
 

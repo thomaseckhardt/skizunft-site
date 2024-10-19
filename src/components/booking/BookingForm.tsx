@@ -1,13 +1,13 @@
-import { useState } from 'react'
-import { useMutation } from 'convex/react'
-import { api } from '../../../convex/_generated/api'
-import { faker } from '@faker-js/faker'
-import { useForm, useFieldArray, useWatch } from 'react-hook-form'
-import BookingSteps from '@/components/booking/BookingSteps'
-import BookingSelection from '@/components/booking/BookingSelection'
 import BookingConfirmation from '@/components/booking/BookingConfirmation'
+import BookingSelection from '@/components/booking/BookingSelection'
+import BookingSteps from '@/components/booking/BookingSteps'
 import { formatPrice } from '@/utils/format'
 import { clsx } from 'clsx'
+import { useMutation } from 'convex/react'
+import { useState } from 'react'
+import { useFieldArray, useForm, useWatch } from 'react-hook-form'
+import { api } from '../../../convex/_generated/api'
+import useLocation from './useLocation'
 
 // TODO: Implement discount feature
 // const DISCOUNT = 0.1
@@ -133,15 +133,25 @@ export default function BookingForm({
     return total
   }
 
+  const getDiscountRate = () => {
+    const location = useLocation()
+    const params = new URLSearchParams(location.search)
+    const discountCode = params.get('code')
+    const discountRate = discountCode === 'brettlemarkt2024' ? 0.1 : 0
+    return discountRate
+  }
+
   const getDiscount = (attendees) => {
+    const discountRate = getDiscountRate()
     const subtotal = getSubtotal(attendees)
-    const discount = subtotal * DISCOUNT
+    const discount = subtotal * discountRate
     return discount
   }
 
   const getTotalPrice = (attendees) => {
+    const discountRate = getDiscountRate()
     const subtotal = getSubtotal(attendees)
-    const total = subtotal * (1 - DISCOUNT)
+    const total = subtotal * (1 - discountRate)
     return total
   }
 

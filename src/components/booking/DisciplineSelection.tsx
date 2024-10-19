@@ -4,9 +4,9 @@ const disciplines = [
   {
     value: 'Ski',
     label: 'Skikurs',
-    description: 'Für Kinder ab 4 bis einschließlich 13 Jahren',
+    description: 'Ab 4 Jahren',
     minAge: 4,
-    maxAge: 13,
+    maxAge: 99,
   },
   {
     value: 'Snowboard',

@@ -103,9 +103,9 @@ const disciplines = {
   [Discipline.Ski]: {
     value: Discipline.Ski,
     label: 'Skikurs',
-    description: 'Für Kinder ab 4 bis einschließlich 13 Jahren',
+    description: 'Ab 4 Jahren',
     minAge: 4,
-    maxAge: 13,
+    maxAge: 99,
   },
   [Discipline.Snowboard]: {
     value: Discipline.Snowboard,
@@ -121,7 +121,7 @@ const disciplines = {
   <main>
     <div class="box mt-5">
       <BookingPage
-        client:load
+        client:only="react"
         disciplines={disciplines}
         courses={courses}
         courseCategories={courseCategories}
