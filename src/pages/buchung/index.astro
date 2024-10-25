@@ -4,7 +4,7 @@ import Page from '@/layouts/Page.astro'
 import { fetchStories } from '@/storyblok/utils/fetchStories'
 
 const bookingClosedRedirect = '/buchung/geschlossen/'
-const bookingEnabled = import.meta.env.PUBLIC_BOOKING_ENABLED
+const bookingEnabled = import.meta.env.PUBLIC_BOOKING_ENABLED === "true"
 const internalBookingKey = 'H7GFS8JHA91HFASLKWH7GFG'
 // if (!bookingEnabled) {
 //   return Astro.redirect(bookingClosedRedirect)
