@@ -1,6 +1,9 @@
 import type { Handler } from '@netlify/functions'
 
+import { sendEmail } from "@netlify/emails";
+
 const handler: Handler = async function (event) {
+  console.log('send-booking-confirmation handler')
   if (event.body === null) {
     return {
       statusCode: 400,
@@ -15,6 +18,7 @@ const handler: Handler = async function (event) {
   //   }
   // }
 
+  // Rename to requestBody
   const data = JSON.parse(event.body)
 
   if (!data.email) {
@@ -24,24 +28,19 @@ const handler: Handler = async function (event) {
     }
   }
 
-  try {
-    const result = await fetch(
-      `${process.env.URL}/.netlify/functions/emails/booking-confirmation`,
-      {
-        headers: {
-          'netlify-emails-secret': process.env.NETLIFY_EMAILS_SECRET,
-        },
-        method: 'POST',
-        body: JSON.stringify({
-          from: 'buchung@szkollnau.de',
-          to: data.email,
-          subject: `Deine Buchung ist bestätigt 🥳 #${data.orderNumber}`,
-          parameters: JSON.parse(event.body),
-        }),
-      },
-    )
+  console.log('send mail ')
 
-    // console.log('result', result)
+    try {
+      const result = await sendEmail({
+      from: 'buchung@szkollnau.de',
+      to: data.email,
+      subject: `Deine Buchung ist bestätigt 🥳 #${data.orderNumber}`,
+      template: "booking-confirmation",
+      parameters: JSON.parse(event.body),
+    });
+
+
+    console.log('result', result)
 
     return {
       statusCode: 200,
