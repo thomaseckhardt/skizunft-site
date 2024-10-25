@@ -103,6 +103,10 @@ export default function BookingForm({
 
   const insertBooking = useMutation(api.bookings.add)
   const insertAttendees = useMutation(api.attendees.addMultiple)
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+  const discountCode = params.get('code')
+  const discountRate = discountCode === 'brettlemarkt2024' ? 0.1 : 0
 
   // --------------------------------------------------
 
@@ -134,10 +138,9 @@ export default function BookingForm({
   }
 
   const getDiscountRate = () => {
-    const location = useLocation()
-    const params = new URLSearchParams(location.search)
-    const discountCode = params.get('code')
-    const discountRate = discountCode === 'brettlemarkt2024' ? 0.1 : 0
+    // const params = new URLSearchParams(location.search)
+    // const discountCode = params.get('code')
+    // const discountRate = discountCode === 'brettlemarkt2024' ? 0.1 : 0
     return discountRate
   }
 
