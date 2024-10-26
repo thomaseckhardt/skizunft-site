@@ -9,10 +9,6 @@ import { useFieldArray, useForm, useWatch } from 'react-hook-form'
 import { api } from '../../../convex/_generated/api'
 import useLocation from './useLocation'
 
-// TODO: Implement discount feature
-// const DISCOUNT = 0.1
-const DISCOUNT = 0
-
 const bookingSteps = [
   {
     index: 0,
@@ -269,11 +265,13 @@ export default function BookingForm({
       }),
     }
 
-    const notificationMail = await triggerNotificationMail(mailingData)
+    // TODO: Implement mailing
+
+    // const notificationMail = await triggerNotificationMail(mailingData)
 
     // console.log('notificationMail', notificationMail)
 
-    const confirmationMail = await triggerConfirmationMail(mailingData)
+    // const confirmationMail = await triggerConfirmationMail(mailingData)
 
     // console.log('confirmationMail', confirmationMail)
 
