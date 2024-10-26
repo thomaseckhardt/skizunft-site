@@ -1,4 +1,3 @@
-import type { Context } from '@netlify/functions';
 import { createTransport, getTestMessageUrl } from 'nodemailer';
 import { nodemailerMjmlPlugin } from 'nodemailer-mjml';
 import { join } from 'path';
