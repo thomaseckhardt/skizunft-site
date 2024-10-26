@@ -1,5 +1,24 @@
 # Astro Starter Kit: Blog
 
+## Emails
+
+<https://docs.netlify.com/integrations/email-integration/>
+
+1. Check, that all environment variables are defined in netlify: NETLIFY_EMAILS_PROVIDER, NETLIFY_EMAILS_PROVIDER_API_KEY, NETLIFY_EMAILS_SECRET, NETLIFY_EMAILS_DIRECTORY (optional)
+
+2. Build project and start netlify dev server
+
+  ```sh
+  # Ensure you have the latest version of Netlify CLI installed:
+  npm install netlify-cli -g
+  # Build your project.
+  netlify build
+  # netlify dev
+  netlify dev
+  ```
+
+3. Open <http://localhost:8888/.netlify/functions/emails>  to launch the Preview UI.
+
 ```sh
 npm create astro@latest -- --template blog
 ```

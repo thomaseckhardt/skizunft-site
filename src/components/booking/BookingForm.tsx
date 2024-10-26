@@ -1,39 +1,39 @@
-import BookingConfirmation from '@/components/booking/BookingConfirmation'
-import BookingSelection from '@/components/booking/BookingSelection'
-import BookingSteps from '@/components/booking/BookingSteps'
-import { formatPrice } from '@/utils/format'
-import { clsx } from 'clsx'
-import { useMutation } from 'convex/react'
-import { useState } from 'react'
-import { useFieldArray, useForm, useWatch } from 'react-hook-form'
-import { api } from '../../../convex/_generated/api'
-import useLocation from './useLocation'
+import BookingConfirmation from '@/components/booking/BookingConfirmation';
+import BookingSelection from '@/components/booking/BookingSelection';
+import BookingSteps from '@/components/booking/BookingSteps';
+import { formatPrice } from '@/utils/format';
+import { clsx } from 'clsx';
+import { useMutation } from 'convex/react';
+import { useState } from 'react';
+import { useFieldArray, useForm, useWatch } from 'react-hook-form';
+import { api } from '../../../convex/_generated/api';
+import useLocation from './useLocation';
 
 // TODO: Implement discount feature
 // const DISCOUNT = 0.1
-const DISCOUNT = 0
+const DISCOUNT = 0;
 
 const bookingSteps = [
   {
     index: 0,
     slug: 'selection',
-    label: 'Kurs auswählen',
+    label: 'Kurs auswählen'
   },
   {
     index: 1,
     slug: 'booking',
-    label: 'Kurs buchen',
+    label: 'Kurs buchen'
   },
   {
     index: 2,
     slug: 'complete',
-    label: 'Fertig!',
-  },
-]
+    label: 'Fertig!'
+  }
+];
 
 const triggerConfirmationMail = async (data) => {
   try {
-    const response = fetch(`/api/send-booking-confirmation`, {
+    const response = fetch(`/api/send-booking-confirmation__nodemailer`, {
       method: 'POST',
       // NOTE: bigint values are not supported by JSON.stringify
       // I used as attendee.age which is now a number
@@ -42,121 +42,121 @@ const triggerConfirmationMail = async (data) => {
         // if (typeof value === 'bigint') {
         //   console.log('bigint', key, value)
         // }
-        return typeof value === 'bigint' ? value.toString() : value
-      }),
-    })
-    // console.log('triggerConfirmationMail', response)
+        return typeof value === 'bigint' ? value.toString() : value;
+      })
+    });
+    console.log('triggerConfirmationMail', response);
     return {
-      statusCode: 200,
-    }
+      statusCode: 200
+    };
   } catch (error) {
-    console.log('error', error)
-    return error
+    console.log('error', error);
+    return error;
   }
-}
+};
 
 const triggerNotificationMail = async (data) => {
-  // console.log('triggerNotificationMail', data)
-  try {
-    const response = fetch(`/api/send-booking-notification`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-    })
-    // console.log('triggerNotificationMail', response)
-    return {
-      statusCode: 200,
-    }
-  } catch (error) {
-    console.log('error', error)
-    return error
-  }
-}
+  // // console.log('triggerNotificationMail', data)
+  // try {
+  //   const response = fetch(`/api/send-booking-notification`, {
+  //     method: 'POST',
+  //     body: JSON.stringify(data),
+  //   })
+  //   // console.log('triggerNotificationMail', response)
+  //   return {
+  //     statusCode: 200,
+  //   }
+  // } catch (error) {
+  //   console.log('error', error)
+  //   return error
+  // }
+};
 
 type FormValues = {
-  firstName: string
-  lastName: string
-  address: string
-  zip: string
-  city: string
-  country: string
-  email: string
-  phone: string
-  legalConfirmed: boolean
-  privacyConfirmed: boolean
+  firstName: string;
+  lastName: string;
+  address: string;
+  zip: string;
+  city: string;
+  country: string;
+  email: string;
+  phone: string;
+  legalConfirmed: boolean;
+  privacyConfirmed: boolean;
   // newsletterConfirmed: boolean
   // returningCustomer: boolean
   attendees: {
-    firstName: string
-    lastName: string
-    age: number
-    member: boolean
-    courses: string[]
-  }[]
-}
+    firstName: string;
+    lastName: string;
+    age: number;
+    member: boolean;
+    courses: string[];
+  }[];
+};
 
 export default function BookingForm({
   disciplines,
   courses,
-  courseCategories,
+  courseCategories
 }) {
-  const [bookingStep, setBookingStep] = useState(bookingSteps[0])
+  const [bookingStep, setBookingStep] = useState(bookingSteps[0]);
 
-  const insertBooking = useMutation(api.bookings.add)
-  const insertAttendees = useMutation(api.attendees.addMultiple)
-  const location = useLocation()
-  const params = new URLSearchParams(location.search)
-  const discountCode = params.get('code')
-  const discountRate = discountCode === 'brettlemarkt2024' ? 0.1 : 0
+  const insertBooking = useMutation(api.bookings.add);
+  const insertAttendees = useMutation(api.attendees.addMultiple);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const discountCode = params.get('code');
+  const discountRate = discountCode === 'brettlemarkt2024' ? 0.1 : 0;
 
   // --------------------------------------------------
 
   const getAttendeeTotalPrice = (attendee) => {
     return attendee.courses.reduce((total, courseSlug) => {
-      const course = courses.find((course) => courseSlug === course.slug)
+      const course = courses.find((course) => courseSlug === course.slug);
       const category = courseCategories.find(
-        (category) => course.categoryId === category.id,
+        (category) => course.categoryId === category.id
       ) ?? {
         price: 0,
-        priceMember: 0,
-      }
+        priceMember: 0
+      };
       const coursePrice = attendee.member
         ? category.priceMember
-        : category.price
-      return total + coursePrice
-    }, 0)
-  }
+        : category.price;
+      return total + coursePrice;
+    }, 0);
+  };
 
   const getSubtotal = (attendees) => {
     const attendeePrices = attendees.map((attendee) =>
-      getAttendeeTotalPrice(attendee),
-    )
+      getAttendeeTotalPrice(attendee)
+    );
     const total = attendeePrices.reduce((total, attendeePrice) => {
-      return total + attendeePrice
-    }, 0)
+      return total + attendeePrice;
+    }, 0);
 
-    return total
-  }
+    return total;
+  };
 
   const getDiscountRate = () => {
     // const params = new URLSearchParams(location.search)
     // const discountCode = params.get('code')
     // const discountRate = discountCode === 'brettlemarkt2024' ? 0.1 : 0
-    return discountRate
-  }
+    return discountRate;
+  };
 
   const getDiscount = (attendees) => {
-    const discountRate = getDiscountRate()
-    const subtotal = getSubtotal(attendees)
-    const discount = subtotal * discountRate
-    return discount
-  }
+    const discountRate = getDiscountRate();
+    const subtotal = getSubtotal(attendees);
+    const discount = subtotal * discountRate;
+    return discount;
+  };
 
   const getTotalPrice = (attendees) => {
-    const discountRate = getDiscountRate()
-    const subtotal = getSubtotal(attendees)
-    const total = subtotal * (1 - discountRate)
-    return total
-  }
+    const discountRate = getDiscountRate();
+    const subtotal = getSubtotal(attendees);
+    const total = subtotal * (1 - discountRate);
+    return total;
+  };
 
   // --------------------------------------------------
 
@@ -165,8 +165,8 @@ export default function BookingForm({
     lastName: '',
     age: 6,
     member: false,
-    courses: [],
-  }
+    courses: []
+  };
 
   // --------------------------------------------------
 
@@ -184,33 +184,33 @@ export default function BookingForm({
       privacyConfirmed: false,
       attendees: [
         {
-          ...defaultAttendeeValues,
-        },
-      ],
-    },
-  })
-  const { register, control, handleSubmit, watch, formState } = form
-  const { errors } = formState
+          ...defaultAttendeeValues
+        }
+      ]
+    }
+  });
+  const { register, control, handleSubmit, watch, formState } = form;
+  const { errors } = formState;
   const attendeeFieldArray = useFieldArray({
     control,
-    name: 'attendees',
-  })
+    name: 'attendees'
+  });
 
   const submit = async (data: FormValues, event) => {
-    if (formState.isSubmitted) return
-    event.preventDefault()
-    // console.log('SUBMIT', data)
+    // if (formState.isSubmitted) return;
+    event.preventDefault();
+    console.log('SUBMIT', data);
 
     const attendeesData = data.attendees.map((attendee) => {
-      const priceTotal = getAttendeeTotalPrice(attendee)
+      const priceTotal = getAttendeeTotalPrice(attendee);
 
       return {
         ...attendee,
-        priceTotal,
-      }
-    })
+        priceTotal
+      };
+    });
 
-    const bookingTotalPrice = getTotalPrice(attendeesData)
+    const bookingTotalPrice = getTotalPrice(attendeesData);
 
     const bookingData = {
       firstName: data.firstName,
@@ -225,15 +225,15 @@ export default function BookingForm({
       legalConfirmed: data.legalConfirmed,
       privacyConfirmed: data.privacyConfirmed,
       newsletterConfirmed: false,
-      returningCustomer: false,
-    }
+      returningCustomer: false
+    };
 
-    const { bookingId, orderNumber } = await insertBooking(bookingData)
+    const { bookingId, orderNumber } = await insertBooking(bookingData);
 
     const attendeeIds = await insertAttendees({
       attendees: attendeesData,
-      bookingId,
-    })
+      bookingId
+    });
 
     const mailingData = {
       firstName: bookingData.firstName,
@@ -251,12 +251,12 @@ export default function BookingForm({
 
       attendees: attendeesData.map((attendee) => {
         const attendeeCourses = attendee.courses.map((courseSlug, index) => {
-          const course = courses.find((course) => courseSlug === course.slug)
+          const course = courses.find((course) => courseSlug === course.slug);
           return {
             name: course.name,
-            date: course.dateShortFormatted,
-          }
-        })
+            date: course.dateShortFormatted
+          };
+        });
 
         return {
           firstName: attendee.firstName,
@@ -264,46 +264,46 @@ export default function BookingForm({
           age: attendee.age,
           member: attendee.member,
           price: formatPrice(attendee.priceTotal),
-          courses: attendeeCourses,
-        }
-      }),
-    }
+          courses: attendeeCourses
+        };
+      })
+    };
 
-    const notificationMail = await triggerNotificationMail(mailingData)
+    // const notificationMail = await triggerNotificationMail(mailingData);
 
     // console.log('notificationMail', notificationMail)
 
-    const confirmationMail = await triggerConfirmationMail(mailingData)
+    const confirmationMail = await triggerConfirmationMail(mailingData);
 
-    // console.log('confirmationMail', confirmationMail)
+    console.log('confirmationMail', confirmationMail);
 
-    setTimeout(() => {
-      window.location.replace('/buchung/erfolgreich')
-    }, 300)
-  }
+    // setTimeout(() => {
+    //   window.location.replace('/buchung/erfolgreich');
+    // }, 300);
+  };
 
   const attendees = useWatch({
     control,
-    name: `attendees`,
-  })
+    name: `attendees`
+  });
 
   // --------------------------------------------------
 
   const gotoStep = (index) => {
-    const nextStep = bookingSteps[index]
+    const nextStep = bookingSteps[index];
     if (nextStep) {
-      setBookingStep(nextStep)
-      window.scrollTo(0, 0)
+      setBookingStep(nextStep);
+      window.scrollTo(0, 0);
     }
-  }
+  };
 
   const nextStep = () => {
-    gotoStep(bookingStep?.index + 1)
-  }
+    gotoStep(bookingStep?.index + 1);
+  };
 
   const prevStep = () => {
-    gotoStep(bookingStep?.index - 1)
-  }
+    gotoStep(bookingStep?.index - 1);
+  };
 
   // const insertTestData = () => {
   //   form.setValue('attendees', [
@@ -337,7 +337,7 @@ export default function BookingForm({
         Insert Test Data
       </button> */}
       <BookingSteps steps={bookingSteps} currentStep={bookingStep} />
-      <div className="mt-10">
+      <div className='mt-10'>
         <BookingSelection
           className={clsx(bookingStep?.slug !== 'selection' && 'sr-only')}
           defaultAttendeeValues={defaultAttendeeValues}
@@ -365,5 +365,5 @@ export default function BookingForm({
         />
       </div>
     </form>
-  )
+  );
 }
