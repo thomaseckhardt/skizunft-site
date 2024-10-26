@@ -9,10 +9,10 @@
   "tailwindAttributes": ["class", "className"],
   "tailwindFunctions": ["clsx"],
   "plugins": [
-    "prettier-plugin-astro",
+    "prettier-plugin-astro" ,
     "prettier-plugin-organize-attributes",
     "prettier-plugin-style-order",
-    "prettier-plugin-tailwindcss"
+    "prettier-plugin-tailwindcss" 
   ],
   "overrides": [
     {
