@@ -4,12 +4,13 @@ import { Image } from 'astro:assets'
 import HeroHomeImage from '../images/hero-skikurse.png'
 import EventCard from './EventCard.astro'
 import { fetchStories, getQueryDate, parseDate } from '@/storyblok/utils'
+import clsx from 'clsx'
 
 const today = getQueryDate(new Date())
 
 const eventStories = await fetchStories({
   content_type: 'Event',
-  per_page: 50,
+  per_page: 4,
   sort_by: 'content.date:asc',
   filter_query: {
     date: {
@@ -33,14 +34,14 @@ const events = eventStories.map((story) => ({
             Unsere nächsten Veranstaltungen
           </div>
           <div class="scrollbar-hidden flex max-w-full items-center gap-x-2 gap-y-4 overflow-auto px-6 pb-4 pt-2 lg:absolute lg:right-0 lg:top-0 lg:flex-col lg:items-stretch lg:overflow-visible lg:pb-0 lg:pt-0">
-            <div class="hidden font-hero text-xl leading-tight text-brandblue-600 lg:block">
+            <div class="hidden font-hero text-xl leading-tight text-brandblue-600 lg:block relative z-10">
               Unsere nächsten Veranstaltungen
             </div>
             {events.map((event) => (
               <EventCard
                 key={event._key}
                 href={event.link?.url}
-                className="relative z-10 flex-none"
+                className="relative z-10 flex-none max-w-80"
                 {...event}
               />
             ))}
@@ -49,7 +50,7 @@ const events = eventStories.map((story) => ({
       </div>
     )
   }
-  <div class="h-[400px] lg:h-[600px]">
+  <div class={clsx("h-[400px] lg:h-[600px]")}>
     <Image
       src={HeroHomeImage}
       alt="Skikurse für Kinder und Erwachsene"
