@@ -8,6 +8,8 @@ import { useState } from 'react'
 import { useFieldArray, useForm, useWatch } from 'react-hook-form'
 import { api } from '../../../convex/_generated/api'
 import useLocation from './useLocation'
+import { DevTool } from "@hookform/devtools";
+import { isDevelopment } from '@/utils/env'
 
 const bookingSteps = [
   {
@@ -105,7 +107,8 @@ export default function BookingForm({
   // --------------------------------------------------
 
   const getAttendeeTotalPrice = (attendee) => {
-    return attendee.courses.reduce((total, courseSlug) => {
+    console.log('getAttendeeTotalPrice', attendee)
+    return Array.isArray(attendee?.courses) ? attendee?.courses?.reduce((total, courseSlug) => {
       const course = courses.find((course) => courseSlug === course.slug)
       const category = courseCategories.find(
         (category) => course.categoryId === category.id,
@@ -117,7 +120,7 @@ export default function BookingForm({
         ? category.priceMember
         : category.price
       return total + coursePrice
-    }, 0)
+    }, 0) : 0
   }
 
   const getSubtotal = (attendees) => {
@@ -244,13 +247,13 @@ export default function BookingForm({
       orderNumber,
 
       attendees: attendeesData.map((attendee) => {
-        const attendeeCourses = attendee.courses.map((courseSlug, index) => {
+        const attendeeCourses = Array.isArray(attendee.courses) ? attendee.courses.map((courseSlug, index) => {
           const course = courses.find((course) => courseSlug === course.slug)
           return {
             name: course.name,
             date: course.dateShortFormatted,
           }
-        })
+        }) : []
 
         return {
           firstName: attendee.firstName,
@@ -324,42 +327,47 @@ export default function BookingForm({
   // }
 
   return (
-    <form onSubmit={handleSubmit(submit)} noValidate>
-      {/* <button
-        type="button"
-        onClick={() => insertTestData()}
-        className="absolute left-0 top-0 z-50 bg-purple-700 p-2 text-sm uppercase text-white"
-      >
-        Insert Test Data
-      </button> */}
-      <BookingSteps steps={bookingSteps} currentStep={bookingStep} />
-      <div className="mt-10">
-        <BookingSelection
-          className={clsx(bookingStep?.slug !== 'selection' && 'sr-only')}
-          defaultAttendeeValues={defaultAttendeeValues}
-          attendeeFieldArray={attendeeFieldArray}
-          register={register}
-          errors={errors}
-          control={control}
-          nextStep={nextStep}
-          courses={courses}
-          courseCategories={courseCategories}
-          getAttendeeTotalPrice={getAttendeeTotalPrice}
-        />
-        <BookingConfirmation
-          className={clsx(bookingStep?.slug !== 'booking' && 'sr-only')}
-          courses={courses}
-          attendees={attendees}
-          register={register}
-          errors={errors}
-          getAttendeeTotalPrice={getAttendeeTotalPrice}
-          getSubtotal={getSubtotal}
-          getDiscount={getDiscount}
-          getTotalPrice={getTotalPrice}
-          prevStep={prevStep}
-          formState={formState}
-        />
-      </div>
-    </form>
+    <>
+      <form onSubmit={handleSubmit(submit)} noValidate>
+        {/* <button
+          type="button"
+          onClick={() => insertTestData()}
+          className="absolute left-0 top-0 z-50 bg-purple-700 p-2 text-sm uppercase text-white"
+        >
+          Insert Test Data
+        </button> */}
+        <BookingSteps steps={bookingSteps} currentStep={bookingStep} />
+        <div className="mt-10">
+          <BookingSelection
+            className={clsx(bookingStep?.slug !== 'selection' && 'sr-only')}
+            defaultAttendeeValues={defaultAttendeeValues}
+            attendeeFieldArray={attendeeFieldArray}
+            register={register}
+            errors={errors}
+            control={control}
+            nextStep={nextStep}
+            courses={courses}
+            courseCategories={courseCategories}
+            getAttendeeTotalPrice={getAttendeeTotalPrice}
+          />
+          <BookingConfirmation
+            className={clsx(bookingStep?.slug !== 'booking' && 'sr-only')}
+            courses={courses}
+            attendees={attendees}
+            register={register}
+            errors={errors}
+            getAttendeeTotalPrice={getAttendeeTotalPrice}
+            getSubtotal={getSubtotal}
+            getDiscount={getDiscount}
+            getTotalPrice={getTotalPrice}
+            prevStep={prevStep}
+            formState={formState}
+          />
+        </div>
+      </form>
+      {isDevelopment() && (
+        <DevTool control={control} />
+      )}
+    </>
   )
 }

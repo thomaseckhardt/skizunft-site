@@ -195,7 +195,7 @@ export default function AttendeeSection({
                 input={register(`attendees.${index}.member`)}
                 control={control}
               />
-              {categories?.length > 1 && (
+              {categories && categories.length > 1 && (
                 <CategorySelection
                   name={`attendees.${index}.category`}
                   label="Könnensstufe"
@@ -204,7 +204,7 @@ export default function AttendeeSection({
                   introduction={categoryIntroduction}
                 ></CategorySelection>
               )}
-              {categories?.length > 0 && (
+              {categories && categories.length > 0 && (
                 <fieldset className="!mt-12">
                   <legend className="text-lg font-semibold leading-6 text-gray-900">
                     Kurstermine
@@ -250,7 +250,7 @@ export default function AttendeeSection({
                       </div>
                     </div>
                   )}
-                  {courses?.length === 0 && (
+                  {courses && courses?.length === 0 && (
                     <div className="relative mt-4 flex items-center justify-center rounded-lg border border-dashed border-gray-200 bg-white p-4 text-sm text-gray-500">
                       {category
                         ? 'Für deine Auswahl konnten wir leider keine Termine finden.'

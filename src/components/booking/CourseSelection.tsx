@@ -21,6 +21,12 @@ export default function CourseSelection({
           name={name}
         />
       ))}
+        <div className="hidden">
+          <input
+          type="checkbox" {...register(name)}
+          value="ARRAY_HELPER"
+          disabled="true" />
+        </div>
     </div>
   )
 }

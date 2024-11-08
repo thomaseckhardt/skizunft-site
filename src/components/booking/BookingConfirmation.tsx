@@ -50,7 +50,7 @@ export default function BookingConfirmation({
                         </span>
                       </h4>
                       <div className="mt-1">
-                        {attendee.courses.map((courseSlug) => (
+                        {Array.isArray(attendee.courses) && attendee.courses?.map((courseSlug) => (
                           <p key={courseSlug} className="text-sm text-gray-500">
                             {getCourseDetails(courseSlug)}
                           </p>
