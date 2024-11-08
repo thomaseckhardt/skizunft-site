@@ -29,7 +29,7 @@ const bookingSteps = [
 
 const triggerConfirmationMail = async (data) => {
   try {
-    const response = fetch(`/api/send-booking-confirmation`, {
+    const response = fetch(`/api/send-booking-confirmation-v2`, {
       method: 'POST',
       // NOTE: bigint values are not supported by JSON.stringify
       // I used as attendee.age which is now a number
@@ -42,9 +42,7 @@ const triggerConfirmationMail = async (data) => {
       }),
     })
     // console.log('triggerConfirmationMail', response)
-    return {
-      statusCode: 200,
-    }
+    return response
   } catch (error) {
     console.log('error', error)
     return error
@@ -193,9 +191,9 @@ export default function BookingForm({
   })
 
   const submit = async (data: FormValues, event) => {
-    if (formState.isSubmitted) return
+    if (formState.isSubmitting) return
     event.preventDefault()
-    // console.log('SUBMIT', data)
+    console.log('SUBMIT', data)
 
     const attendeesData = data.attendees.map((attendee) => {
       const priceTotal = getAttendeeTotalPrice(attendee)
@@ -266,18 +264,18 @@ export default function BookingForm({
     }
 
     // TODO: Implement mailing
-
     // const notificationMail = await triggerNotificationMail(mailingData)
-
     // console.log('notificationMail', notificationMail)
 
-    // const confirmationMail = await triggerConfirmationMail(mailingData)
-
-    // console.log('confirmationMail', confirmationMail)
-
-    setTimeout(() => {
-      window.location.replace('/buchung/erfolgreich')
-    }, 300)
+    const confirmationMail = await triggerConfirmationMail(mailingData)
+    if (confirmationMail.status < 400) {
+      console.log('confirmationMail success')
+      setTimeout(() => {
+        window.location.replace('/buchung/erfolgreich')
+      }, 100)
+    } else {
+      console.log('confirmationMail error')
+    }
   }
 
   const attendees = useWatch({

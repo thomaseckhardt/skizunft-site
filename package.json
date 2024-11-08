@@ -17,7 +17,8 @@
     "sb-pull-components": "dotenv -e ./.env.local cross-var storyblok pull-components --space %STORYBLOK_SPACE%",
     "sb-generate-types": "dotenv -e ./.env.local cross-var storyblok-generate-ts source=./components.%STORYBLOK_SPACE%.json target=./src/types/storyblok-component-types.d.ts",
     "sb-graphiql": "dotenv -e ./.env.local cross-var open https://gapi-browser.storyblok.com/?token=%STORYBLOK_TOKEN%",
-    "tailwindcss": "npx tailwindcss -i ./src/styles/base.css -o ./tailwind/base.css --watch"
+    "tailwindcss": "npx tailwindcss -i ./src/styles/base.css -o ./tailwind/base.css --watch",
+    "func:send-booking-confirmation": "netlify functions:invoke send-booking-confirmation-v2 --payload '{\"firstName\": \"John\", \"lastName\": \"Doe\", \"email\": \"thomas.eckhardt@web.de\", \"orderNumber\": \"123456\"}' --port 9999"
   },
   "dependencies": {
     "@alpinejs/collapse": "^3.14.3",
@@ -28,6 +29,7 @@
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.2",
     "@faker-js/faker": "^9.0.3",
+    "@getbrevo/brevo": "^2.2.0",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.1.5",
     "@netlify/emails": "^1.1.0",
@@ -44,6 +46,8 @@
     "clsx": "^2.1.1",
     "convex": "^1.17.0",
     "googleapis": "^144.0.0",
+    "handlebars": "^4.7.8",
+    "mjml": "^4.15.3",
     "nodemailer-mjml": "^1.4.5",
     "object-to-formdata": "^4.5.1",
     "react": "^18.3.1",

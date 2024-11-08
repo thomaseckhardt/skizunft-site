@@ -308,22 +308,22 @@ export default function BookingConfirmation({
                 type="button"
                 className="w-full rounded-full bg-white px-8 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 md:w-auto md:flex-none"
                 onClick={() => prevStep()}
-                disabled={formState?.isSubmitted}
+                disabled={formState?.isSubmitting}
               >
                 Zurück
               </button>
               <button
                 type="submit"
                 className={clsx(
-                  'inline-flex w-full max-w-md flex-1 items-center rounded-full border border-transparent bg-sky-600 px-8 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 md:w-auto md:flex-none',
-                  formState?.isSubmitted
+                  'inline-flex w-full md:max-w-md flex-auto items-center justify-center rounded-full border border-transparent bg-sky-600 px-8 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 md:w-auto md:flex-none',
+                  formState?.isSubmitting
                     ? 'cursor-wait bg-sky-700'
                     : 'bg-sky-600',
                 )}
-                disabled={formState?.isSubmitted}
+                disabled={formState?.isSubmitting}
               >
-                {formState?.isSubmitted ? (
-                  <span className="inline-flex items-center gap-x-2">
+                {formState?.isSubmitting ? (
+                  <span className="inline-flex items-center justify-center gap-x-2">
                     <svg
                       className="h-5 w-5 animate-spin"
                       xmlns="http://www.w3.org/2000/svg"
