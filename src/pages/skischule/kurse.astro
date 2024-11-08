@@ -1,7 +1,45 @@
 ---
 import Icon from '@/components/Icon.astro'
-import StatusKurse from '@/components/sections/skischule/StatusKurse.astro'
+// import StatusKurse from '@/components/sections/skischule/StatusKurse.astro'
 import Page from '@/layouts/Page.astro'
+import { fetchStories } from '@/storyblok/utils/fetchStories'
+import { dateFormat, dateShortFormat } from '@/utils/date'
+import { resolve } from 'path'
+
+const categoryOrder = ['Beginner', 'Junior_Champion', 'Champion']
+const courseStories = await fetchStories({
+  content_type: 'Course',
+  per_page: 50,
+  sort_by: 'content.startDate:asc',
+  resolve_relations: 'Course.category',
+})
+const courseDates = courseStories.map((story) => {
+  const startDate = new Date(`${story.content.startDate}+0000`)
+  const endDate = new Date(`${story.content.endDate}+0000`)
+  const {
+    closed = false,
+    canceled = false,
+    ...storyContent
+  } = story.content
+
+  return {
+    canceled,
+    closed,
+    disabled: closed || canceled,
+    state: undefined,
+    stateColor: undefined,
+    ...storyContent,
+    id: story.uuid,
+    name: story.name,
+    slug: story.slug,
+    startDate,
+    endDate,
+    dateFormatted: dateFormat.formatRange(startDate, endDate),
+    dateShortFormatted: dateShortFormat.formatRange(startDate, endDate),
+  }
+})
+
+// console.log('courseDates', courseDates)
 
 const courses = [
   {
@@ -11,6 +49,7 @@ const courses = [
     duration: '10.30 Uhr – 12 Uhr',
     meetingPointTitle: 'Treffpunkt 2',
     meetingPoint: 'Hinterer Parkplatz',
+    dates: courseDates.filter((course) => course.category?.slug === 'ski-bambini'),
   },
   {
     title: 'Skikurs Beginner',
@@ -19,6 +58,7 @@ const courses = [
     duration: '10 – 12 Uhr und 13 – 15 Uhr',
     meetingPointTitle: 'Treffpunkt 2',
     meetingPoint: 'Hinterer Parkplatz',
+    dates: courseDates.filter((course) => course.category?.slug === 'ski-beginner'),
   },
   {
     title: 'Skikurs Junior Champion',
@@ -27,6 +67,7 @@ const courses = [
     duration: '10 – 12 Uhr und 13 – 15 Uhr',
     meetingPointTitle: 'Treffpunkt 1',
     meetingPoint: 'Berggasthaus Kandelhof',
+    dates: courseDates.filter((course) => course.category?.slug === 'ski-junior-champion'),
   },
   {
     title: 'Skikurs Champion',
@@ -35,14 +76,16 @@ const courses = [
     duration: '10 – 12 Uhr und 13 – 15 Uhr',
     meetingPointTitle: 'Treffpunkt 1',
     meetingPoint: 'Berggasthaus Kandelhof',
+    dates: courseDates.filter((course) => course.category?.slug === 'ski-champion'),
   },
   {
     title: 'Snowboardkurs',
     age: 'zwischen 6 und 13 Jahren',
     description: `<p>Unser Snowboardkurs richtet sich an Kinder, die bisher noch keine Erfahrungen mit dem Snowboarden gemacht haben.</p>`,
-    duration: '10.30 – 12.30 Uhr und 13.30 – 15.30 Uhr',
+    duration: '10 – 12 Uhr und 13 – 15 Uhr',
     meetingPointTitle: 'Treffpunkt 1',
     meetingPoint: 'Berggasthaus Kandelhof',
+    dates: courseDates.filter((course) => course.category?.slug === 'ski-champion'),
   },
 ]
 ---
@@ -77,8 +120,24 @@ const courses = [
               </h3>
               <div class="prose mt-4 max-w-2xl">
                 <Fragment set:html={course.description} />
-                <p class="!mb-2 flex items-center gap-x-2">
+                {course.dates && course.dates.length > 0 && (
+                  <div>
+                    <p class="!mb-2 flex items-center gap-x-2">
                   <Icon name="calendar-24-regular" />
+                  <span class="font-semibold">Termine</span>
+                  </p>
+                  <ul class="ml-6">
+                    {course.dates.map((date) => (
+                      <li>
+                        {date.dateFormatted}
+                      </li>
+                    ))}
+
+                  </ul>
+                  </div>
+                  )}
+                <p class="!mb-2 flex items-center gap-x-2">
+                  <Icon name="clock-24-regular" />
                   <span class="font-semibold">Dauer</span>
                   <span>{course.duration}</span>
                 </p>

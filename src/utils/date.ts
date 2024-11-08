@@ -4,3 +4,14 @@ export function isValidDate(date: any): boolean {
   }
   return !Number.isNaN(date.getTime())
 }
+
+export const dateFormat = new Intl.DateTimeFormat('de-DE', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+})
+export const dateShortFormat = new Intl.DateTimeFormat('de-DE', {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+})
