@@ -200,6 +200,7 @@ export default async (event) => {
             'Mitglied',
             'Kurse',
             'Gebucht am',
+            'Text Kurskarte',
             'Buchung-ID',
             'Teilnehmer-ID',
           ],
@@ -217,6 +218,7 @@ export default async (event) => {
               new Date(booking?._creationTime).toLocaleString('de-DE', {
                 timeZone: 'Europe/Berlin',
               }),
+              `${attendee.lastName} ${attendee.firstName} (${attendee.age}) ✆ ${booking.phone}`,
               booking?._id,
               attendee._id,
             ]
