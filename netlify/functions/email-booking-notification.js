@@ -1,4 +1,4 @@
-<mjml>
+export default `<mjml>
   <mj-head>
     <mj-title>Say hello to card</mj-title>
     <mj-attributes>
@@ -88,5 +88,4 @@
         </mj-column>
       </mj-section>
   </mj-body>
-</mjml>
-```
+</mjml>`

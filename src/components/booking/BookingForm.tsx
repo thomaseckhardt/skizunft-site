@@ -54,7 +54,7 @@ const triggerConfirmationMail = async (data) => {
 const triggerNotificationMail = async (data) => {
   // console.log('triggerNotificationMail', data)
   try {
-    const response = fetch(`/api/send-booking-notification`, {
+    const response = fetch(`/api/send-booking-notification-v2`, {
       method: 'POST',
       body: JSON.stringify(data),
     })
@@ -272,9 +272,7 @@ export default function BookingForm({
       }),
     }
 
-    // TODO: Implement mailing
-    // const notificationMail = await triggerNotificationMail(mailingData)
-    // console.log('notificationMail', notificationMail)
+    triggerNotificationMail(mailingData)
 
     const confirmationMail = await triggerConfirmationMail(mailingData)
     if (confirmationMail.status < 400) {
