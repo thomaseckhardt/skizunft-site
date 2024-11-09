@@ -1,6 +1,7 @@
 import { ConvexHttpClient } from 'convex/browser'
 import { api } from '@db/api'
 import { google } from 'googleapis'
+import { fetchStoriesSSR } from '@/storyblok/utils/fetchStoriesSSR'
 
 // ----------------------------------------------------------------------------
 // GOOGLE SHEET
@@ -68,6 +69,17 @@ export default async (event) => {
     console.log('Query bookings')
     const bookings = await httpClient.query(api.bookings.list)
     console.log(`${bookings?.length || 0} bookings found`)
+
+    const courseStories = await fetchStoriesSSR({
+      content_type: 'Course',
+      per_page: 50,
+      sort_by: 'content.startDate:asc',
+    })
+
+    const coursesBySlug = courseStories.reduce((acc, course) => {
+      acc[course.slug] = course
+      return acc
+    }, {})
 
     // {
     //   _creationTime: 1699815755564.7134,
@@ -239,18 +251,28 @@ export default async (event) => {
       StatOrder.findIndex((order) => course.startsWith(order))
     const stats = Object.entries(attendeesByCourse)
       .map(([course, attendees]) => {
+        const courseStory = coursesBySlug[course]
+        const seatLimit = courseStory?.content?.seatLimit || '?'
+        const totalAttendees = attendees.length
         return {
           course,
-          totalAttendees: attendees.length,
+          totalAttendees,
+          seatLimit,
+          availableSeats: seatLimit - totalAttendees,
         }
       })
       .sort((a, b) => a.course.localeCompare(b.course))
       .sort((a, b) => getStatOrder(a.course) - getStatOrder(b.course))
 
     const statsData = [
-      ['Kurs', 'Teilnehmerzahl'],
+      ['Kurs', 'Teilnehmerzahl', 'Plätze gesamt', 'Noch frei'],
       ...stats.map((stat) => {
-        return [stat.course, stat.totalAttendees]
+        return [
+          stat.course,
+          stat.totalAttendees,
+          stat.seatLimit,
+          stat.availableSeats,
+        ]
       }),
     ]
     // Fill statsData array with empty strings to have a fixed length
