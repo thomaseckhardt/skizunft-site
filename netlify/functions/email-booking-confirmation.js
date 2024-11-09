@@ -40,22 +40,22 @@ export default `<mjml>
           Buchungs&uuml;bersicht
         </mj-text>
       </mj-column>
-      {{#each attendees}}
+      <mj-raw>{{#each attendees}}</mj-raw>
         <mj-column width="100%">
           <mj-text padding="5px 25px" font-weight="600" font-size="14px" line-height="20px">
             {{firstName}} {{lastName}} ({{age}} Jahre)
           </mj-text>
-          {{#each courses}}
+          <mj-raw>{{#each courses}}</mj-raw>
             <mj-text padding="5px 25px" font-weight="400" font-size="14px" line-height="20px">
               {{name}} am {{date}}
             </mj-text>
-          {{/each}}
+          <mj-raw>{{/each}}</mj-raw>
           <mj-text padding="5px 25px" font-weight="400" font-size="14px" line-height="20px" align="right">
-            {%if member %}Vereinsmitglied {% endif %} {{price}}
+            <mj-raw>{%if member %}</mj-raw>Vereinsmitglied <mj-raw>{% endif %}</mj-raw> {{price}}
           </mj-text>
           <mj-divider border-width="1px" border-color="lightgrey" />
         </mj-column>
-      {{/each}}
+      <mj-raw>{{/each}}</mj-raw>
     </mj-section>
     <mj-section background-color="#FFFFFF">
       <mj-column width="70%">
