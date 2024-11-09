@@ -16,11 +16,7 @@ const courseStories = await fetchStories({
 const courseDates = courseStories.map((story) => {
   const startDate = new Date(`${story.content.startDate}+0000`)
   const endDate = new Date(`${story.content.endDate}+0000`)
-  const {
-    closed = false,
-    canceled = false,
-    ...storyContent
-  } = story.content
+  const { closed = false, canceled = false, ...storyContent } = story.content
 
   return {
     canceled,
@@ -49,7 +45,9 @@ const courses = [
     duration: '10.30 Uhr – 12 Uhr',
     meetingPointTitle: 'Treffpunkt 2',
     meetingPoint: 'Hinterer Parkplatz',
-    dates: courseDates.filter((course) => course.category?.slug === 'ski-bambini'),
+    dates: courseDates.filter(
+      (course) => course.category?.slug === 'ski-bambini',
+    ),
   },
   {
     title: 'Skikurs Beginner',
@@ -58,7 +56,9 @@ const courses = [
     duration: '10 – 12 Uhr und 13 – 15 Uhr',
     meetingPointTitle: 'Treffpunkt 2',
     meetingPoint: 'Hinterer Parkplatz',
-    dates: courseDates.filter((course) => course.category?.slug === 'ski-beginner'),
+    dates: courseDates.filter(
+      (course) => course.category?.slug === 'ski-beginner',
+    ),
   },
   {
     title: 'Skikurs Junior Champion',
@@ -67,7 +67,9 @@ const courses = [
     duration: '10 – 12 Uhr und 13 – 15 Uhr',
     meetingPointTitle: 'Treffpunkt 1',
     meetingPoint: 'Berggasthaus Kandelhof',
-    dates: courseDates.filter((course) => course.category?.slug === 'ski-junior-champion'),
+    dates: courseDates.filter(
+      (course) => course.category?.slug === 'ski-junior-champion',
+    ),
   },
   {
     title: 'Skikurs Champion',
@@ -76,7 +78,9 @@ const courses = [
     duration: '10 – 12 Uhr und 13 – 15 Uhr',
     meetingPointTitle: 'Treffpunkt 1',
     meetingPoint: 'Berggasthaus Kandelhof',
-    dates: courseDates.filter((course) => course.category?.slug === 'ski-champion'),
+    dates: courseDates.filter(
+      (course) => course.category?.slug === 'ski-champion',
+    ),
   },
   {
     title: 'Snowboardkurs',
@@ -85,7 +89,9 @@ const courses = [
     duration: '10 – 12 Uhr und 13 – 15 Uhr',
     meetingPointTitle: 'Treffpunkt 1',
     meetingPoint: 'Berggasthaus Kandelhof',
-    dates: courseDates.filter((course) => course.category?.slug === 'ski-champion'),
+    dates: courseDates.filter(
+      (course) => course.category?.slug === 'snowboard-beginner',
+    ),
   },
 ]
 ---
@@ -123,19 +129,16 @@ const courses = [
                 {course.dates && course.dates.length > 0 && (
                   <div>
                     <p class="!mb-2 flex items-center gap-x-2">
-                  <Icon name="calendar-24-regular" />
-                  <span class="font-semibold">Termine</span>
-                  </p>
-                  <ul class="ml-6">
-                    {course.dates.map((date) => (
-                      <li>
-                        {date.dateFormatted}
-                      </li>
-                    ))}
-
-                  </ul>
+                      <Icon name="calendar-24-regular" />
+                      <span class="font-semibold">Termine</span>
+                    </p>
+                    <ul class="ml-6">
+                      {course.dates.map((date) => (
+                        <li>{date.dateFormatted}</li>
+                      ))}
+                    </ul>
                   </div>
-                  )}
+                )}
                 <p class="!mb-2 flex items-center gap-x-2">
                   <Icon name="clock-24-regular" />
                   <span class="font-semibold">Dauer</span>
