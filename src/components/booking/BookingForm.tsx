@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { useFieldArray, useForm, useWatch } from 'react-hook-form'
 import { api } from '../../../convex/_generated/api'
 import useLocation from './useLocation'
-import { DevTool } from "@hookform/devtools";
+import { DevTool } from '@hookform/devtools'
 import { isDevelopment } from '@/utils/env'
 
 const bookingSteps = [
@@ -107,20 +107,23 @@ export default function BookingForm({
   // --------------------------------------------------
 
   const getAttendeeTotalPrice = (attendee) => {
-    console.log('getAttendeeTotalPrice', attendee)
-    return Array.isArray(attendee?.courses) ? attendee?.courses?.reduce((total, courseSlug) => {
-      const course = courses.find((course) => courseSlug === course.slug)
-      const category = courseCategories.find(
-        (category) => course.categoryId === category.id,
-      ) ?? {
-        price: 0,
-        priceMember: 0,
-      }
-      const coursePrice = attendee.member
-        ? category.priceMember
-        : category.price
-      return total + coursePrice
-    }, 0) : 0
+    const total = Array.isArray(attendee?.courses)
+      ? attendee?.courses?.reduce((total, courseSlug) => {
+          const course = courses.find((course) => courseSlug === course.slug)
+          const category = courseCategories.find(
+            (category) => course.categoryId === category.id,
+          ) ?? {
+            price: 0,
+            priceMember: 0,
+          }
+          const coursePrice = attendee.member
+            ? category.priceMember
+            : category.price
+          return total + coursePrice
+        }, 0)
+      : 0
+
+    return total
   }
 
   const getSubtotal = (attendees) => {
@@ -196,7 +199,6 @@ export default function BookingForm({
   const submit = async (data: FormValues, event) => {
     if (formState.isSubmitting) return
     event.preventDefault()
-    console.log('SUBMIT', data)
 
     const attendeesData = data.attendees.map((attendee) => {
       const priceTotal = getAttendeeTotalPrice(attendee)
@@ -247,13 +249,17 @@ export default function BookingForm({
       orderNumber,
 
       attendees: attendeesData.map((attendee) => {
-        const attendeeCourses = Array.isArray(attendee.courses) ? attendee.courses.map((courseSlug, index) => {
-          const course = courses.find((course) => courseSlug === course.slug)
-          return {
-            name: course.name,
-            date: course.dateShortFormatted,
-          }
-        }) : []
+        const attendeeCourses = Array.isArray(attendee.courses)
+          ? attendee.courses.map((courseSlug, index) => {
+              const course = courses.find(
+                (course) => courseSlug === course.slug,
+              )
+              return {
+                name: course.name,
+                date: course.dateShortFormatted,
+              }
+            })
+          : []
 
         return {
           firstName: attendee.firstName,
@@ -365,9 +371,7 @@ export default function BookingForm({
           />
         </div>
       </form>
-      {isDevelopment() && (
-        <DevTool control={control} />
-      )}
+      {isDevelopment() && <DevTool control={control} />}
     </>
   )
 }
