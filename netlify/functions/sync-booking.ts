@@ -55,14 +55,7 @@ const saveGoogleSheet = async ({ tabName, data, range = 'A1:Z500' }) => {
 
 // ----------------------------------------------------------------------------
 
-export default async (req: Request) => {
-  if (req.body === null) {
-    return new Response('Payload required', {
-      status: 400,
-      statusText: 'Payload required',
-    })
-  }
-
+export default async () => {
   try {
     console.log('Establish db connection')
     const httpClient = new ConvexHttpClient(
@@ -314,6 +307,5 @@ export default async (req: Request) => {
 }
 
 export const config: Config = {
-  // schedule: '@daily',
-  schedule: '*/15 * * * *',
+  schedule: '@daily',
 }
