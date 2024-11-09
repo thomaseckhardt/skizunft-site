@@ -64,7 +64,9 @@ export default async (event) => {
 
   try {
     console.log('Establish db connection')
-    const httpClient = new ConvexHttpClient(process.env.PUBLIC_CONVEX_URL)
+    const httpClient = new ConvexHttpClient(
+      Netlify.env.get('PUBLIC_CONVEX_URL'),
+    )
 
     console.log('Query bookings')
     const bookings = await httpClient.query(api.bookings.list)
@@ -254,6 +256,7 @@ export default async (event) => {
         const courseStory = coursesBySlug[course]
         const seatLimit = courseStory?.content?.seatLimit || '?'
         const totalAttendees = attendees.length
+        console.log('course', course)
         return {
           course,
           totalAttendees,
@@ -284,9 +287,7 @@ export default async (event) => {
     statsData.push([`Gesamt`, `=SUMME(B2:B20)`])
     statsData.push(['', ''])
     statsData.push([
-      `Aktualisiert am ${new Date().toLocaleString('de-DE', {
-        timeZone: 'Europe/Berlin',
-      })}`,
+      `Aktualisiert am ${new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })}`,
     ])
 
     saveGoogleSheet({
