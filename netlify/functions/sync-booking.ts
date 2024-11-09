@@ -217,12 +217,12 @@ export default async () => {
               (booking) => booking._id === attendee.bookingId,
             )
             return [
-              booking?.orderNumber,
-              attendee.lastName,
-              attendee.firstName,
-              attendee.age,
-              attendee.member,
-              attendee.courses.join(', '),
+              `${booking?.orderNumber}`,
+              `${attendee.lastName}`,
+              `${attendee.firstName}`,
+              `${attendee.age}`,
+              `${attendee.member}`,
+              `${attendee.courses.join(', ')}`,
               new Date(booking?._creationTime).toLocaleString('de-DE', {
                 timeZone: 'Europe/Berlin',
               }),
@@ -278,7 +278,12 @@ export default async () => {
       statsData.push(['', ''])
     }
     statsData.push(['', ''])
-    statsData.push([`Gesamt`, `=SUMME(B2:B20)`])
+    statsData.push([
+      `Gesamt`,
+      `=SUMME(B2:B20)`,
+      `=SUMME(C2:C20)`,
+      `=SUMME(D2:D20)`,
+    ])
     statsData.push(['', ''])
     statsData.push([
       `Aktualisiert am ${new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })}`,
