@@ -55,10 +55,10 @@ const saveGoogleSheet = async ({ tabName, data, range = 'A1:Z500' }) => {
 
 export default async (event) => {
   if (event.body === null) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify('Payload required'),
-    }
+    return new Response('Payload required', {
+      status: 400,
+      statusText: 'Payload required',
+    })
   }
 
   try {
@@ -230,6 +230,7 @@ export default async (event) => {
       'ski-beginner',
       'ski-junior-champion',
       'ski-champion',
+      'ski-erwachsene',
       'snowboard',
     ]
     const getStatOrder = (course) =>
@@ -244,20 +245,41 @@ export default async (event) => {
       .sort((a, b) => a.course.localeCompare(b.course))
       .sort((a, b) => getStatOrder(a.course) - getStatOrder(b.course))
 
+    const statsData = [
+      ['Kurs', 'Teilnehmerzahl'],
+      ...stats.map((stat) => {
+        return [stat.course, stat.totalAttendees]
+      }),
+    ]
+    // Fill statsData array with empty strings to have a fixed length
+    const statsDataLength = statsData.length
+    for (let i = 0; i < 20 - statsDataLength; i++) {
+      statsData.push(['', ''])
+    }
+    statsData.push(['', ''])
+    statsData.push([`Gesamt`, `=SUMME(B2:B20)`])
+    statsData.push(['', ''])
+    statsData.push([
+      `Aktualisiert am ${new Date().toLocaleString('de-DE', {
+        timeZone: 'Europe/Berlin',
+      })}`,
+    ])
+
     saveGoogleSheet({
       tabName: 'overview',
-      data: [
-        ['Kurs', 'Teilnehmerzahl'],
-        ...stats.map((stat) => {
-          return [stat.course, stat.totalAttendees]
-        }),
-        [],
-        [
-          `Aktualisiert am ${new Date().toLocaleString('de-DE', {
-            timeZone: 'Europe/Berlin',
-          })}`,
-        ],
-      ],
+      data: statsData,
+      // data: [
+      //   ['Kurs', 'Teilnehmerzahl'],
+      //   ...stats.map((stat) => {
+      //     return [stat.course, stat.totalAttendees]
+      //   }),
+      //   [],
+      //   [
+      //     `Aktualisiert am ${new Date().toLocaleString('de-DE', {
+      //       timeZone: 'Europe/Berlin',
+      //     })}`,
+      //   ],
+      // ],
     })
     console.log('Save stats to google sheet')
   } catch (error) {
