@@ -1,7 +1,8 @@
-import { ConvexHttpClient } from 'convex/browser'
-import { api } from '@db/api'
-import { google } from 'googleapis'
 import { fetchStoriesSSR } from '@/storyblok/utils/fetchStoriesSSR'
+import { api } from '@db/api'
+import type { Config } from '@netlify/functions'
+import { ConvexHttpClient } from 'convex/browser'
+import { google } from 'googleapis'
 
 // ----------------------------------------------------------------------------
 // GOOGLE SHEET
@@ -54,8 +55,8 @@ const saveGoogleSheet = async ({ tabName, data, range = 'A1:Z500' }) => {
 
 // ----------------------------------------------------------------------------
 
-export default async (event) => {
-  if (event.body === null) {
+export default async (req: Request) => {
+  if (req.body === null) {
     return new Response('Payload required', {
       status: 400,
       statusText: 'Payload required',
@@ -312,6 +313,7 @@ export default async (event) => {
   }
 }
 
-export const config = {
-  schedule: '@hourly',
+export const config: Config = {
+  // schedule: '@daily',
+  schedule: '*/15 * * * *',
 }
