@@ -1,0 +1,58 @@
+---
+import Icon from '@/components/Icon.astro'
+import Page from '@/layouts/Page.astro'
+
+const showDownload = false
+---
+
+<Page title="70-järhiges Vereinsjubiläum" description="">
+  <main>
+    <div class="box mt-5">
+      <div class="bg-white pb-24 sm:pb-32">
+        <div class="max-w-2xl md:mx-auto">
+          <h1 class="md:mx-auto md:text-center">
+            <div class="typo-overline">Einladung aller Mitglieder zum</div>
+            <div class="typo-headline">
+              70-jährigen Vereinsjubiläum
+              <span class="sr-only">der Skizunft Kollnau e.V.</span><br />
+              1954 — 2024
+            </div>
+          </h1>
+          <div
+            class="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-6 text-gray-600 md:mx-auto md:text-center"
+          >
+            <p class="flex items-center gap-x-2">
+              <Icon name="calendar-24-regular" />
+              <span>Samstag, 18. Januar 2025 ab&nbsp;18&nbsp;Uhr</span>
+            </p>
+            <p>
+              <a
+                href="https://www.kandel-kulinarik.de/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-x-2"
+              >
+                <Icon name="location-24-regular" />
+                <span class="underline"
+                  >Kandel-Kulinarik Restaurant, Waldkirch</span
+                >
+              </a>
+            </p>
+          </div>
+          <p class="mt-6 text-lg leading-8 text-gray-600">
+            Liebes Mitglied der Skizunft Kollnau, wir freuen uns, dich herzlich
+            zur Feier unseres 70-jährigen Jubiläums einzuladen!
+          </p>
+          <div class="prose mt-10">
+            <p>
+              Es erwartet dich ein gemütlicher Abend in geselliger Runde mit
+              Musik, Essen und Trinken. Lasst uns gemeinsam auf sieben
+              Jahrzehnte voller sportlicher Aktivitäten, Gemeinschaft und
+              unvergesslicher Momente zurückblicken.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Page>
