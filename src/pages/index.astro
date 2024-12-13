@@ -35,12 +35,14 @@ import StatusKurse from '@/components/sections/skischule/StatusKurse.astro'
         Wir sind deine zertifizierte DSV-Skischule auf dem Kandel und bieten dir
         Kinderkurse für unterschiedliche Könnensstufen.
       </p>
-      <div class="mt-6 flex items-center justify-center gap-x-6">
-        <a href="/buchung/" class="block">
+      <div
+        class="mt-6 flex flex-col items-center justify-center gap-x-6 gap-y-6 sm:flex-row"
+      >
+        <a href="/buchung/" class="block flex-none">
           <div
             class={clsx(
               'rounded-full px-6 py-2 text-sm font-semibold shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
-              'bg-brandred-600 text-white  focus-visible:outline-brandred-600',
+              'bg-brandred-600 text-white focus-visible:outline-brandred-600',
               'transition ease-in-out',
               'hovers:hover:-translate-y-0.5 hovers:hover:bg-brandred-500 hovers:hover:shadow-lg',
             )}
@@ -48,8 +50,14 @@ import StatusKurse from '@/components/sections/skischule/StatusKurse.astro'
             Kurs buchen
           </div>
         </a>
-        <a href="/skischule/" class="text-sm font-semibold leading-6">
+        <a href="/skischule/" class="flex-none text-sm font-semibold leading-6">
           Mehr erfahren <span aria-hidden="true">→</span>
+        </a>
+        <a
+          href="/skischule/kurse"
+          class="flex-none text-sm font-semibold leading-6"
+        >
+          Kurstermine <span aria-hidden="true">→</span>
         </a>
       </div>
     </div>

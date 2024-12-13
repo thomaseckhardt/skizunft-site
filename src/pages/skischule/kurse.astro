@@ -83,6 +83,17 @@ const courses = [
     ),
   },
   {
+    title: 'Skikurs Jugendliche und Erwachsene',
+    age: 'ab 14 Jahren',
+    description: `<p>Unser Beginner Kurs richtet sich an Jugendliche und Erwachasene, …</p><ul><li>die bisher noch keine Erfahrungen mit dem Skifahren gemacht haben.</li><li>die am Tag des Kurses zum ersten Mal auf dem Ski stehen.</li><li>die Spaß daran haben, sich im Schnee zu bewegen.</li></ul>`,
+    duration: '10 – 12 Uhr und 13 – 15 Uhr',
+    meetingPointTitle: 'Treffpunkt 1',
+    meetingPoint: 'Berggasthaus Kandelhof',
+    dates: courseDates.filter(
+      (course) => course.category?.slug === 'ski-erwachsene',
+    ),
+  },
+  {
     title: 'Snowboardkurs',
     age: 'zwischen 6 und 13 Jahren',
     description: `<p>Unser Snowboardkurs richtet sich an Kinder, die bisher noch keine Erfahrungen mit dem Snowboarden gemacht haben.</p>`,
@@ -90,7 +101,7 @@ const courses = [
     meetingPointTitle: 'Treffpunkt 1',
     meetingPoint: 'Berggasthaus Kandelhof',
     dates: courseDates.filter(
-      (course) => course.category?.slug === 'snowboard-beginner',
+      (course) => course.category?.slug === 'snowboard',
     ),
   },
 ]
