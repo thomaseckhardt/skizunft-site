@@ -1,4 +1,6 @@
 ---
+import Alert from '@/components/Alert.astro'
+import AlertSection from '@/components/AlertSection.astro'
 import Icon from '@/components/Icon.astro'
 import {
   courseBambini,
@@ -30,7 +32,7 @@ const courses = [courseBambini, courseBeginner, courseJuniorChampion]
         <span class="typo-hero-xs">Kurse am 28./29. Dezember 2024</span>
       </h3>
       <div class="prose mt-4 max-w-2xl space-y-2">
-        <h4 class="inline-flex flex-wrap items-center gap-2">
+        <div class="inline-flex flex-wrap items-center gap-2">
           <strong> Skikurse Bambini, Beginner und Junior Champions </strong>
           <span
             class={clsx(
@@ -40,26 +42,41 @@ const courses = [courseBambini, courseBeginner, courseJuniorChampion]
           >
             Kandel
           </span>
-        </h4>
+        </div>
         <p>
           Grünes Licht: Die Kurse finden am Wochenende auf dem
-          <a href="https://www.kandellifte.de/" target="_blank" rel="noreferrer"
-            >Kandel</a
-          > statt.
+          <a
+            href="https://www.kandellifte.de/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Kandel
+          </a> statt. Der Winter ist da und die Pisten sind präpariert. Wir freuen
+          uns, dass wir auf unserem Hausberg in die Saison 2024/2025 starten können.
+          Wir freuen uns auf dich und deine Familie!
         </p>
-        <p>
-          Bitte beachte die unterschiedlichen Zeiten und Treffpunkte für die
-          Kurse:
-        </p>
-        <div class="mx-auto mt-8 flow-root max-w-3xl space-y-8 md:mt-16">
+        <Alert class="!my-6">
+          <p>
+            Die Situation auf dem Kandel wird bei entsprechender Wetterlage
+            regelmäßig von der Stadt kontrolliert. Im Falle einer Überlastung
+            werden die Zufahrten auf den Kandel gesperrt. Informiert euch bitte
+            am Kurstag auf der <a
+              href="https://www.stadt-waldkirch.de/start/aktuelle+meldungen/kandelzufahrt.html"
+              target="_blank"
+              rel="noreferer noopener">Website der Stadt Waldkirch</a
+            > über die aktuelle Situation, dort werdeb Sperrungen bekannt gegeben.
+          </p>
+        </Alert>
+        <h4 class="font-bold">Kurszeiten und Treffpunkte:</h4>
+        <div class="mx-auto !mt-4 flow-root max-w-3xl space-y-6">
           {
             courses.map((course) => (
               <div>
-                <h4 class="font-bold">{course.title}</h4>
-                <div class="prose mt-4 max-w-2xl">
+                <h5 class="font-bold">{course.title}</h5>
+                <div class="prose mt-2 max-w-2xl">
                   <p class="!mb-2 flex items-center gap-x-2">
                     <Icon name="clock-24-regular" />
-                    <span class="font-semibold">Dauer</span>
+                    <span class="font-semibold">Zeit</span>
                     <span>{course.duration}</span>
                   </p>
                   <p class="!mt-2 flex gap-x-2">
