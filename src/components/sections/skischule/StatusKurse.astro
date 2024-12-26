@@ -1,8 +1,15 @@
 ---
 import Icon from '@/components/Icon.astro'
+import {
+  courseBambini,
+  courseBeginner,
+  courseJuniorChampion,
+} from '@/data/course-info'
 import clsx from 'clsx'
 
 const { class: className } = Astro.props
+
+const courses = [courseBambini, courseBeginner, courseJuniorChampion]
 ---
 
 <div class={clsx('box', className)}>
@@ -14,10 +21,71 @@ const { class: className } = Astro.props
       class="mt-4 flex items-center gap-x-1 text-xs leading-tight text-sky-600 md:text-sm"
     >
       <Icon name="arrow-sync-circle-16-regular" />
-      <span>Aktualisiert am 22.02.2024 um 14.11 Uhr</span>
+      <span>Aktualisiert am 26.12.2024 um 16.01 Uhr</span>
     </p>
   </div>
   <div class="mx-auto mt-16 max-w-2xl space-y-16">
+    <div>
+      <h3 class="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
+        <span class="typo-hero-xs">Kurse am 28./29. Dezember 2024</span>
+      </h3>
+      <div class="prose mt-4 max-w-2xl space-y-2">
+        <h4 class="inline-flex flex-wrap items-center gap-2">
+          <strong> Skikurse Bambini, Beginner und Junior Champions </strong>
+          <span
+            class={clsx(
+              'bg-green-50 text-green-700 ring-green-600/20',
+              'mt-0.5 inline-block whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
+            )}
+          >
+            Kandel
+          </span>
+        </h4>
+        <p>
+          Grünes Licht: Die Kurse finden am Wochenende auf dem
+          <a href="https://www.kandellifte.de/" target="_blank" rel="noreferrer"
+            >Kandel</a
+          > statt.
+        </p>
+        <p>
+          Bitte beachte die unterschiedlichen Zeiten und Treffpunkte für die
+          Kurse:
+        </p>
+        <div class="mx-auto mt-8 flow-root max-w-3xl space-y-8 md:mt-16">
+          {
+            courses.map((course) => (
+              <div>
+                <h4 class="font-bold">{course.title}</h4>
+                <div class="prose mt-4 max-w-2xl">
+                  <p class="!mb-2 flex items-center gap-x-2">
+                    <Icon name="clock-24-regular" />
+                    <span class="font-semibold">Dauer</span>
+                    <span>{course.duration}</span>
+                  </p>
+                  <p class="!mt-2 flex gap-x-2">
+                    <Icon name="location-24-regular" />
+                    <span class="flex flex-wrap items-center gap-x-2">
+                      <span class="font-semibold">
+                        {course.meetingPointTitle}
+                      </span>
+                      <span>{course.meetingPoint}</span>
+                      <a
+                        href="/skischule/treffpunkt/"
+                        class="text-xs font-semibold text-sky-600"
+                      >
+                        Wo ist das?
+                      </a>
+                    </span>
+                  </p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+    {
+      /* 
     <div>
       <h3 class="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
         <span class="typo-hero-xs">Kurse am 24./25. Februar 2024</span>
@@ -308,8 +376,7 @@ const { class: className } = Astro.props
         <p>Wir hoffen auf bessere Verhältnisse in der nächsten Woche.</p>
       </div>
     </div>
-    {
-      /* 
+    
         <div>
           <h3 class="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
             <span class="typo-hero-xs">Kurse am 13./14. Januar 2024</span>

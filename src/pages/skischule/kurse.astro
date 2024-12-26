@@ -1,6 +1,6 @@
 ---
 import Icon from '@/components/Icon.astro'
-// import StatusKurse from '@/components/sections/skischule/StatusKurse.astro'
+import StatusKurse from '@/components/sections/skischule/StatusKurse.astro'
 import Page from '@/layouts/Page.astro'
 import { fetchStories } from '@/storyblok/utils/fetchStories'
 import { dateFormat, dateShortFormat } from '@/utils/date'
@@ -109,7 +109,7 @@ const courses = [
 
 <Page title="Skikurse & Snowboardkurse auf dem Kandel" description="">
   <main class="mt-5 space-y-24 md:space-y-32">
-    <!-- <StatusKurse /> -->
+    <StatusKurse />
     <div class="box">
       <!-- <h2 class="text-center font-hero text-5xl leading-none md:text-7xl">
       Wir bieten Ski- und Snowboardkurse<br />für Kinder ab 4 Jahren.
