@@ -154,16 +154,16 @@ export const sendConfirmationManually = async ({
     }),
   }
 
-  console.log('mailingData', mailingData)
+  console.log('Send confirmation mail', mailingData)
 
-  // const confirmationMail = await triggerConfirmationMail(mailingData)
-  // if (confirmationMail.status < 400) {
-  //   console.log('confirmationMail success', confirmationMail)
-  // } else {
-  //   console.log('confirmationMail error', confirmationMail)
-  // }
+  const confirmationMail = await triggerConfirmationMail(mailingData)
+  if (confirmationMail.status < 400) {
+    console.log('Sending confirmation mail successful', confirmationMail)
+  } else {
+    console.log('Error while sending confirmation mail', confirmationMail)
+  }
 
-  // return confirmationMail
+  return confirmationMail
 }
 
 export default sendConfirmationManually
