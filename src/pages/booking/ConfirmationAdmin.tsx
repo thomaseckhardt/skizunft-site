@@ -9,6 +9,18 @@ const bookingIds = [
   'j97888hxw4yq7shb7x07wfq5d973cwt5',
   // Meine Buchung Production
   'j97236t93pacnhv7qnf0nhe3mh748wbr',
+  //
+  'j97c3pknsqx0eev70k13k3k4m173cxen',
+  'j971k91ahehb6zmxq958c0zjx573dbgh',
+  'j97bnw411prcgj6xja2wqjtym973dsk2',
+  'j973rgch4gbkn8s36s77v3ppeh73d1qt',
+  'j972nzdawgxznhwrhgajpwz1pn73d0ge',
+  'j97by92x4vx6dfjr1f5yjkreg973dqmp',
+  'j973gqbm3f8ac9hgkba6rvxzc973dfkd',
+  'j9782bpwgfhcyjxrwsj0yc28yn73dv6d',
+  'j97dgjggc3arwc09xmwgz3g6e573dk53',
+  'j978ta7pyq1nbg7dhtx4bsbj0d73dc2z',
+  'j973srh35d9w69b0snjcypeegs73c67q',
 ]
 
 function ConfirmationAdmin({ courses, courseCategories }) {
