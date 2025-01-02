@@ -24,9 +24,9 @@ const getDiscountRate = () => {
   return 0.1
 }
 
-const getSubtotal = (attendees) => {
+const getSubtotal = ({ attendees, courses, courseCategories }) => {
   const attendeePrices = attendees.map((attendee) =>
-    getAttendeeTotalPrice(attendee),
+    getAttendeeTotalPrice({ attendee, courses, courseCategories }),
   )
   const total = attendeePrices.reduce((total, attendeePrice) => {
     return total + attendeePrice
@@ -35,16 +35,16 @@ const getSubtotal = (attendees) => {
   return total
 }
 
-const getDiscount = (attendees) => {
+const getDiscount = ({ attendees, courses, courseCategories }) => {
   const discountRate = getDiscountRate()
-  const subtotal = getSubtotal(attendees)
+  const subtotal = getSubtotal({ attendees, courses, courseCategories })
   const discount = subtotal * discountRate
   return discount
 }
 
-const getTotalPrice = (attendees) => {
+const getTotalPrice = ({ attendees, courses, courseCategories }) => {
   const discountRate = getDiscountRate()
-  const subtotal = getSubtotal(attendees)
+  const subtotal = getSubtotal({ attendees, courses, courseCategories })
   const total = subtotal * (1 - discountRate)
   return total
 }
@@ -89,7 +89,13 @@ export const sendConfirmationManually = async ({
     }
   })
 
-  const bookingTotalPrice = getTotalPrice(attendeesData)
+  console.log('attendeesData', attendeesData)
+
+  const bookingTotalPrice = getTotalPrice({
+    attendees: attendeesData,
+    courses,
+    courseCategories,
+  })
 
   const bookingData = {
     firstName: booking.firstName,
@@ -118,8 +124,12 @@ export const sendConfirmationManually = async ({
     email: bookingData.email,
     phone: bookingData.phone,
     price: formatPrice(bookingData.priceTotal),
-    subtotal: formatPrice(getSubtotal(attendeesData)),
-    discount: formatPrice(getDiscount(attendeesData)),
+    subtotal: formatPrice(
+      getSubtotal({ attendees: attendeesData, courses, courseCategories }),
+    ),
+    discount: formatPrice(
+      getDiscount({ attendees: attendeesData, courses, courseCategories }),
+    ),
     orderNumber: bookingData.orderNumber,
 
     attendees: attendeesData.map((attendee) => {
@@ -144,17 +154,16 @@ export const sendConfirmationManually = async ({
     }),
   }
 
-  const confirmationMail = await triggerConfirmationMail(mailingData)
-  if (confirmationMail.status < 400) {
-    console.log('confirmationMail success')
-    setTimeout(() => {
-      window.location.replace('/buchung/erfolgreich')
-    }, 100)
-  } else {
-    console.log('confirmationMail error')
-  }
+  console.log('mailingData', mailingData)
 
-  return confirmationMail
+  // const confirmationMail = await triggerConfirmationMail(mailingData)
+  // if (confirmationMail.status < 400) {
+  //   console.log('confirmationMail success', confirmationMail)
+  // } else {
+  //   console.log('confirmationMail error', confirmationMail)
+  // }
+
+  // return confirmationMail
 }
 
 export default sendConfirmationManually
