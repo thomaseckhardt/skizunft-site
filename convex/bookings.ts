@@ -7,15 +7,12 @@ function generateOrderNumber() {
 }
 
 export const list = query({
-  args: { },
+  args: {},
   handler: async (ctx, args) => {
-    const bookings = await ctx.db
-      .query("bookings")
-      .order("asc")
-      .take(1000);
-    return bookings;
+    const bookings = await ctx.db.query('bookings').order('asc').take(1000)
+    return bookings
   },
-});
+})
 
 export const add = mutation({
   args: {

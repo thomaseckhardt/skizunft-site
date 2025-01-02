@@ -6,6 +6,7 @@ import storyblok from '@storyblok/astro'
 import tailwind from '@astrojs/tailwind'
 import react from '@astrojs/react'
 import icon from 'astro-icon'
+import netlify from '@astrojs/netlify'
 
 const env = loadEnv('', process.cwd(), 'STORYBLOK')
 const PUBLIC_ENV = loadEnv('', process.cwd(), 'PUBLIC_ENV')
@@ -13,6 +14,10 @@ const PUBLIC_ENV = loadEnv('', process.cwd(), 'PUBLIC_ENV')
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.szkollnau.de',
+  output: 'hybrid',
+  adapter: netlify({
+    cacheOnDemandPages: true,
+  }),
   integrations: [
     storyblok({
       accessToken: env.STORYBLOK_TOKEN,

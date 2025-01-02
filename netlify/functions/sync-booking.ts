@@ -4,6 +4,8 @@ import type { Config } from '@netlify/functions'
 import { ConvexHttpClient } from 'convex/browser'
 import { google } from 'googleapis'
 
+// Fix with https://www.npmjs.com/package/google-spreadsheet
+
 // ----------------------------------------------------------------------------
 // GOOGLE SHEET
 // ----------------------------------------------------------------------------
