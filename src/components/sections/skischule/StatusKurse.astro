@@ -1,12 +1,16 @@
 ---
 import Alert from '@/components/Alert.astro'
 import Icon from '@/components/Icon.astro'
-import { courseBambini, courseBeginner } from '@/data/course-info'
+import {
+  courseBambini,
+  courseBeginner,
+  courseJuniorChampion,
+} from '@/data/course-info'
 import clsx from 'clsx'
 
 const { class: className } = Astro.props
 
-const courses = [courseBambini, courseBeginner]
+const courses = [courseBambini, courseBeginner, courseJuniorChampion]
 ---
 
 <div class={clsx('box', className)}>
