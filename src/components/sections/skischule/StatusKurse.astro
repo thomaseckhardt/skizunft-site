@@ -1,17 +1,12 @@
 ---
 import Alert from '@/components/Alert.astro'
-import AlertSection from '@/components/AlertSection.astro'
 import Icon from '@/components/Icon.astro'
-import {
-  courseBambini,
-  courseBeginner,
-  courseJuniorChampion,
-} from '@/data/course-info'
+import { courseBambini, courseBeginner } from '@/data/course-info'
 import clsx from 'clsx'
 
 const { class: className } = Astro.props
 
-const courses = [courseBambini, courseBeginner, courseJuniorChampion]
+const courses = [courseBambini, courseBeginner]
 ---
 
 <div class={clsx('box', className)}>
@@ -23,17 +18,17 @@ const courses = [courseBambini, courseBeginner, courseJuniorChampion]
       class="mt-4 flex items-center gap-x-1 text-xs leading-tight text-sky-600 md:text-sm"
     >
       <Icon name="arrow-sync-circle-16-regular" />
-      <span>Aktualisiert am 26.12.2024 um 16.01 Uhr</span>
+      <span>Aktualisiert am 03.01.2025 um 09.59 Uhr</span>
     </p>
   </div>
   <div class="mx-auto mt-16 max-w-2xl space-y-16">
     <div>
       <h3 class="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
-        <span class="typo-hero-xs">Kurse am 28./29. Dezember 2024</span>
+        <span class="typo-hero-xs">Kurse am 4./5. Januar 2025</span>
       </h3>
       <div class="prose mt-4 max-w-2xl space-y-2">
         <div class="inline-flex flex-wrap items-center gap-2">
-          <strong> Skikurse Bambini, Beginner und Junior Champions </strong>
+          <strong>Skikurse Bambini, Beginner und Junior Champions </strong>
           <span
             class={clsx(
               'bg-green-50 text-green-700 ring-green-600/20',
@@ -44,15 +39,15 @@ const courses = [courseBambini, courseBeginner, courseJuniorChampion]
           </span>
         </div>
         <p>
-          Grünes Licht: Die Kurse finden am Wochenende auf dem
+          Grünes Licht: Übernacht kam nochmals Schnee und die Kurse für Bambini
+          und Beginner finden am Wochenende auf dem
           <a
             href="https://www.kandellifte.de/"
             target="_blank"
             rel="noreferrer"
           >
             Kandel
-          </a> statt. Der Winter ist da und die Pisten sind präpariert. Wir freuen
-          uns, dass wir auf unserem Hausberg in die Saison 2024/2025 starten können.
+          </a> statt. Der Skikurs für Junior Champions muss leider abgesagt werden.
           Wir freuen uns auf dich und deine Familie!
         </p>
         <Alert class="!my-6">
