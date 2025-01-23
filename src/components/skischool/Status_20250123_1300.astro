@@ -1,0 +1,61 @@
+---
+import Alert from '@/components/Alert.astro'
+import Icon from '@/components/Icon.astro'
+import clsx from 'clsx'
+---
+
+<section>
+  <h3 class="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
+    <span class="typo-hero-xs">Kurse am 25./26. Januar 2025</span>
+  </h3>
+  <div class="prose mt-4 max-w-2xl space-y-2">
+    <div class="inline-flex flex-wrap items-center gap-2">
+      <strong>
+        Skikurse Bambini, Beginner, Junior Champions und Champions
+      </strong>
+      <span
+        class={clsx(
+          'bg-rose-50 text-rose-500 ring-rose-700/20',
+          'mt-0.5 inline-block whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
+        )}
+      >
+        Neuer Termin
+      </span>
+    </div>
+    <Alert class="!my-6">
+      <p>
+        Aufgrund der aktuellen Wetterlage und der damit verbundenen
+        Schneeverhältnisse müssen die Skikurse am 25./26. Januar 2025 leider
+        verschoben werden.
+      </p>
+      <p>
+        Alle Kursteilnehmer sind damit automatisch für den Ersatzkurs in zwei
+        Wochen am <span class="block text-center font-bold"
+          >8./9. Februar 2025</span
+        > angemeldet. Sollte dieser Termin nicht passen, bitten wir um eine kurze
+        Rückmeldung via E-Mail an <a
+          href="mailto:info@szkollnau.de?subject=Stornierung%20Ersatzkurs%202025&body=%0A%0A"
+          target="_blank"
+          rel="noreferrer"
+          set:html="info@szkollnau.de"
+        />.
+      </p>
+    </Alert>
+    <p>
+      Wie bereits Anfang der Woche angekündigt, haben wir die Situation im
+      Schwarzwald laufend beobachtet und waren guter Hoffnung, dass zumindest
+      ein Großteil der Kurse im <a
+        href="https://www.skizentrum-muggenbrunn.de/"
+        target="_blank"
+        rel="noreferrer"
+        set:html="Skigebiet Muggenbrunn"
+      /> stattfinden kann. Leider hatten wir viel Regen und Wind in der letzten Nacht
+      und die Schneesituation lässt es im Augenblick nicht mehr zu, einen sicheren
+      Kursbetrieb über zwei Tage zu gewährleisten.
+    </p>
+    <p>
+      Wir bitten um euer Verständnis und hoffen, dass euch der Ersatztermin
+      zusagt.
+    </p>
+  </div>
+</section>

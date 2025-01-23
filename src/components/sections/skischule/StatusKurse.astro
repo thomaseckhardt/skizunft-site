@@ -8,6 +8,7 @@ import {
   courseChampion,
 } from '@/data/course-info'
 import clsx from 'clsx'
+import Status_20250123_1300 from '@/components/skischool/Status_20250123_1300.astro'
 
 const { class: className } = Astro.props
 
@@ -28,186 +29,11 @@ const courses = [
       class="mt-4 flex items-center gap-x-1 text-xs leading-tight text-sky-600 md:text-sm"
     >
       <Icon name="arrow-sync-circle-16-regular" />
-      <span>Aktualisiert am 22.01.2025 um 18.24 Uhr</span>
+      <span>Aktualisiert am 23.01.2025 um 15.55 Uhr</span>
     </p>
   </div>
   <div class="mx-auto mt-16 max-w-2xl space-y-16">
-    <div>
-      <h3 class="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
-        <span class="typo-hero-xs">Kurse am 25./26. Januar 2025</span>
-      </h3>
-      <div class="prose mt-4 max-w-2xl space-y-2">
-        <div class="inline-flex flex-wrap items-center gap-2">
-          <strong>
-            Skikurse Bambini, Beginner, Junior Champions und Champions
-          </strong>
-          <span
-            class={clsx(
-              'bg-yellow-50 text-yellow-800 ring-yellow-600/20',
-              'mt-0.5 inline-block whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
-            )}
-          >
-            Entscheidung offen
-          </span>
-        </div>
-        {
-          //   <span
-          //   class={clsx(
-          //     'bg-green-50 text-green-700 ring-green-600/20',
-          //     'mt-0.5 inline-block whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
-          //   )}
-          //   >
-          //   Kandel
-          // </span>
-        }
-        <p>
-          Aller Voraussicht nach werden wir unsere Skikurse nach Muggenbrunn
-          verlegen. Eine entgültige Entscheidung werden wir unter Beobachtung
-          der Schnee- und Wetterlage frühestens Donnerstagabend treffen können.
-        </p>
-        <p>
-          Die <b>Bambini Kurse</b> werden wir absagen müssen. Die Schneelage auf
-          dem Kandel ist ungenügend und in Muggenbrunn auf Grund der durchwachsenen
-          Schneeverhältnisse zu wenig Platz, um einen sicheren Kursablauf gewährleisten
-          zu können. Wir bitten um euer Verständnis und werden euch über mögliche
-          Ersatztermine in Kürze informieren.
-        </p>
-        <p>
-          Hintergrund: Der Schnee auf dem Kandel reicht leider nicht aus, aber
-          dank der kalten Temperaturen können andere Skipisten im Schwarzwald
-          beschneit werden. Das gilt auch für das <a
-            href="https://www.feldberg-erlebnis.de/schneebericht/detail#/article/5405d6a2-925b-4daf-ba07-e80ec867c6aa"
-            target="_blank"
-            rel="noreferrer">Skigebiet Muggenbrunn</a
-          >.
-        </p>
-        <Alert class="!my-6">
-          <h3 class="font-bold">Geänderte Kurszeiten und Treffpunkte:</h3>
-          <h4 class="font-bold">Skikurs Beginner, Junior Champion, Champion</h4>
-          <p class="!mb-2 flex items-center gap-x-2">
-            <Icon name="clock-24-regular" />
-            <span class="font-semibold">Zeit</span>
-            <span>9:30 – 11:30 Uhr und 12 – 14 Uhr</span>
-          </p>
-          <p class="!mt-2 flex gap-x-2">
-            <Icon name="location-24-regular" />
-            <span class="flex flex-wrap items-center gap-x-2">
-              <span class="font-semibold">Treffpunkt</span>
-              <span>Talstation Wasenlift, Muggenbrunn</span>
-              <a
-                href="/skischule/treffpunkt/#muggenbrunn"
-                class="text-xs font-semibold text-sky-600"
-              >
-                Wo ist das?
-              </a>
-            </span>
-          </p>
-        </Alert>
-        <p>
-          <a
-            href="https://www.skizentrum-muggenbrunn.de/preise/"
-            target="_blank"
-            rel="noreferer"
-            >Tickets für das Skigebiet Muggenbrunn können online gekauft werden.</a
-          >
-        </p>
-        <p>
-          <a
-            href="https://wp.datacreate.de/skizentrummuggenbrunn/wp-content/uploads/sites/14/2021/11/2021-Panorma-Muggenbrunn-1.jpg"
-            target="_blank"
-          >
-            <img
-              src="https://wp.datacreate.de/skizentrummuggenbrunn/wp-content/uploads/sites/14/2021/11/2021-Panorma-Muggenbrunn-1.jpg"
-              class="block w-full"
-            />
-          </a>
-        </p>
-      </div>
-      {
-        // <Alert class="!my-6">
-        //   <h3><strong>Kurse abgesagt</strong></h3>
-        //   <p>
-        //     Manchmal ist es einfach nicht einfach und die Lage ändert sich
-        //     schnell. Leider müssen wir die Kurse für Bambini, Beginner und
-        //     Junior Champions jetzt doch absagen.
-        //   </p>
-        //   <p>
-        //     Der Liftbertrieb auf dem Kandel wurde soeben aufgrund starker, nicht
-        //     nachlassender Windböen abgesagt. Bei diesen Verhältnissen können wir
-        //     leider auch die Bambini und Beginner Kurse nicht stattfinden lassen.
-        //     Auch die Anfahrt durch den Kandel bleibt damit nicht ohne erhöhtes
-        //     Risiko.
-        //   </p>
-        //   <p>
-        //     Nach einem wunderschönen ersten Kurstag bei perfekten Verhältnissen
-        //     ist das Wetter heute leider nicht auf unserer Seite. Das ist sehr
-        //     schade, wir hätten euch heute gerne wiedergesehen. Wir bitten um
-        //     euer Verständnis für diese Entscheidung.
-        //   </p>
-        //   <p>
-        //     Die Kurse sind damit aufgrund höherer Gewalt ersatzlos abgesagt.
-        //   </p>
-        // </Alert>
-        // <p>
-        // Grünes Licht: Übernacht kam nochmals Schnee und die Kurse für Bambini,
-        // Beginner und Junior Champions finden am Wochenende auf dem
-        // <a
-        // href="https://www.kandellifte.de/"
-        // target="_blank"
-        // rel="noreferrer"
-        // >
-        // Kandel
-        // </a> statt. Der Skikurs für Champions muss leider abgesagt werden. Wir
-        // freuen uns auf dich und deine Familie!
-        // </p>
-      }
-      {
-        // <Alert class="!my-6">
-        //   <p>
-        //     Die Situation auf dem Kandel wird bei entsprechender Wetterlage
-        //     regelmäßig von der Stadt kontrolliert. Im Falle einer Überlastung
-        //     werden die Zufahrten auf den Kandel gesperrt. Informiert euch bitte am
-        //     Kurstag auf der <a
-        //       href="https://www.stadt-waldkirch.de/start/aktuelle+meldungen/kandelzufahrt.html"
-        //       target="_blank"
-        //       rel="noreferer noopener">Website der Stadt Waldkirch</a
-        //     > über die aktuelle Situation, dort werden Sperrungen bekannt gegeben.
-        //   </p>
-        // </Alert>
-      }
-
-      {
-        // <div class="mx-auto !mt-4 flow-root max-w-3xl space-y-6">
-        // courses.map((course) => (
-        //   <div>
-        //     <h5 class="font-bold">{course.title}</h5>
-        //     <div class="prose mt-2 max-w-2xl">
-        //       <p class="!mb-2 flex items-center gap-x-2">
-        //         <Icon name="clock-24-regular" />
-        //         <span class="font-semibold">Zeit</span>
-        //         <span>{course.duration}</span>
-        //       </p>
-        //       <p class="!mt-2 flex gap-x-2">
-        //         <Icon name="location-24-regular" />
-        //         <span class="flex flex-wrap items-center gap-x-2">
-        //           <span class="font-semibold">
-        //             {course.meetingPointTitle}
-        //           </span>
-        //           <span>{course.meetingPoint}</span>
-        //           <a
-        //             href="/skischule/treffpunkt/"
-        //             class="text-xs font-semibold text-sky-600"
-        //           >
-        //             Wo ist das?
-        //           </a>
-        //         </span>
-        //       </p>
-        //     </div>
-        //   </div>
-        // ))
-        // </div>
-      }
-    </div>
+    <Status_20250123_1300 />
   </div>
   {
     /* 
