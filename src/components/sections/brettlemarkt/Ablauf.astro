@@ -2,6 +2,8 @@
 import clsx from 'clsx'
 import Icon from '@/components/Icon.astro'
 
+const { festhalleLinkProps } = Astro.props
+
 const flow = [
   // {
   //   icon: 'tag-reset-24-regular',
@@ -12,7 +14,7 @@ const flow = [
   {
     icon: 'building-shop-20-regular',
     bgColor: 'bg-green-500',
-    content: `Komm in die <strong>Festhalle Kollnau</strong> und gib deine gebrauchten Ski, Snowboards, Skischuhe, Stöcke, Winterkleidung, Helme, etc. bei unseren ehrenamtlichen Helfern ab.`,
+    content: `Komm in die <a  href='${festhalleLinkProps.href}' target='${festhalleLinkProps.target}' rel='${festhalleLinkProps.rel}' class="link"><strong>Festhalle Kollnau</strong></a> und gib deine gebrauchten Ski, Snowboards, Skischuhe, Stöcke, Winterkleidung, Helme, etc. bei unseren ehrenamtlichen Helfern ab.`,
     note: '12.30 Uhr',
   },
   {
@@ -41,7 +43,7 @@ const flow = [
   {
     icon: 'chat-bubbles-question-24-regular',
     bgColor: 'bg-gray-400',
-    content: `Am Stand unserer <a href="/skischule" class="font-semibold text-gray-900 underline">DSV-Skischule</a> kannst du dich über unser Kursangebot an Ski- und Snowboardkursen für Kinder ab 4 Jahren informieren. Eine Anmeldung direkt möglich und du bekommst einen Rabatt von 10% obendrauf.`,
+    content: `Am Stand unserer <a href="/skischule" class="font-semibold text-gray-900 link">DSV-Skischule</a> kannst du dich über unser Kursangebot an Ski- und Snowboardkursen für Kinder ab 4 Jahren informieren. Eine Anmeldung direkt möglich und du bekommst einen Rabatt von 10% obendrauf.`,
   },
   {
     icon: 'receipt-bag-24-regular',
@@ -57,15 +59,15 @@ const flow = [
 ]
 ---
 
-<div class="pb-24 sm:pb-32">
-  <div class="box">
+<div class='pb-24 sm:pb-32'>
+  <div class='box'>
     <!-- <h2 class="text-center font-hero text-5xl leading-none md:text-7xl">
       Wir bieten Ski- und Snowboardkurse<br />für Kinder ab 4 Jahren.
     </h2> -->
-    <h2 class="md:mx-auto md:max-w-2xl md:text-center">
-      <div class="typo-hero-md">Wir organisieren den Verkauf für dich</div>
+    <h2 class='md:mx-auto md:max-w-2xl md:text-center'>
+      <div class='typo-hero-md'>Wir organisieren den Verkauf für dich</div>
     </h2>
-    <div class="mx-auto mt-6 max-w-2xl space-y-4 text-base">
+    <div class='mx-auto mt-6 max-w-2xl space-y-4 text-base'>
       <p>
         Du möchtest deine gebrauchten Ski, Snowboards, Skischuhe, Stöcke,
         Winterkleidung, Helme, etc. verkaufen? Dann komm zu unserem Skibasar und
@@ -77,35 +79,35 @@ const flow = [
       </p>
     </div>
 
-    <div class="mx-auto mt-8 flow-root max-w-3xl md:mt-12">
-      <ul role="list" class="-mb-8">
+    <div class='mx-auto mt-8 flow-root max-w-3xl md:mt-12'>
+      <ul role='list' class='-mb-8'>
         {
           flow.map((item, index) => (
             <li>
-              <div class="relative pb-8">
+              <div class='relative pb-8'>
                 {index < flow.length - 1 && (
                   <span
-                    class="absolute left-5 top-5 -ml-px h-full "
-                    aria-hidden="true"
+                    class='absolute left-5 top-5 -ml-px h-full'
+                    aria-hidden='true'
                   >
-                    <span class="absolute bottom-8 top-8 w-0.5 bg-black/10" />
+                    <span class='absolute bottom-8 top-8 w-0.5 bg-black/10' />
                   </span>
                 )}
-                <div class="relative flex space-x-3">
+                <div class='relative flex space-x-3'>
                   <div>
                     <span
                       class={clsx(
-                        'flex h-10 w-10 items-center justify-center rounded-full text-white ',
+                        'flex h-10 w-10 items-center justify-center rounded-full text-white',
                         item.bgColor,
                       )}
                     >
                       <Icon name={item.icon} />
                     </span>
                   </div>
-                  <div class="flex min-w-0 flex-1 flex-col justify-between gap-y-2 pt-2 md:flex-row md:gap-x-16">
+                  <div class='flex min-w-0 flex-1 flex-col justify-between gap-y-2 pt-2 md:flex-row md:gap-x-16'>
                     {item.note && (
                       <div
-                        class="text-sm leading-snug text-gray-500 md:order-1 md:whitespace-nowrap md:text-right"
+                        class='text-sm leading-snug text-gray-500 md:order-1 md:whitespace-nowrap md:text-right'
                         set:html={item.note}
                       />
                     )}

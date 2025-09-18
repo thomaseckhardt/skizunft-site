@@ -1,7 +1,12 @@
-@import "./base.css";
-@import "./components.css";
-@import "./utilities.css";
+@import './base.css';
+@import './components.css';
+@import './utilities.css';
 
 :root {
   --header-height: 7.5rem;
+}
+
+.link {
+  /* @apply text-sky-600 underline hover:text-sky-800; */
+  @apply underline underline-offset-2 hover:text-sky-600;
 }

@@ -1,33 +1,38 @@
 ---
 import Ablauf from '@/components/sections/brettlemarkt/Ablauf.astro'
 import Page from '@/layouts/Page.astro'
+
+const festhalleLinkProps = {
+  href: 'https://www.google.com/maps/dir//festhalle+kollnau/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x47911fe0fe2a7c1d:0x57d7beafba0fbe25?sa=X&ved=1t:3061&ictx=111',
+  target: '_blank',
+  rel: 'noopener noreferrer',
+}
 ---
 
-<Page title="Brettlemarkt" description="">
-  <main class="mt-5">
-    <div class="box pb-24 sm:pb-32">
-      <h1 class="typo-hero">Unser Brettlemarkt 2024</h1>
-      <p class="typo-hero-xs mt-2 text-center">
-        am <span class="text-sky-600">26.&nbsp;Oktober&nbsp;2024</span> in der
-        Festhalle Kollnau
+<Page title='Brettlemarkt' description=''>
+  <main class='mt-5'>
+    <div class='box pb-24 sm:pb-32'>
+      <h1 class='typo-hero'>Unser Brettlemarkt 2025</h1>
+      <p class='typo-hero-xs mt-2 text-center'>
+        am <span class='text-sky-600'>25.&nbsp;Oktober&nbsp;2025</span> in der Festhalle
+        Kollnau
       </p>
-      <div class="mx-auto mt-6 max-w-2xl space-y-4 text-base">
+      <div class='mx-auto mt-6 max-w-2xl space-y-4 text-base'>
         <p>
-          Rechtzeitig vor Saisonbeginn kann in der <a
-            href="https://www.google.com/maps/dir//festhalle+kollnau/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x47911fe0fe2a7c1d:0x57d7beafba0fbe25?sa=X&ved=1t:3061&ictx=111"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Festhalle in Kollnau
-          </a> alles, was mit dem Wintersport zu tun hat, verkauft oder erworben
-          werden.
+          Wintersport zum Mitnehmen! Auf dem Brettlemarkt in der <a
+            {...festhalleLinkProps}
+            class='link'>Festhalle Kollnau</a
+          > kannst du deine gebrauchten Sachen verkaufen oder günstig neue Ausrüstung
+          für die kommende Saison finden. Hier findest du alles, was du für die Piste
+          und unsere Ski-/Snowboard-Kurse brauchst: Ski, Snowboards, Schuhe, Helme,
+          Jacken, Hosen und vieles mehr.
         </p>
         <p>
-          Für das leibliche Wohl ist bestens gesorgt, so gibt es Kaffe und
-          Kuchen, Waffeln, Bratwurst und Getränke.
+          Dazu gibt’s wie immer leckere Verpflegung: Kaffee & Kuchen, Waffeln,
+          Bratwurst und Getränke warten auf dich.
         </p>
       </div>
     </div>
   </main>
-  <Ablauf />
+  <Ablauf festhalleLinkProps={festhalleLinkProps} />
 </Page>
