@@ -5,32 +5,37 @@ import Page from '@/layouts/Page.astro'
 const showDownload = false
 ---
 
-<Page title="Jahreshauptversammlung" description="">
+<Page title='Jahreshauptversammlung' description=''>
   <main>
-    <div class="box mt-5">
-      <div class="bg-white pb-24 sm:pb-32">
-        <div class="max-w-2xl md:mx-auto">
-          <h1 class="md:mx-auto md:text-center">
-            <div class="typo-overline">Einladung aller Mitglieder zur</div>
-            <div class="typo-headline">
+    <div class='box mt-5'>
+      <div class='bg-white pb-24 sm:pb-32'>
+        <div class='max-w-2xl md:mx-auto'>
+          <h1 class='md:mx-auto md:text-center'>
+            <div class='typo-overline'>Einladung aller Mitglieder zur</div>
+            <div class='typo-headline'>
               Jahreshaupt­versammlung
-              <span class="sr-only">der Skizunft Kollnau e.V.</span>
-               2024
+              <span class='sr-only'>der Skizunft Kollnau e.V.</span>
+              2024
             </div>
           </h1>
           <div
-            class="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-6 text-gray-600 md:mx-auto md:text-center"
+            class='mt-6 flex flex-wrap justify-center gap-x-6 gap-y-6 text-gray-600 md:mx-auto md:text-center'
           >
-            <p class="flex items-center gap-x-2">
-              <Icon name="calendar-24-regular" />
-              <span>Freitag, 15. November 2024 um&nbsp;20&nbsp;Uhr</span>
+            <p class='flex items-center gap-x-2'>
+              <Icon name='calendar-24-regular' />
+              <span>Freitag, 24. Oktober 2025 um&nbsp;20&nbsp;Uhr</span>
             </p>
-            <p class="flex items-center gap-x-2">
-              <Icon name="location-24-regular" />
+            <p class='flex items-center gap-x-2'>
+              <Icon name='location-24-regular' />
               <span>Acqua Mediterranes Restaurant, Kollnau</span>
             </p>
           </div>
-          <p class="mt-6 text-lg leading-8 text-gray-600">
+          <p class='mt-6 text-lg leading-8 text-rose-800'>
+            <b>Hinweis:</b> Die Verpflegung nach der Versammlung kann in diesem Jahr
+            nicht durch den Verein gestellt werden. Gerne könnt ihr jedoch individuell
+            à la Carte bestellen.
+          </p>
+          <p class='mt-6 text-lg leading-8 text-gray-600'>
             Liebes Mitglied der Skizunft Kollnau, wir, die Vorstandschaft
             möchten dich herzlich zu unserer alljährlichen
             Jahreshaupt­­versammlung einladen. Wir werden gemeinsam auf das
@@ -40,14 +45,14 @@ const showDownload = false
             Meinungen und Ideen hören. Wir hoffen, euch zahlreich bei der
             Jahreshauptversammlung begrüßen zu dürfen.
           </p>
-          <div class="prose mt-10">
+          <div class='prose mt-10'>
             <h2>Tagesordnung</h2>
             <ol>
               <li>Begrüßung</li>
               <li>Gedenken an unsere verstorbenen Mitglieder</li>
               <li>Ordnungsgemäße Einberufung und Beschlussfähigkeit</li>
-              <li>Verlesen des Protokoll der JHV 2023</li>
-              <li>Geschäftsjahr 2023/2024</li>
+              <li>Verlesen des Protokoll der JHV 2024</li>
+              <li>Geschäftsjahr 2024/2025</li>
               <li>Ehrungen und Auszeichnungen</li>
               <li>Tätigkeitsbericht der Fachwarte</li>
               <li>Kassenbericht</li>
@@ -55,6 +60,7 @@ const showDownload = false
               <li>Entlastung der Vorstandschaft</li>
               <li>Wahlen</li>
               <li>Wahl des Kassenprüfers</li>
+              <li><strong>Satzungsänderungen</strong></li>
               <li>Anträge</li>
               <li>Verschiedenes</li>
             </ol>
@@ -62,31 +68,31 @@ const showDownload = false
               showDownload && (
                 <Fragment>
                   <h3>Anhänge</h3>
-                  <div class="not-prose text-sm text-gray-900">
+                  <div class='not-prose text-sm text-gray-900'>
                     <ul
-                      role="list"
-                      class="divide-y divide-gray-100 rounded-md border border-gray-200"
+                      role='list'
+                      class='divide-y divide-gray-100 rounded-md border border-gray-200'
                     >
                       <li>
                         <a
-                          class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"
-                          href="/downloads/Skizunft-Kollnau-JHV-2022-Protokoll.pdf"
+                          class='flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6'
+                          href='/downloads/Skizunft-Kollnau-JHV-2022-Protokoll.pdf'
                           download
-                          target="_blank"
+                          target='_blank'
                         >
-                          <div class="flex w-0 flex-1 items-center">
-                            <Icon name="attach-text-24-regular" size={20} />
-                            <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                              <span class="truncate font-medium">
+                          <div class='flex w-0 flex-1 items-center'>
+                            <Icon name='attach-text-24-regular' size={20} />
+                            <div class='ml-4 flex min-w-0 flex-1 gap-2'>
+                              <span class='truncate font-medium'>
                                 Skizunft-Kollnau-JHV-2022-Protokoll.pdf
                               </span>
-                              <span class="flex-shrink-0 text-gray-400">
+                              <span class='flex-shrink-0 text-gray-400'>
                                 1.4mb
                               </span>
                             </div>
                           </div>
-                          <div class="ml-4 flex-shrink-0">
-                            <div class="font-medium text-sky-600 hover:text-sky-500">
+                          <div class='ml-4 flex-shrink-0'>
+                            <div class='font-medium text-sky-600 hover:text-sky-500'>
                               Download
                             </div>
                           </div>
@@ -99,11 +105,11 @@ const showDownload = false
             }
             <h3>Anträge</h3>
             <p>
-              Bitte stelle deinen Antrag bis zum 13. November 2024 via E-Mail an
+              Bitte stelle deinen Antrag bis zum 22. Oktober 2025 via E-Mail an
               unseren ersten Vorsitzenden Thomas Eckhardt:<br />
               <a
-                href="mailto:thomas.eckhardt@szkollnau.de?subject=Antrag%20JHV"
-                target="_blank"
+                href='mailto:thomas.eckhardt@szkollnau.de?subject=Antrag%20JHV'
+                target='_blank'
               >
                 thomas.eckhardt@szkollnau.de
               </a>
