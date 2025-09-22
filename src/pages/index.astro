@@ -7,10 +7,10 @@ import StatusKurse from '@/components/sections/skischule/StatusKurse.astro'
 ---
 
 <Page
-  title="Ski und Snowboardkurse, Gymnastik und Fitness, Nordic Walking und Wanderungen"
-  description=""
+  title='Ski und Snowboardkurse, Gymnastik und Fitness, Nordic Walking und Wanderungen'
+  description=''
 >
-  <main class="pt-4">
+  <main class='pt-4'>
     <!-- <AlertSection>
       <p>
         <strong>Wichtige Hinweise</strong> zu unseren Kursen am 14./15. Januar
@@ -20,25 +20,25 @@ import StatusKurse from '@/components/sections/skischule/StatusKurse.astro'
       </p>
     </AlertSection> -->
     <HeroHome />
-    <div class="box mt-5">
-      <div class="mb-4 flex justify-center">
+    <div class='box mt-5'>
+      <div class='mb-4 flex justify-center'>
         <img
           src={DsvSkischule.src}
-          alt="DSV Skischule Skizunft Kollnau e.V."
-          class="h-[24px] w-auto"
+          alt='DSV Skischule Skizunft Kollnau e.V.'
+          class='h-[24px] w-auto'
         />
       </div>
-      <h2 class="typo-hero text-center">
+      <h2 class='typo-hero text-center'>
         Wir bieten Ski- und Snowboardkurse<br />für Kinder ab 4 Jahren.
       </h2>
-      <p class="mx-auto mt-6 max-w-xl text-lg leading-8">
+      <p class='mx-auto mt-6 max-w-xl text-lg leading-8'>
         Wir sind deine zertifizierte DSV-Skischule auf dem Kandel und bieten dir
         Kinderkurse für unterschiedliche Könnensstufen.
       </p>
       <div
-        class="mt-6 flex flex-col items-center justify-center gap-x-6 gap-y-6 sm:flex-row"
+        class='mt-6 flex flex-col items-center justify-center gap-x-6 gap-y-6 sm:flex-row'
       >
-        <a href="/buchung/" class="block flex-none">
+        <a href='/buchung/' class='block flex-none'>
           <div
             class={clsx(
               'rounded-full px-6 py-2 text-sm font-semibold shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
@@ -50,17 +50,17 @@ import StatusKurse from '@/components/sections/skischule/StatusKurse.astro'
             Kurs buchen
           </div>
         </a>
-        <a href="/skischule/" class="flex-none text-sm font-semibold leading-6">
-          Mehr erfahren <span aria-hidden="true">→</span>
+        <a href='/skischule/' class='flex-none text-sm font-semibold leading-6'>
+          Mehr erfahren <span aria-hidden='true'>→</span>
         </a>
         <a
-          href="/skischule/kurse"
-          class="flex-none text-sm font-semibold leading-6"
+          href='/skischule/kurse'
+          class='flex-none text-sm font-semibold leading-6'
         >
-          Kurstermine <span aria-hidden="true">→</span>
+          Kurstermine <span aria-hidden='true'>→</span>
         </a>
       </div>
     </div>
-    <StatusKurse class="mt-24 md:mt-32" />
+    <!-- <StatusKurse class="mt-24 md:mt-32" /> -->
   </main>
 </Page>

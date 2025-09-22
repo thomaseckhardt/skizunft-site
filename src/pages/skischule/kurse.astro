@@ -1,8 +1,11 @@
 ---
+import Alert from '@/components/Alert.astro'
+import AlertSection from '@/components/AlertSection.astro'
 import Icon from '@/components/Icon.astro'
 import StatusKurse from '@/components/sections/skischule/StatusKurse.astro'
 import Page from '@/layouts/Page.astro'
 import { fetchStories } from '@/storyblok/utils/fetchStories'
+import clsx from '@/utils/clsx'
 import { dateFormat, dateShortFormat } from '@/utils/date'
 import { resolve } from 'path'
 
@@ -107,19 +110,19 @@ const courses = [
 ]
 ---
 
-<Page title="Skikurse & Snowboardkurse auf dem Kandel" description="">
-  <main class="mt-5 space-y-24 md:space-y-32">
-    <StatusKurse />
-    <div class="box">
+<Page title='Skikurse & Snowboardkurse auf dem Kandel' description=''>
+  <main class='mt-5 space-y-24 md:space-y-32'>
+    <!-- <StatusKurse /> -->
+    <div class='box'>
       <!-- <h2 class="text-center font-hero text-5xl leading-none md:text-7xl">
       Wir bieten Ski- und Snowboardkurse<br />für Kinder ab 4 Jahren.
     </h2> -->
       <h2>
-        <div class="typo-overline">Unser Kursangebot</div>
-        <div class="typo-hero">
+        <div class='typo-overline'>Unser Kursangebot</div>
+        <div class='typo-hero'>
           Wir bieten Ski- und Snowboardkurse<br />für Kinder ab 4 Jahren.
         </div>
-        <div class="prose mx-auto mt-12 max-w-3xl">
+        <div class='prose mx-auto mt-12 max-w-3xl'>
           <p>
             Die Kinder werden in kleinen Gruppen von ausgebildeten Skilehrern
             betreut. Die Kurse gehen über 2 Tage und finden am Samstag und
@@ -127,44 +130,55 @@ const courses = [
           </p>
         </div>
       </h2>
-      <div class="mx-auto mt-8 flow-root max-w-3xl space-y-16 md:mt-16">
+      <Alert class='mx-auto mt-6 max-w-3xl'>
+        <p>
+          <strong>Unsere Ski- und Snowboardkurse 2025/26</strong> sind in Planung
+          und werden spätestens am <time datetime='2025-10-25'
+            >25.&nbsp;Oktober&nbsp;2025</time
+          > an unserem <a href='/brettlemarkt/'>Brettlemarkt</a> zur Buchung freigeschaltet.
+          Auf dem Brettlemarkt beraten unsere Skilehrer:innen zu Fragen der Ausrüstung
+          und es gibt <strong>10 % Rabatt vor Ort</strong> auf das gesamte Kursangebot
+          der DSV-Skischule.
+        </p>
+      </Alert>
+      <div class='mx-auto mt-8 flow-root max-w-3xl space-y-16 md:mt-16'>
         {
           courses.map((course) => (
             <div>
-              <h3 class="">
-                <div class="typo-hero-sm">{course.title}</div>
-                <div class="typo-hero-xs mt-2">{course.age}</div>
+              <h3 class=''>
+                <div class='typo-hero-sm'>{course.title}</div>
+                <div class='typo-hero-xs mt-2'>{course.age}</div>
               </h3>
-              <div class="prose mt-4 max-w-2xl">
+              <div class='prose mt-4 max-w-2xl'>
                 <Fragment set:html={course.description} />
                 {course.dates && course.dates.length > 0 && (
                   <div>
-                    <p class="!mb-2 flex items-center gap-x-2">
-                      <Icon name="calendar-24-regular" />
-                      <span class="font-semibold">Termine</span>
+                    <p class='!mb-2 flex items-center gap-x-2'>
+                      <Icon name='calendar-24-regular' />
+                      <span class='font-semibold'>Termine</span>
                     </p>
-                    <ul class="ml-6">
+                    <ul class='ml-6'>
                       {course.dates.map((date) => (
                         <li>{date.dateFormatted}</li>
                       ))}
                     </ul>
                   </div>
                 )}
-                <p class="!mb-2 flex items-center gap-x-2">
-                  <Icon name="clock-24-regular" />
-                  <span class="font-semibold">Dauer</span>
+                <p class='!mb-2 flex items-center gap-x-2'>
+                  <Icon name='clock-24-regular' />
+                  <span class='font-semibold'>Dauer</span>
                   <span>{course.duration}</span>
                 </p>
-                <p class="!mt-2 flex gap-x-2">
-                  <Icon name="location-24-regular" />
-                  <span class="flex flex-wrap items-center gap-x-2">
-                    <span class="font-semibold">
+                <p class='!mt-2 flex gap-x-2'>
+                  <Icon name='location-24-regular' />
+                  <span class='flex flex-wrap items-center gap-x-2'>
+                    <span class='font-semibold'>
                       {course.meetingPointTitle}
                     </span>
                     <span>{course.meetingPoint}</span>
                     <a
-                      href="/skischule/treffpunkt/"
-                      class="text-xs font-semibold text-sky-600"
+                      href='/skischule/treffpunkt/'
+                      class='text-xs font-semibold text-sky-600'
                     >
                       Wo ist das?
                     </a>
