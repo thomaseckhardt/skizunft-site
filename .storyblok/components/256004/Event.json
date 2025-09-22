@@ -1,0 +1,42 @@
+{
+  "name": "Event",
+  "display_name": "Veranstaltung",
+  "description": null,
+  "created_at": "2023-10-17T07:58:55.281Z",
+  "updated_at": "2023-11-14T10:15:16.548Z",
+  "id": 4736964,
+  "schema": {
+    "date": {
+      "type": "datetime",
+      "disable_time": true,
+      "pos": 0
+    },
+    "title": {
+      "type": "textarea",
+      "pos": 1
+    },
+    "description": {
+      "type": "textarea",
+      "pos": 2
+    },
+    "link": {
+      "type": "multilink",
+      "pos": 3
+    }
+  },
+  "image": null,
+  "preview_field": null,
+  "is_root": true,
+  "preview_tmpl": null,
+  "is_nestable": false,
+  "all_presets": [],
+  "preset_id": null,
+  "real_name": "Veranstaltung",
+  "component_group_uuid": null,
+  "color": "#395ece",
+  "icon": null,
+  "internal_tags_list": [],
+  "internal_tag_ids": [],
+  "content_type_asset_preview": null,
+  "metadata": {}
+}

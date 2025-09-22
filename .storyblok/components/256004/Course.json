@@ -1,0 +1,119 @@
+{
+  "name": "Course",
+  "display_name": null,
+  "description": null,
+  "created_at": "2023-10-11T16:30:31.749Z",
+  "updated_at": "2024-10-03T13:10:40.973Z",
+  "id": 4706002,
+  "schema": {
+    "category": {
+      "type": "option",
+      "pos": 0,
+      "use_uuid": true,
+      "source": "internal_stories",
+      "filter_content_type": [
+        "CourseCategory"
+      ],
+      "required": true,
+      "key": "category"
+    },
+    "startDate": {
+      "type": "datetime",
+      "pos": 1,
+      "disable_time": true,
+      "required": true,
+      "key": "startDate"
+    },
+    "endDate": {
+      "type": "datetime",
+      "pos": 2,
+      "required": true,
+      "disable_time": true,
+      "key": "endDate"
+    },
+    "closed": {
+      "type": "boolean",
+      "inline_label": true,
+      "pos": 3,
+      "key": "closed",
+      "display_name": "Ausgebucht"
+    },
+    "canceled": {
+      "type": "boolean",
+      "inline_label": true,
+      "pos": 4,
+      "key": "canceled",
+      "display_name": "Geschlossen",
+      "description": "Nicht ausgebucht, die Buchung ist aber dennoch geschlossen, weil der Kurs z.B. nicht statt finden kann",
+      "tooltip": true
+    },
+    "seatLimit": {
+      "type": "number",
+      "pos": 5,
+      "min_value": 0,
+      "default_value": "0"
+    },
+    "state": {
+      "type": "option",
+      "pos": 6,
+      "use_uuid": true,
+      "source": "internal",
+      "datasource_slug": "course-status",
+      "default_value": "open",
+      "key": "state"
+    },
+    "bookingStateColor": {
+      "type": "option",
+      "use_uuid": true,
+      "options": [
+        {
+          "_uid": "4fc02cc2-673a-461c-a75c-afdbc7c85dd9",
+          "value": "grey",
+          "name": "Grau"
+        },
+        {
+          "_uid": "78d6b790-68c5-4316-8da7-29ba579b759f",
+          "name": "Grün",
+          "value": "green"
+        },
+        {
+          "_uid": "8d19664d-f159-42e2-b884-5207febac3cb",
+          "value": "blue",
+          "name": "Blau"
+        },
+        {
+          "_uid": "fac93571-2898-4c11-817e-c76326c303b8",
+          "value": "yellow",
+          "name": "Gelb"
+        },
+        {
+          "_uid": "b49a411f-0327-4fa5-b634-8dc56271bd69",
+          "value": "red",
+          "name": "Rot"
+        }
+      ],
+      "default_value": "grey",
+      "key": "statusColor",
+      "pos": 7
+    },
+    "bookingStateMessage": {
+      "type": "textarea",
+      "pos": 8
+    }
+  },
+  "image": null,
+  "preview_field": null,
+  "is_root": true,
+  "preview_tmpl": null,
+  "is_nestable": false,
+  "all_presets": [],
+  "preset_id": null,
+  "real_name": "Course",
+  "component_group_uuid": null,
+  "color": "#1b243f",
+  "icon": null,
+  "internal_tags_list": [],
+  "internal_tag_ids": [],
+  "content_type_asset_preview": null,
+  "metadata": {}
+}

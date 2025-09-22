@@ -1,0 +1,88 @@
+{
+  "name": "CourseCategory",
+  "display_name": null,
+  "description": null,
+  "created_at": "2023-10-11T16:32:10.271Z",
+  "updated_at": "2023-10-12T23:17:52.529Z",
+  "id": 4706003,
+  "schema": {
+    "name": {
+      "type": "text",
+      "pos": 0
+    },
+    "discipline": {
+      "type": "option",
+      "use_uuid": true,
+      "options": [
+        {
+          "_uid": "3b736ac5-db00-431b-bfbb-cf0fca2eb065",
+          "name": "Ski",
+          "value": "Ski"
+        },
+        {
+          "_uid": "7b7716ff-588f-4478-a752-ef0033969948",
+          "value": "Snowboard",
+          "name": "Snowboard"
+        }
+      ],
+      "default_value": "Ski",
+      "pos": 1
+    },
+    "skillLevel": {
+      "type": "option",
+      "use_uuid": true,
+      "options": [
+        {
+          "_uid": "04f586a1-40b8-48e5-8898-d97d8175c834",
+          "name": "Beginner",
+          "value": "Beginner"
+        },
+        {
+          "_uid": "5ad4946c-25a8-471e-9ea3-12917c576ae3",
+          "value": "Junior_Champion",
+          "name": "Junior_Champion"
+        },
+        {
+          "_uid": "6bcdc91b-320b-4617-b7e7-84c483446000",
+          "value": "Champion",
+          "name": "Champion"
+        }
+      ],
+      "default_value": "Beginner",
+      "pos": 2
+    },
+    "minAge": {
+      "type": "number",
+      "default_value": "6",
+      "pos": 3
+    },
+    "maxAge": {
+      "type": "number",
+      "default_value": "13",
+      "pos": 4
+    },
+    "priceMember": {
+      "type": "number",
+      "pos": 5
+    },
+    "price": {
+      "type": "number",
+      "pos": 6
+    }
+  },
+  "image": null,
+  "preview_field": null,
+  "is_root": true,
+  "preview_tmpl": null,
+  "is_nestable": false,
+  "all_presets": [],
+  "preset_id": null,
+  "real_name": "CourseCategory",
+  "component_group_uuid": null,
+  "color": "#1b243f",
+  "icon": null,
+  "internal_tags_list": [],
+  "internal_tag_ids": [],
+  "content_type_asset_preview": null,
+  "metadata": {}
+}
