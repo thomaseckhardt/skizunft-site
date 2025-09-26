@@ -1,19 +1,25 @@
+import { MODE } from 'astro:env/client';
+import { STORYBLOK_VERSION } from 'astro:env/server';
+
+export const getMode = () => {
+  return MODE ?? 'development';
+};
+
 export const isDevelopment = () => {
-  return import.meta.env.PUBLIC_ENV === 'development'
-}
+  return MODE === 'development' || MODE === undefined;
+};
+export const isProduction = () => {
+  return MODE === 'production';
+};
 
 export const isPreview = () => {
-  return import.meta.env.PUBLIC_ENV === 'preview'
-}
+  return MODE === 'preview';
+};
 
-export const isProduction = () => {
-  return import.meta.env.PUBLIC_ENV === 'production'
-}
-
-export const isSSR = () => {
-  return import.meta.env.SSR
-}
+export const isStaging = () => {
+  return MODE === 'staging';
+};
 
 export const getStoryblokVersion = (): 'published' | 'draft' => {
-  return isProduction() ? 'published' : 'draft'
-}
+  return STORYBLOK_VERSION;
+};

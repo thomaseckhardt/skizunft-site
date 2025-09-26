@@ -1,42 +1,194 @@
 ---
 import Icon from '@/components/Icon.astro'
 import Page from '@/layouts/Page.astro'
+import { createStoryblokAsset } from '@/utils/storyblok/asset'
+import Image from '@/components/shared/Image.astro'
+import clsx from 'clsx'
 
 // Fira Sans
 ---
 
-<Page title="Wanderungen" description="">
+<Page title='Fitness' description=''>
   <main>
-    <div class="box mt-12">
-      <h2
-        class="mt-2 font-hero text-4xl leading-none tracking-tight md:text-7xl"
+    <h1 class='sr-only'>Unsere Fitnesskurse & Präventionsangebote</h1>
+
+    <section>
+      <div
+        class='relative isolate overflow-hidden bg-white px-6 py-12 lg:overflow-visible lg:px-0'
       >
-        Haltung und Bewegung durch Ganzkörpertraining
-      </h2>
-      <div class="max-w-2xl">
-        <p class="mt-6 text-lg leading-8">
-          Damit du den täglichen Belastungen besser gewachsen bist. Durch
-          Bewegungsmangel, langes Sitzen und Stehen hervorgerufene
-          Fehlbelastungen unseres Körpers gehören zu den Problemen der heutigen
-          Zeit. Das Ziel des Kurses ist funktionale Verhaltensweisen sowie eine
-          bewusste und aktive Körperhaltung zu erlernen. Die in diesem Kurs
-          vermittelten Trainingsmaßnahmen helfen, Beschwerden vorzubeugen.
-        </p>
+        <div
+          class='mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-end lg:gap-y-10'
+        >
+          <div
+            class='lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8'
+          >
+            <div class='lg:pr-4'>
+              <div class='lg:max-w-lg'>
+                <h2>
+                  <span class='text-base/7 font-semibold text-sky-600'>
+                    Ausgezeichneter Präventionskurs
+                  </span>
+                  <span
+                    class={clsx(
+                      'mt-2 block text-pretty',
+                      // 'text-4xl font-semibold tracking-tight text-gray-600 sm:text-5xl'
+                      'font-hero text-4xl leading-none tracking-tight md:text-7xl',
+                    )}
+                  >
+                    Haltung und Bewegung durch Ganzkörper­­kräftigung
+                  </span>
+                </h2>
+                <p class='mt-6 text-xl/8 text-gray-700'>
+                  Durch Bewegungsmangel, langes Sitzen und Stehen hervorgerufene
+                  Fehlbelastungen unseres Körpers gehören zu den Problemen der
+                  heutigen Zeit. Schwerpunkt des Kurses sind Übungen zur
+                  allgemeinen körperlichen Aktivierung und Kräftigung sowie zur
+                  Verbesserung von Koordination und Körperwahrnehmung um
+                  Beschwerden im Alltag vorzubeugen.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class='lg:col-start-2 lg:row-start-1 lg:items-end lg:overflow-hidden'
+          >
+            <Image
+              image={createStoryblokAsset(
+                // 'https://a.storyblok.com/f/256004/2674x1782/321f9dde50/pinguin-fitness-praeventionskurs.jpg',
+                'https://a.storyblok.com/f/256004/1200x800/1293eec247/pinguin-fitness-praeventionskurs-logos.jpg',
+              )}
+              width='592'
+              class='mt-auto block'
+            />
+          </div>
+        </div>
+        <div class='mx-auto mt-12 max-w-7xl px-8'>
+          <div class='sm:grid sm:gap-x-8 lg:grid-cols-3 lg:gap-x-12'>
+            <dl
+              class='grid gap-y-4 text-base/7 text-gray-600 sm:grid-cols-2 md:col-span-2 md:gap-y-3'
+            >
+              <div class='relative pl-9 sm:row-span-3'>
+                <dt class='inline font-semibold text-gray-600'>
+                  <Icon
+                    name='person-starburst-24-regular'
+                    class='absolute left-1 top-0.5'
+                  />
+                  Leitung:
+                </dt>
+                <dd class='inline'>
+                  <br />Monika Franz<br />DTB-Rückentrainerin,<br />
+                  staatl. gepr. Übungsleiterin (P‑Lizenz)
+                </dd>
+              </div>
+              <div class='relative pl-9'>
+                <dt class='inline font-semibold text-gray-600'>
+                  <Icon
+                    name='clock-24-regular'
+                    class='absolute left-1 top-0.5'
+                  />
+                  Zeiten:
+                </dt>
+                <dd class='inline'>
+                  Dienstags, <time datetime='19:00'>19</time> – <time
+                    datetime='20:00'>20</time
+                  > Uhr
+                </dd>
+              </div>
+              <div class='relative pl-9'>
+                <dt class='inline font-semibold text-gray-600'>
+                  <Icon
+                    name='calendar-24-regular'
+                    class='absolute left-1 top-0.5'
+                  />
+                  Termine:
+                </dt>
+                <dd class='inline'>
+                  10 Abende ab <time datetime='2025-09-30'
+                    >30. September 2025</time
+                  >
+                </dd>
+              </div>
+              <div class='relative pl-9'>
+                <dt class='inline font-semibold text-gray-600'>
+                  <Icon
+                    name='location-24-regular'
+                    class='absolute left-1 top-0.5'
+                  />
+                  Ort:
+                </dt>
+                <dd class='inline'>Festhalle Kollnau</dd>
+              </div>
+            </dl>
+            <div class='flex flex-col items-center'>
+              <p class='text-base/6 text-gray-600'>
+                <span class='flex items-baseline justify-center gap-x-2'>
+                  <span
+                    class='-mt-1 text-5xl font-semibold tracking-tight text-gray-900'
+                    >50 €</span
+                  >
+                </span>
+                <span>Vereinsmitglieder</span>
+              </p>
+              <p
+                class='mt-4 flex items-baseline justify-center gap-x-2 text-base/6 text-gray-600'
+              >
+                <span class='font-semibold tracking-tight text-gray-900'
+                  >60 €</span
+                >
+                <span>Nicht-Mitglieder</span>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mt-6 flex flex-wrap gap-x-6 gap-y-6 text-gray-600">
-        <p class="flex items-center gap-x-2">
-          <Icon name="calendar-24-regular" />
-          <span class="italic">Derzeit keine Termine</span>
-        </p>
-        <p class="flex items-center gap-x-2">
-          <Icon name="clock-24-regular" />
-          <span>Dienstags, 19:30 Uhr</span>
-        </p>
-        <p class="flex items-center gap-x-2">
-          <Icon name="location-24-regular" />
-          <span>Festhalle Kollnau</span>
-        </p>
+
+      <div class='bg-white py-12'>
+        <div class='mx-auto max-w-7xl px-6 lg:px-8'>
+          <h2 class='text-center text-lg/8 text-gray-600'>
+            Der Kurs wird von der Kooperationsgemeinschaft gesetzlicher
+            Krankenkassen als Präventionskurs anerkannt
+          </h2>
+          <div
+            class='mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5'
+          >
+            <img
+              width='158'
+              height='48'
+              src='https://tailwindcss.com/plus-assets/img/logos/158x48/transistor-logo-gray-900.svg'
+              alt='Transistor'
+              class='col-span-2 max-h-12 w-full object-contain lg:col-span-1'
+            />
+            <img
+              width='158'
+              height='48'
+              src='https://tailwindcss.com/plus-assets/img/logos/158x48/reform-logo-gray-900.svg'
+              alt='Reform'
+              class='col-span-2 max-h-12 w-full object-contain lg:col-span-1'
+            />
+            <img
+              width='158'
+              height='48'
+              src='https://tailwindcss.com/plus-assets/img/logos/158x48/tuple-logo-gray-900.svg'
+              alt='Tuple'
+              class='col-span-2 max-h-12 w-full object-contain lg:col-span-1'
+            />
+            <img
+              width='158'
+              height='48'
+              src='https://tailwindcss.com/plus-assets/img/logos/158x48/savvycal-logo-gray-900.svg'
+              alt='SavvyCal'
+              class='col-span-2 max-h-12 w-full object-contain sm:col-start-2 lg:col-span-1'
+            />
+            <img
+              width='158'
+              height='48'
+              src='https://tailwindcss.com/plus-assets/img/logos/158x48/statamic-logo-gray-900.svg'
+              alt='Statamic'
+              class='col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1'
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   </main>
 </Page>

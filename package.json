@@ -17,6 +17,10 @@
     "sb-pull-components": "dotenv -e ./.env.local cross-var storyblok pull-components --space %STORYBLOK_SPACE%",
     "sb-generate-types": "dotenv -e ./.env.local cross-var storyblok-generate-ts source=./components.%STORYBLOK_SPACE%.json target=./src/types/storyblok-component-types.d.ts",
     "sb-graphiql": "dotenv -e ./.env.local cross-var open https://gapi-browser.storyblok.com/?token=%STORYBLOK_TOKEN%",
+    "sb": "storyblok",
+    "sb:components": "storyblok components pull --space 256004 --verbose --separate-files",
+    "sb:types": "storyblok types generate --space 256004 --verbose --separate-files --strict --type-prefix Storyblok",
+    "sb:sync": "pnpm run sb:components && pnpm run sb:types",
     "tailwindcss": "npx tailwindcss -i ./src/styles/base.css -o ./tailwind/base.css --watch",
     "func:send-booking-confirmation": "netlify functions:invoke send-booking-confirmation-v2 --payload '{\"firstName\": \"John\", \"lastName\": \"Doe\", \"email\": \"thomas.eckhardt@web.de\", \"orderNumber\": \"123456\"}' --port 9999"
   },
@@ -41,9 +45,11 @@
     "@tailwindcss/typography": "^0.5.15",
     "@types/react": "^18.3.16",
     "@types/react-dom": "^18.3.5",
+    "@unpic/astro": "^1.0.1",
     "alpinejs": "^3.14.7",
     "astro": "^4.16.17",
     "astro-icon": "^1.1.4",
+    "blurhash": "^2.0.5",
     "clsx": "^2.1.1",
     "convex": "^1.17.3",
     "googleapis": "^144.0.0",
@@ -56,6 +62,7 @@
     "react-hook-form": "^7.54.1",
     "storyblok-rich-text-astro-renderer": "^2.2.2",
     "tailwindcss": "^3.4.16",
+    "unpic": "^4.1.3",
     "uuid": "^10.0.0",
     "vite": "^5.4.11"
   },
@@ -69,6 +76,7 @@
     "prettier": "^3.4.2",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.8",
+    "storyblok": "^4.6.3",
     "storyblok-js-client": "^6.10.3"
   }
 }

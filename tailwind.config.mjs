@@ -75,7 +75,7 @@ export default {
       },
       fontFamily: {
         hero: ['verveine', ...defaultTheme.fontFamily.sans],
-        sans: ["Mona Sans", ...defaultTheme.fontFamily.sans],
+        // sans: ["Mona Sans", ...defaultTheme.fontFamily.sans],
         // display: [
         //   ["Mona Sans", ...defaultTheme.fontFamily.sans],
         //   { fontVariationSettings: '"wdth" 125' },

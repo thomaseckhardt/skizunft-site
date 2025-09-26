@@ -1,0 +1,205 @@
+---
+import type { StoryblokAsset } from '@/types/storyblok';
+import clsx from '@/utils/clsx';
+import { getExtension, getFocusObjectPosition } from '@/utils/storyblok/asset';
+import { parseIntUndefined } from '@/utils/string';
+import { checkIfSvg, getRemoteSvgDimensions } from '@/utils/svg';
+import { Image as UnpicImage } from '@unpic/astro/base';
+import { transform, type StoryblokOperations } from 'unpic/providers/storyblok';
+import { inferRemoteSize } from 'astro:assets';
+import { getPixels } from '@unpic/pixels';
+import { blurhashToImageCssObject, type CSSObject } from '@unpic/placeholder';
+import { encode } from 'blurhash';
+import { transformUrl } from 'unpic';
+
+interface PropsDefault {
+  class?: string;
+  alt?: string;
+  loading?: 'lazy' | 'eager';
+  sizes?: string;
+  width?: number | string;
+  height?: number | string;
+  aspectRatio?: number | string;
+  layout?: 'constrained' | 'fixed' | 'fullWidth';
+  unstyled?: boolean;
+  positionedByFocus?: boolean;
+  placeholder?: 'none' | 'blurhash';
+}
+
+interface PropsImage extends PropsDefault {
+  image: StoryblokAsset;
+}
+
+interface PropsSrc extends PropsDefault {
+  src: string;
+}
+
+export type Props = PropsImage | PropsSrc;
+
+const {
+  class: className,
+  sizes,
+  layout,
+  loading = 'lazy',
+  unstyled = false,
+  positionedByFocus = false,
+  placeholder = 'blurhash',
+  ...props
+} = Astro.props;
+
+const storyblokImage = (props as PropsImage)?.image;
+const src = storyblokImage?.filename || (props as PropsSrc).src;
+const alt = storyblokImage?.alt || props.alt || '';
+const ext = getExtension(src, { withoutDot: true }) ?? '';
+const isSupported = ['jpg', 'png', 'svg'].includes(ext);
+const isSvg = checkIfSvg(src);
+let width = parseIntUndefined(props.width);
+let height = parseIntUndefined(props.height);
+let originalWidth = 0;
+let originalHeight = 0;
+let originalAspectRatio = 1;
+
+if (src && isSvg) {
+  const svgSize = await getRemoteSvgDimensions(src);
+  if (svgSize?.width && svgSize?.height) {
+    originalWidth = svgSize.width;
+    originalHeight = svgSize.height;
+    originalAspectRatio = originalWidth / originalHeight;
+  }
+}
+
+if (src && isSupported) {
+  try {
+    const { width, height } = await inferRemoteSize(src);
+    originalWidth = width;
+    originalHeight = height;
+    originalAspectRatio = originalWidth / originalHeight;
+  } catch (error) {
+    console.error('Error getting image size:', error);
+  }
+}
+
+let aspectRatio =
+  typeof props.aspectRatio === 'string'
+    ? props.aspectRatio
+        .split('/')
+        .map((a) => a.trim())
+        .map(parseFloat)
+        .reduce((a, b) => a / b)
+    : typeof props.aspectRatio === 'number'
+      ? props.aspectRatio
+      : originalAspectRatio;
+
+if (width && width > 0 && !height) {
+  height = (1 / aspectRatio) * width;
+}
+if (height && height > 0 && !width) {
+  width = aspectRatio * height;
+}
+if (!width && !height) {
+  width = originalWidth;
+  height = originalHeight;
+}
+
+// @see https://unpic.pics/providers/storyblok/
+const storyblokFilters: Record<string, string> = {};
+if (storyblokImage?.focus) {
+  storyblokFilters.focal = storyblokImage.focus;
+}
+storyblokFilters.format = 'webp';
+const operations: StoryblokOperations = {
+  filters: storyblokFilters,
+};
+
+// NOTE: There's a bug in the UnpicImage getDataFromUrl function that causes
+// it to fail when the image is not available. The function does not round
+// the width and height values to integers. This causes the fetch to fail with
+// a 502 Bad Gateway error.
+// getDataFromUrl https://a.storyblok.com/f/324161/3600x2400/e2beb2fea5/jr-korpa-9prz33ohjr4-unsplash.jpg/m/100x66.66666666666666
+// Error loading image https://a.storyblok.com/f/324161/3600x2400/e2beb2fea5/jr-korpa-9prz33ohjr4-unsplash.jpg Error: Failed to fetch image: Bad Gateway
+let placeholderStyle: CSSObject | undefined = undefined;
+if ((props as PropsImage).image?.filename && width && height) {
+  const blurhashWidth = 100;
+  const blurhashHeight = Math.floor((height / width) * blurhashWidth);
+
+  const urlBlurhashThumb = transformUrl(
+    {
+      url: src,
+      width: blurhashWidth,
+      height: blurhashHeight,
+    },
+    {
+      storyblok: {
+        ...operations,
+        filters: {
+          ...operations.filters,
+          format: 'jpeg',
+        },
+      },
+    },
+  );
+
+  try {
+    const jpgData = await getPixels(urlBlurhashThumb ?? '');
+    const data = Uint8ClampedArray.from(jpgData.data);
+    const blurhash = encode(data, jpgData.width, jpgData.height, 8, 8);
+    placeholderStyle = blurhashToImageCssObject(blurhash);
+  } catch (error) {
+    console.error('Error loading image', src, error);
+  }
+}
+
+const objectPositon =
+  positionedByFocus && storyblokImage?.focus
+    ? getFocusObjectPosition({
+        focus: storyblokImage?.focus,
+        width: originalWidth,
+        height: originalHeight,
+      })
+    : undefined;
+
+const style = objectPositon ? { objectPosition: objectPositon } : {};
+
+if (!isSupported) {
+  console.error(`Unsupported image format "${ext}"`, src);
+}
+---
+
+{
+  isSvg ? (
+    <img
+      src={src}
+      alt={alt}
+      class={className}
+      width={originalWidth}
+      height={originalHeight}
+      loading={loading}
+    />
+  ) : isSupported ? (
+    <UnpicImage
+      class={clsx(className)}
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      sizes={sizes}
+      placeholder="none"
+      priority={loading === 'eager'}
+      transformer={transform}
+      style={{
+        ...style,
+        ...(placeholder === 'blurhash' ? placeholderStyle : undefined),
+      }}
+      layout={layout}
+      unstyled={unstyled}
+      operations={operations}
+    />
+  ) : (
+    <div class={clsx(className)}>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform font-mono text-xs">
+        Unsupported image format "{ext}"<br />
+        {src}
+      </div>
+    </div>
+  )
+}
