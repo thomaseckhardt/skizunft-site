@@ -1,35 +1,99 @@
 ---
 import Icon from '@/components/Icon.astro'
 import Page from '@/layouts/Page.astro'
+import { createStoryblokAsset } from '@/utils/storyblok/asset'
+import Image from '@/components/shared/Image.astro'
+import clsx from 'clsx'
 ---
 
 <Page title='Wanderungen' description=''>
   <main>
-    <div class='box mt-12'>
-      <h2
-        class='mt-2 font-hero text-4xl leading-none tracking-tight md:text-7xl'
-      >
-        Franz-Josef-Schmieder-Wanderung
-      </h2>
-      <div class='max-w-2xl'>
-        <p class='mt-6 text-lg leading-8'>
-          Unsere „Wurst und Wecken” Wanderung führt die Teilnehmer durch den
-          Kandelwald zur Gustav-Beck-Hütte: Individuell, in der Gruppe oder mit
-          dem Mountainbike. Für das leibliche Wohl wird bestens gesorgt. Die
-          Tour findet bei jedem Wetter statt. Gäste sind herzlich willkommen.
-        </p>
-      </div>
-      <div class='mt-6 flex flex-wrap gap-x-6 gap-y-6 text-gray-600'>
-        <p class='flex items-center gap-x-2'>
-          <Icon name='calendar-24-regular' />
-          <span class='font-semibold'>Am</span>
-          <span>26. Oktober 2025</span>
-        </p>
-        <p class='flex items-center gap-x-2'>
-          <Icon name='location-24-regular' />
-          <span class='font-semibold'>Treffpunkt</span>
-          <span>10 Uhr Rathausplatz, Kollnau</span>
-        </p>
+    <div class='box mt-12 bg-white'>
+      <div class='mx-auto lg:flex'>
+        <div
+          class='mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:min-w-full lg:max-w-none lg:flex-none lg:gap-y-8'
+        >
+          <div class='lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8'>
+            <h2
+              class='mt-2 font-hero text-4xl leading-none tracking-tight md:text-7xl'
+            >
+              Franz Josef Schmieder Wanderung
+            </h2>
+            <div class='max-w-2xl'>
+              <p class='mt-6 text-lg leading-8'>
+                Unsere „Wurst und Wecken” Wanderung führt die Teilnehmer durch
+                den Kandelwald zur Gustav-Beck-Hütte: Individuell, in der Gruppe
+                oder mit dem Mountainbike. Für das leibliche Wohl wird bestens
+                gesorgt. Die Tour findet bei jedem Wetter statt. Gäste sind
+                herzlich willkommen.
+              </p>
+            </div>
+            <div class='mt-6 flex flex-wrap gap-x-6 gap-y-6 text-gray-600'>
+              <p class='flex items-center gap-x-2'>
+                <Icon name='calendar-24-regular' />
+                <span class='font-semibold'>Am</span>
+                <span>26. Oktober 2025</span>
+              </p>
+              <p class='flex items-center gap-x-2'>
+                <Icon name='location-24-regular' />
+                <span class='font-semibold'>Treffpunkt</span>
+                <span>10 Uhr Rathausplatz, Kollnau</span>
+              </p>
+            </div>
+          </div>
+          <div
+            class='flex flex-wrap items-start justify-end gap-6 sm:gap-8 lg:contents'
+          >
+            <div
+              class='w-0 flex-auto lg:ml-auto lg:w-auto lg:flex-none lg:self-end'
+            >
+              <Image
+                image={createStoryblokAsset(
+                  'https://a.storyblok.com/f/256004/1280x960/bdd5f532bc/wuw-01.jpg',
+                )}
+                class='max-sm:w-[30rem] aspect-[7/5] w-[37rem] max-w-none rounded-2xl bg-gray-50 object-cover'
+                width='592'
+              />
+            </div>
+            <div
+              class='contents lg:col-span-2 lg:col-end-2 lg:ml-auto lg:flex lg:w-[37rem] lg:items-start lg:justify-end lg:gap-x-8'
+            >
+              <div
+                class='max-sm:w-40 order-first flex w-64 flex-none justify-end self-end lg:w-auto'
+              >
+                <Image
+                  image={createStoryblokAsset(
+                    'https://a.storyblok.com/f/256004/1600x1200/1adbaa61d7/wuw-02.jpg',
+                  )}
+                  class='aspect-[4/3] w-[24rem] max-w-none flex-none rounded-2xl bg-gray-50 object-cover'
+                  width='384'
+                />
+              </div>
+              <div
+                class='flex w-96 flex-auto justify-end lg:w-auto lg:flex-none'
+              >
+                <Image
+                  image={createStoryblokAsset(
+                    'https://a.storyblok.com/f/256004/1673x1254/0875d02ff6/wuw-03.jpg',
+                  )}
+                  class='max-sm:w-[30rem] aspect-[7/5] w-[37rem] max-w-none flex-none rounded-2xl bg-gray-50 object-cover'
+                  width='592'
+                />
+              </div>
+              <div
+                class='hidden sm:block sm:w-0 sm:flex-auto lg:w-auto lg:flex-none'
+              >
+                <Image
+                  image={createStoryblokAsset(
+                    'https://a.storyblok.com/f/256004/1450x1088/05c6feea8f/wuw-04.jpg',
+                  )}
+                  class='aspect-[4/3] w-[24rem] max-w-none rounded-2xl bg-gray-50 object-cover'
+                  width='384'
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </main>

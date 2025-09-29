@@ -151,19 +151,21 @@ const courses = [
               </h3>
               <div class='prose mt-4 max-w-2xl'>
                 <Fragment set:html={course.description} />
-                {course.dates && course.dates.length > 0 && (
-                  <div>
-                    <p class='!mb-2 flex items-center gap-x-2'>
-                      <Icon name='calendar-24-regular' />
-                      <span class='font-semibold'>Termine</span>
-                    </p>
+                <div>
+                  <p class='!mb-2 flex items-center gap-x-2'>
+                    <Icon name='calendar-24-regular' />
+                    <span class='font-semibold'>Termine</span>
+                  </p>
+                  {course.dates && course.dates.length > 0 ? (
                     <ul class='ml-6'>
                       {course.dates.map((date) => (
                         <li>{date.dateFormatted}</li>
                       ))}
                     </ul>
-                  </div>
-                )}
+                  ) : (
+                    <i>Aktuell keine Termine verfügbar.</i>
+                  )}
+                </div>
                 <p class='!mb-2 flex items-center gap-x-2'>
                   <Icon name='clock-24-regular' />
                   <span class='font-semibold'>Dauer</span>
