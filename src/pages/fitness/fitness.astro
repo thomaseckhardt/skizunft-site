@@ -12,10 +12,10 @@ import clsx from 'clsx'
   <main>
     <h1 class='sr-only'>Unsere Fitnesskurse & Präventionsangebote</h1>
 
-    <section>
-      <div
-        class='relative isolate overflow-hidden bg-white px-6 py-12 lg:overflow-visible lg:px-0'
-      >
+    <section
+      class='isolate overflow-hidden bg-white px-6 py-12 lg:overflow-visible lg:px-2'
+    >
+      <div class='relative'>
         <div
           class='mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-end lg:gap-y-10'
         >
@@ -26,7 +26,7 @@ import clsx from 'clsx'
               <div class='lg:max-w-lg'>
                 <h2>
                   <span class='text-base/7 font-semibold text-sky-600'>
-                    Ausgezeichneter Präventionskurs
+                    Anerkannter Präventionskurs
                   </span>
                   <span
                     class={clsx(
@@ -55,7 +55,8 @@ import clsx from 'clsx'
             <Image
               image={createStoryblokAsset(
                 // 'https://a.storyblok.com/f/256004/2674x1782/321f9dde50/pinguin-fitness-praeventionskurs.jpg',
-                'https://a.storyblok.com/f/256004/1200x800/1293eec247/pinguin-fitness-praeventionskurs-logos.jpg',
+                // 'https://a.storyblok.com/f/256004/1200x800/1293eec247/pinguin-fitness-praeventionskurs-logos.jpg',
+                'https://a.storyblok.com/f/256004/1536x1024/6f4b86a52b/pinguin-gymnastik.jpeg',
               )}
               width='592'
               class='mt-auto block'
@@ -63,11 +64,11 @@ import clsx from 'clsx'
           </div>
         </div>
         <div class='mx-auto mt-12 max-w-7xl px-8'>
-          <div class='sm:grid sm:gap-x-8 lg:grid-cols-3 lg:gap-x-12'>
-            <dl
-              class='grid gap-y-4 text-base/7 text-gray-600 sm:grid-cols-2 md:col-span-2 md:gap-y-3'
-            >
-              <div class='relative pl-9 sm:row-span-3'>
+          <dl
+            class='grid gap-y-4 text-base/6 text-gray-600 sm:grid-cols-2 md:col-span-2 md:grid-cols-3 md:gap-y-3'
+          >
+            <div class='space-y-3'>
+              <div class='relative pl-9'>
                 <dt class='inline font-semibold text-gray-600'>
                   <Icon
                     name='person-starburst-24-regular'
@@ -79,6 +80,28 @@ import clsx from 'clsx'
                   <br />Monika Franz<br />DTB-Rückentrainerin,<br />
                   staatl. gepr. Übungsleiterin (P‑Lizenz)
                 </dd>
+              </div>
+              <div class='relative pl-9'>
+                <dt class='inline font-semibold text-gray-600'>
+                  <Icon
+                    name='call-24-regular'
+                    class='absolute left-1 top-0.5'
+                  />
+                  Kontakt:
+                </dt>
+                <dd class='inline'>07681 8632</dd>
+              </div>
+            </div>
+            <div class='space-y-3'>
+              <div class='relative pl-9'>
+                <dt class='inline font-semibold text-gray-600'>
+                  <Icon
+                    name='info-24-regular'
+                    class='absolute left-1 top-0.5'
+                  />
+                  Hinweis:
+                </dt>
+                <dd class='inline'>Bitte bringt eine Gymnastikmatte mit.</dd>
               </div>
               <div class='relative pl-9'>
                 <dt class='inline font-semibold text-gray-600'>
@@ -103,9 +126,9 @@ import clsx from 'clsx'
                   Termine:
                 </dt>
                 <dd class='inline'>
-                  10 Abende ab <time datetime='2025-09-30'
-                    >30. September 2025</time
-                  >
+                  10 Abende ab <time datetime='2025-09-30'>
+                    30. September 2025
+                  </time>
                 </dd>
               </div>
               <div class='relative pl-9'>
@@ -118,40 +141,72 @@ import clsx from 'clsx'
                 </dt>
                 <dd class='inline'>Festhalle Kollnau</dd>
               </div>
-            </dl>
-            <div class='flex flex-col items-center'>
-              <p class='text-base/6 text-gray-600'>
-                <span class='flex items-baseline justify-center gap-x-2'>
-                  <span
-                    class='-mt-1 text-5xl font-semibold tracking-tight text-gray-900'
-                    >50 €</span
-                  >
-                </span>
-                <span>Vereinsmitglieder</span>
-              </p>
-              <p
-                class='mt-4 flex items-baseline justify-center gap-x-2 text-base/6 text-gray-600'
-              >
-                <span class='font-semibold tracking-tight text-gray-900'
-                  >60 €</span
-                >
-                <span>Nicht-Mitglieder</span>
-              </p>
             </div>
-          </div>
+            <div class='flex flex-col items-center'>
+              <dt class='font-semibold text-gray-600'>Kursgebühren</dt>
+              <dd class='mt-3 text-center'>
+                <div class='text-base/6 text-gray-600'>
+                  <span>Vereinsmitglieder</span>
+                  <span class='flex items-baseline justify-center gap-x-2'>
+                    <span
+                      class='-mt-2 text-5xl font-semibold tracking-tight text-gray-900'
+                    >
+                      50 €
+                    </span>
+                  </span>
+                </div>
+                <div
+                  class='mt-2 flex items-baseline justify-center gap-x-2 text-base/6 text-gray-600'
+                >
+                  <span>Nicht-Mitglieder</span>
+                  <span class='font-semibold tracking-tight text-gray-900'>
+                    60 €
+                  </span>
+                </div>
+              </dd>
+            </div>
+          </dl>
         </div>
       </div>
-
-      <div class='bg-white py-12'>
+      <div class='mt-12 bg-white'>
         <div class='mx-auto max-w-7xl px-6 lg:px-8'>
-          <h2 class='text-center text-lg/8 text-gray-600'>
-            Der Kurs wird von der Kooperationsgemeinschaft gesetzlicher
-            Krankenkassen als Präventionskurs anerkannt
-          </h2>
+          <h2 class='typo-hero-md text-center'>Deine Krankenkasse zahlt</h2>
+          <p class='mt-2 text-center'>
+            Deine Krankenkasse bezahlt bis zu 100% 10 Wochen Präventionskurs.
+          </p>
+          <p class='text-center'>
+            <a
+              href='https://a.storyblok.com/f/256004/x/0350632bb0/skizunft-kollnau-haltung-und-bewegung-durch-ganzkorperkraftigung-ku-be-8ugjx3.pdf'
+              target='_blank'
+              class='flex-none text-sm font-semibold leading-6'
+            >
+              Zertifikat (PDF) <span aria-hidden='true'>→</span>
+            </a>
+          </p>
+          <p class='my-2 text-center font-semibold text-sky-600'>
+            Kurs-ID KU-BE-8UGJX3
+          </p>
           <div
-            class='mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5'
+            class='mt-6 flex items-center justify-center gap-x-8 md:gap-x-12'
           >
-            <img
+            <Image
+              image={createStoryblokAsset(
+                'https://a.storyblok.com/f/256004/800x888/99931f7443/deutscher-standard-praevention-logo.jpg',
+              )}
+              width='160'
+              layout='constrained'
+              placeholder='none'
+            />
+            <Image
+              image={createStoryblokAsset(
+                'https://a.storyblok.com/f/256004/302x317/19b4b09fbb/dosb-signet_spg_2021_farbe_rgb.png',
+              )}
+              width='160'
+              layout='constrained'
+              placeholder='none'
+            />
+
+            <!-- <img
               width='158'
               height='48'
               src='https://tailwindcss.com/plus-assets/img/logos/158x48/transistor-logo-gray-900.svg'
@@ -185,10 +240,320 @@ import clsx from 'clsx'
               src='https://tailwindcss.com/plus-assets/img/logos/158x48/statamic-logo-gray-900.svg'
               alt='Statamic'
               class='col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1'
-            />
+            /> -->
           </div>
         </div>
       </div>
     </section>
+
+    <div>
+      <div
+        class='relative isolate overflow-hidden bg-white px-6 py-12 lg:overflow-visible lg:px-0'
+      >
+        <div
+          class='mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-end lg:gap-y-10'
+        >
+          <div
+            class='grid gap-y-20 lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8'
+          >
+            <section class='lg:pr-4'>
+              <div class='lg:max-w-lg'>
+                <h2>
+                  <span
+                    class={clsx(
+                      'block text-pretty',
+                      'font-hero text-4xl leading-none tracking-tight md:text-7xl',
+                    )}
+                  >
+                    Gesund und Aktiv 50 Plus
+                  </span>
+                </h2>
+                <p class='mt-6 text-xl/8 text-gray-700'>
+                  Unser Fitnesskurs für alle ab 50 Jahren, die ihre
+                  Beweglichkeit, Kraft und Ausdauer verbessern möchten. Der Kurs
+                  umfasst ein abwechslungsreiches Programm mit Übungen zur
+                  Kräftigung, Dehnung und Koordination. Gemeinsam in der Gruppe
+                  fördern wir die Gesundheit und das Wohlbefinden im Alltag.
+                </p>
+              </div>
+              <dl class='mt-8 space-y-4 text-gray-600'>
+                <div class='relative pl-9 sm:row-span-3'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='person-starburst-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Leitung:
+                  </dt>
+                  <dd class='inline'>
+                    <br />Monika Franz<br />DTB-Rückentrainerin,<br />
+                    staatl. gepr. Übungsleiterin (P‑Lizenz)
+                  </dd>
+                </div>
+                <div class='relative pl-9'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='call-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Kontakt:
+                  </dt>
+                  <dd class='inline'>07681 8632</dd>
+                </div>
+                <div class='relative pl-9'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='clock-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Zeiten:
+                  </dt>
+                  <dd class='inline'>
+                    Mittwochs, <time datetime='19:00'>19</time> – <time
+                      datetime='20:00'>20</time
+                    > Uhr
+                  </dd>
+                </div>
+                <div class='relative pl-9'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='location-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Ort:
+                  </dt>
+                  <dd class='inline'>Georg-Schindler-Halle Kollnau</dd>
+                </div>
+              </dl>
+            </section>
+            <section class='lg:pr-4'>
+              <div class='lg:max-w-lg'>
+                <h2>
+                  <span
+                    class={clsx(
+                      'block text-pretty',
+                      'font-hero text-4xl leading-none tracking-tight md:text-7xl',
+                    )}
+                  >
+                    Fitnessgymnastik
+                  </span>
+                </h2>
+                <p class='mt-6 text-xl/8 text-gray-700'>
+                  Unser Fitnesskurs für alle, die ihre allgemeine Fitness und
+                  Gesundheit verbessern möchten. Der Kurs umfasst ein
+                  abwechslungsreiches Programm mit Übungen zur Kräftigung,
+                  Dehnung und Koordination, zur Verbesserung der Haltung und
+                  Stärkung des Herz-Kreislaufs.
+                </p>
+              </div>
+              <dl class='mt-8 space-y-4 text-gray-600'>
+                <div class='relative pl-9 sm:row-span-3'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='person-starburst-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Leitung:
+                  </dt>
+                  <dd class='inline'>
+                    <br />Tanja Trenkle<br />
+                    DOSB-Übungsleiterin B<br />
+                    Sport in der Prävention
+                  </dd>
+                </div>
+                <div class='relative pl-9'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='call-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Kontakt:
+                  </dt>
+                  <dd class='inline'>07681 12345</dd>
+                </div>
+                <div class='relative pl-9'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='clock-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Zeiten:
+                  </dt>
+                  <dd class='inline'>
+                    Mittwochs, <time datetime='20:00'>20</time> – <time
+                      datetime='21:30'>21:30</time
+                    > Uhr
+                  </dd>
+                </div>
+                <div class='relative pl-9'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='location-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Ort:
+                  </dt>
+                  <dd class='inline'>Georg-Schindler-Halle Kollnau</dd>
+                </div>
+              </dl>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div
+        class='relative isolate overflow-hidden bg-white px-6 py-12 lg:overflow-visible lg:px-0'
+      >
+        <div
+          class='mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-end lg:gap-y-10'
+        >
+          <div
+            class='grid gap-y-20 lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8'
+          >
+            <section class='lg:pr-4'>
+              <div class='lg:max-w-lg'>
+                <Image
+                  image={createStoryblokAsset(
+                    'https://a.storyblok.com/f/256004/1536x1024/89ea4df488/pinguin-tartanbahn.jpeg',
+                  )}
+                  width='592'
+                  class='mt-auto block'
+                />
+                <h2>
+                  <span
+                    class={clsx(
+                      'block text-pretty',
+                      'font-hero text-4xl leading-none tracking-tight md:text-7xl',
+                    )}
+                  >
+                    Sportabzeichentraining
+                  </span>
+                </h2>
+                <p class='mt-6 text-xl/8 text-gray-700'>
+                  Unser Sportabzeichentraining für alle Altersgruppen, die das
+                  Deutsche Sportabzeichen erwerben oder ihre Fitness verbessern
+                  möchten. Das Training startet alljährlich ab Ende Mai.
+                </p>
+              </div>
+              <dl class='mt-8 space-y-4 text-gray-600'>
+                <div class='relative pl-9 sm:row-span-3'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='person-starburst-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Leitung:
+                  </dt>
+                  <dd class='inline'>Karin Schaller</dd>
+                </div>
+                <div class='relative pl-9'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='call-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Kontakt:
+                  </dt>
+                  <dd class='inline'>07681 4938383</dd>
+                </div>
+                <div class='relative pl-9'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='clock-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Zeiten:
+                  </dt>
+                  <dd class='inline'>
+                    Dienstags, <time datetime='18:30'>18:30</time> Uhr
+                  </dd>
+                </div>
+                <div class='relative pl-9'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='location-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Ort:
+                  </dt>
+                  <dd class='inline'>Stadion Kollnau</dd>
+                </div>
+              </dl>
+            </section>
+            <section class='lg:pr-4'>
+              <div class='lg:max-w-lg'>
+                <Image
+                  image={createStoryblokAsset(
+                    'https://a.storyblok.com/f/256004/1536x1024/b603928e8a/pinguin-nordic-walking.jpeg',
+                  )}
+                  width='592'
+                  class='mt-auto block'
+                />
+                <h2>
+                  <span
+                    class={clsx(
+                      'block text-pretty',
+                      'font-hero text-4xl leading-none tracking-tight md:text-7xl',
+                    )}
+                  >
+                    Nordic Walking Treff
+                  </span>
+                </h2>
+                <p class='mt-6 text-xl/8 text-gray-700'>
+                  Unser ganzjähriger Nordic Walking Treff für alle
+                  Interessierten.
+                </p>
+              </div>
+              <dl class='mt-8 space-y-4 text-gray-600'>
+                <div class='relative pl-9 sm:row-span-3'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='person-starburst-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Leitung:
+                  </dt>
+                  <dd class='inline'>Manuela Schmieder-Rösch</dd>
+                </div>
+                <div class='relative pl-9'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='call-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Kontakt:
+                  </dt>
+                  <dd class='inline'>07681 4938135</dd>
+                </div>
+                <div class='relative pl-9'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='clock-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Zeiten:
+                  </dt>
+                  <dd class='inline'>
+                    Montags, <time datetime='18:30'>18:30</time> Uhr
+                  </dd>
+                </div>
+                <div class='relative pl-9'>
+                  <dt class='inline font-semibold text-gray-600'>
+                    <Icon
+                      name='location-24-regular'
+                      class='absolute left-1 top-0.5'
+                    />
+                    Treffpunkt:
+                  </dt>
+                  <dd class='inline'>Rathausplatz Kollnau</dd>
+                </div>
+              </dl>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 </Page>
