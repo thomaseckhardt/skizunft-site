@@ -232,8 +232,10 @@ export default async () => {
       },
       {} as Record<string, typeof attendees>,
     )
-    Object.entries(attendeesByCourse).forEach(([course, courseAttendees]) => {
-      saveGoogleSheet({
+
+    console.log('Save course sheets to google sheet')
+    for (const [course, courseAttendees] of Object.entries(attendeesByCourse)) {
+      await saveGoogleSheet({
         tabName: course,
         data: [
           [
@@ -269,7 +271,7 @@ export default async () => {
           }),
         ],
       })
-    })
+    }
 
     const StatOrder = [
       'ski-bambini',
@@ -325,23 +327,13 @@ export default async () => {
       `Aktualisiert am ${new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })}`,
     ])
 
-    saveGoogleSheet({
+    console.log('Save stats to google sheet')
+    await saveGoogleSheet({
       tabName: 'overview',
       data: statsData,
-      // data: [
-      //   ['Kurs', 'Teilnehmerzahl'],
-      //   ...stats.map((stat) => {
-      //     return [stat.course, stat.totalAttendees]
-      //   }),
-      //   [],
-      //   [
-      //     `Aktualisiert am ${new Date().toLocaleString('de-DE', {
-      //       timeZone: 'Europe/Berlin',
-      //     })}`,
-      //   ],
-      // ],
     })
-    console.log('Save stats to google sheet')
+
+    console.log('Sync completed successfully!')
   } catch (error) {
     console.log('error', error)
   }
