@@ -2,57 +2,77 @@ import { fetchStoriesSSR } from '@/storyblok/utils/fetchStoriesSSR'
 import { api } from '@db/api'
 import type { Config } from '@netlify/functions'
 import { ConvexHttpClient } from 'convex/browser'
-import { google } from 'googleapis'
+import { GoogleSpreadsheet } from 'google-spreadsheet'
+import { JWT } from 'google-auth-library'
 
-// Fix with https://www.npmjs.com/package/google-spreadsheet
+const SCOPES = [
+  'https://www.googleapis.com/auth/spreadsheets',
+  'https://www.googleapis.com/auth/drive.file',
+]
 
 // ----------------------------------------------------------------------------
 // GOOGLE SHEET
 // ----------------------------------------------------------------------------
 
-const serviceAccountKeyFile = `google-api-credentials.json`
-const sheetId = `1y_-G-GcrR_70YL3B1pOFRFiVKdNKEPHNZ5KVmRaKLlk`
-
-const getGoogleClient = async () => {
-  const auth = new google.auth.GoogleAuth({
-    keyFile: serviceAccountKeyFile,
-    scopes: [`https://www.googleapis.com/auth/spreadsheets`],
-  })
-  const authClient = await auth.getClient()
-  return google.sheets({
-    version: 'v4',
-    auth: authClient,
-  })
+// Get Sheet ID from environment variable
+const getSheetId = () => {
+  const sheetId = Netlify.env.get('GOOGLE_SHEET_ID')
+  if (!sheetId) {
+    throw new Error('GOOGLE_SHEET_ID environment variable is not set')
+  }
+  return sheetId
 }
 
-const writeGoogleSheet = async (
-  googleClient,
-  sheetId,
-  tabName,
-  range,
-  data,
-) => {
-  await googleClient.spreadsheets.values.update({
-    spreadsheetId: sheetId,
-    range: `${tabName}!${range}`,
-    valueInputOption: 'USER_ENTERED',
-    // insertDataOption: "INSERT_ROWS",
-    resource: {
-      majorDimension: 'ROWS',
-      values: data,
-    },
+// Initialize Google Spreadsheet with JWT authentication
+const getGoogleSpreadsheet = async () => {
+  const sheetId = getSheetId()
+
+  // Get service account credentials from environment or file
+  const serviceAccountEmail = Netlify.env.get('GOOGLE_SERVICE_ACCOUNT_EMAIL')
+  const privateKey = Netlify.env
+    .get('GOOGLE_PRIVATE_KEY')
+    ?.replace(/\\n/g, '\n')
+
+  if (!serviceAccountEmail || !privateKey) {
+    throw new Error(
+      'GOOGLE_SERVICE_ACCOUNT_EMAIL and GOOGLE_PRIVATE_KEY environment variables are required',
+    )
+  }
+
+  const serviceAccountAuth = new JWT({
+    email: serviceAccountEmail,
+    key: privateKey,
+    scopes: SCOPES,
   })
+
+  const doc = new GoogleSpreadsheet(sheetId, serviceAccountAuth)
+  await doc.loadInfo()
+
+  return doc
 }
 
+// Save data to a specific sheet tab
 const saveGoogleSheet = async ({ tabName, data, range = 'A1:Z500' }) => {
-  // Generating google sheet client
-  const googleClient = await getGoogleClient()
+  const doc = await getGoogleSpreadsheet()
 
-  await writeGoogleSheet(googleClient, sheetId, tabName, range, data)
+  // Get or create the sheet
+  let sheet = doc.sheetsByTitle[tabName]
+  if (!sheet) {
+    sheet = await doc.addSheet({ title: tabName })
+  }
 
-  // TODO: update sytling
-  // https://developers.google.com/sheets/api/samples/formatting
-  // TODO: update formulas
+  // Clear existing content
+  await sheet.clear()
+
+  // Update with new data using setHeaderRow and addRows
+  if (data.length > 0) {
+    await sheet.setHeaderRow(data[0])
+    if (data.length > 1) {
+      await sheet.addRows(data.slice(1))
+    }
+  }
+
+  console.log(`Successfully updated sheet: ${tabName}`)
 }
 
 // ----------------------------------------------------------------------------
@@ -189,16 +209,19 @@ export default async () => {
       ],
     })
 
-    const attendeesByCourse = attendees.reduce((acc, attendee) => {
-      attendee.courses.forEach((course) => {
-        if (!acc[course]) {
-          acc[course] = []
-        }
-        acc[course].push(attendee)
-      })
-      return acc
-    }, {})
-    Object.entries(attendeesByCourse).forEach(([course, attendees]) => {
+    const attendeesByCourse = attendees.reduce(
+      (acc, attendee) => {
+        attendee.courses.forEach((course) => {
+          if (!acc[course]) {
+            acc[course] = []
+          }
+          acc[course].push(attendee)
+        })
+        return acc
+      },
+      {} as Record<string, typeof attendees>,
+    )
+    Object.entries(attendeesByCourse).forEach(([course, courseAttendees]) => {
       saveGoogleSheet({
         tabName: course,
         data: [
@@ -214,7 +237,7 @@ export default async () => {
             'Buchung-ID',
             'Teilnehmer-ID',
           ],
-          ...attendees.map((attendee) => {
+          ...courseAttendees.map((attendee) => {
             const booking = bookings.find(
               (booking) => booking._id === attendee.bookingId,
             )
@@ -248,10 +271,10 @@ export default async () => {
     const getStatOrder = (course) =>
       StatOrder.findIndex((order) => course.startsWith(order))
     const stats = Object.entries(attendeesByCourse)
-      .map(([course, attendees]) => {
+      .map(([course, courseAttendees]) => {
         const courseStory = coursesBySlug[course]
         const seatLimit = courseStory?.content?.seatLimit || '?'
-        const totalAttendees = attendees.length
+        const totalAttendees = courseAttendees.length
         console.log('course', course)
         return {
           course,
