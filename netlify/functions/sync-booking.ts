@@ -29,15 +29,26 @@ const getGoogleSpreadsheet = async () => {
 
   // Get service account credentials from environment or file
   const serviceAccountEmail = Netlify.env.get('GOOGLE_SERVICE_ACCOUNT_EMAIL')
-  const privateKey = Netlify.env
-    .get('GOOGLE_PRIVATE_KEY')
-    ?.replace(/\\n/g, '\n')
+  let privateKey = Netlify.env.get('GOOGLE_PRIVATE_KEY')
 
   if (!serviceAccountEmail || !privateKey) {
     throw new Error(
       'GOOGLE_SERVICE_ACCOUNT_EMAIL and GOOGLE_PRIVATE_KEY environment variables are required',
     )
   }
+
+  // Handle different newline encodings
+  // In Netlify, the private key might be stored with literal \n characters
+  // Replace them with actual newlines
+  privateKey = privateKey.replace(/\\n/g, '\n')
+
+  // Debugging: Log partial info (without exposing the full key)
+  console.log('Service Account Email:', serviceAccountEmail)
+  console.log('Private Key starts with:', privateKey.substring(0, 50))
+  console.log(
+    'Private Key ends with:',
+    privateKey.substring(privateKey.length - 50),
+  )
 
   const serviceAccountAuth = new JWT({
     email: serviceAccountEmail,
