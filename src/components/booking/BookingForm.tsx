@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { useFieldArray, useForm, useWatch } from 'react-hook-form'
 import { api } from '../../../convex/_generated/api'
 import useLocation from './useLocation'
-import { DevTool } from '@hookform/devtools'
+// import { DevTool } from '@hookform/devtools'
 import { isDevelopment } from '@/utils/env'
 
 const bookingSteps = [
@@ -102,7 +102,7 @@ export default function BookingForm({
   const location = useLocation()
   const params = new URLSearchParams(location.search)
   const discountCode = params.get('code')
-  const discountRate = discountCode === 'brettlemarkt2024' ? 0.1 : 0
+  const discountRate = discountCode === 'brettlemarkt2025' ? 0.1 : 0
 
   // --------------------------------------------------
 
@@ -369,7 +369,7 @@ export default function BookingForm({
           />
         </div>
       </form>
-      {isDevelopment() && <DevTool control={control} />}
+      {/* {isDevelopment() && <DevTool control={control} />} */}
     </>
   )
 }

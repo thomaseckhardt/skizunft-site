@@ -4,11 +4,11 @@ import Page from '@/layouts/Page.astro'
 import { fetchStories } from '@/storyblok/utils/fetchStories'
 
 const bookingClosedRedirect = '/buchung/geschlossen/'
-const bookingEnabled = import.meta.env.PUBLIC_BOOKING_ENABLED === "true"
+const bookingEnabled = import.meta.env.PUBLIC_BOOKING_ENABLED === 'true'
 const internalBookingKey = 'H7GFS8JHA91HFASLKWH7GFG'
-// if (!bookingEnabled) {
-//   return Astro.redirect(bookingClosedRedirect)
-// }
+if (!bookingEnabled) {
+  return Astro.redirect(bookingClosedRedirect)
+}
 
 const categoryOrder = ['Beginner', 'Junior_Champion', 'Champion']
 
@@ -117,11 +117,11 @@ const disciplines = {
 }
 ---
 
-<Page title="Buchung" description="">
+<Page title='Buchung' description=''>
   <main>
-    <div class="box mt-5">
+    <div class='box mt-5'>
       <BookingPage
-        client:only="react"
+        client:only='react'
         disciplines={disciplines}
         courses={courses}
         courseCategories={courseCategories}
