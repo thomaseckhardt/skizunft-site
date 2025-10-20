@@ -1,9 +1,11 @@
 import { ConvexProvider, ConvexReactClient } from 'convex/react'
 import BookingForm from './BookingForm'
 
-const convex = new ConvexReactClient(
-  import.meta.env.PUBLIC_CONVEX_URL as string,
-)
+const convexURL = import.meta.env.PUBLIC_CONVEX_URL as string
+
+const convex = new ConvexReactClient(convexURL)
+
+console.log('BookingPage using Convex URL:', convexURL)
 
 export default function BookingPage({
   disciplines,
