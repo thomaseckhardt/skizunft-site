@@ -8,8 +8,9 @@ import react from '@astrojs/react'
 import icon from 'astro-icon'
 import netlify from '@astrojs/netlify'
 
-const env = loadEnv('', process.cwd(), 'STORYBLOK')
-const PUBLIC_ENV = loadEnv('', process.cwd(), 'PUBLIC_ENV')
+const env = loadEnv(process.env.NODE_ENV ?? 'development', process.cwd(), '');
+
+console.log('ENV VARS', { PUBLIC_CONVEX_URL: env.PUBLIC_CONVEX_URL })
 
 // https://astro.build/config
 export default defineConfig({

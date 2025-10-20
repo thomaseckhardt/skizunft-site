@@ -42,14 +42,6 @@ const getGoogleSpreadsheet = async () => {
   // Replace them with actual newlines
   privateKey = privateKey.replace(/\\n/g, '\n')
 
-  // Debugging: Log partial info (without exposing the full key)
-  console.log('Service Account Email:', serviceAccountEmail)
-  console.log('Private Key starts with:', privateKey.substring(0, 50))
-  console.log(
-    'Private Key ends with:',
-    privateKey.substring(privateKey.length - 50),
-  )
-
   const serviceAccountAuth = new JWT({
     email: serviceAccountEmail,
     key: privateKey,
@@ -340,6 +332,6 @@ export default async () => {
 }
 
 export const config: Config = {
-  // schedule: '@daily',
+  // schedule: '@hourly',
   schedule: '*/15 * * * *',
 }
