@@ -282,6 +282,9 @@ export default async () => {
     console.log('Save course sheets to google sheet (all types)')
     for (const course of allCourseTypes as string[]) {
       const courseAttendees = attendeesByCourse[course] || []
+      const updatedAt = `Aktualisiert am ${new Date().toLocaleString('de-DE', {
+        timeZone: 'Europe/Berlin',
+      })}`
       await saveGoogleSheet({
         tabName: course,
         data: [
@@ -320,6 +323,8 @@ export default async () => {
               attendee._id,
             ]
           }),
+          [],
+          [updatedAt],
         ],
       })
     }
