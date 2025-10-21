@@ -37,7 +37,7 @@ const courseOrderIndex = (base: string) => {
   return idx === -1 ? Number.MAX_SAFE_INTEGER : idx
 }
 
-const sortCourseTypes = (a: string, b: string) => {
+const sortCourses = (a: string, b: string) => {
   const A = splitCourseSlug(a)
   const B = splitCourseSlug(b)
   const oa = courseOrderIndex(A.base)
@@ -92,7 +92,7 @@ const getGoogleSpreadsheet = async () => {
 }
 
 // Save data to a specific sheet tab
-const saveGoogleSheet = async ({ tabName, data, range = 'A1:Z500' }) => {
+const saveGoogleSheet = async ({ tabName, data }) => {
   const doc = await getGoogleSpreadsheet()
 
   // Get or create the sheet
@@ -274,19 +274,19 @@ export default async () => {
         {} as Record<string, typeof attendees>,
       )
 
-    // Build full list of course type slugs from CourseCategory and sort them
-    const allCourseTypes: string[] = Array.from(
-      new Set((courseCategoryStories as any[]).map((s: any) => String(s.slug))),
-    ).sort(sortCourseTypes)
+    // Build full list of course type slugs from Courses and sort them
+    const allCourseSlugs: string[] = Array.from(
+      new Set((courseStories as any[]).map((s: any) => String(s.slug))),
+    ).sort(sortCourses)
 
     console.log('Save course sheets to google sheet (all types)')
-    for (const course of allCourseTypes as string[]) {
-      const courseAttendees = attendeesByCourse[course] || []
+    for (const courseSlug of allCourseSlugs as string[]) {
+      const courseAttendees = attendeesByCourse[courseSlug] || []
       const updatedAt = `Aktualisiert am ${new Date().toLocaleString('de-DE', {
         timeZone: 'Europe/Berlin',
       })}`
       await saveGoogleSheet({
-        tabName: course,
+        tabName: courseSlug,
         data: [
           [
             'Buchungsnummer',
@@ -331,9 +331,7 @@ export default async () => {
 
     // Stats should be based on actual courseStories (not CourseCategory),
     // but still include empty ones and be ordered by COURSE_ORDER and numeric suffix
-    const courseSlugsSorted = courseStories
-      .map((s) => s.slug)
-      .sort(sortCourseTypes)
+    const courseSlugsSorted = courseStories.map((s) => s.slug).sort(sortCourses)
 
     const stats = courseSlugsSorted.map((course) => {
       const courseStory = coursesBySlug[course]
