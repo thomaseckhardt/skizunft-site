@@ -142,10 +142,13 @@ export default async () => {
     })
 
     const coursesBySlug: Record<string, (typeof courseStories)[number]> =
-      courseStories.reduce((acc, course) => {
-        acc[course.slug] = course
-        return acc
-      }, {} as Record<string, (typeof courseStories)[number]>)
+      courseStories.reduce(
+        (acc, course) => {
+          acc[course.slug] = course
+          return acc
+        },
+        {} as Record<string, (typeof courseStories)[number]>,
+      )
 
     // {
     //   _creationTime: 1699815755564.7134,
@@ -257,18 +260,19 @@ export default async () => {
       ],
     })
 
-    const attendeesByCourse: Record<string, typeof attendees> = attendees.reduce(
-      (acc, attendee) => {
-        attendee.courses.forEach((course) => {
-          if (!acc[course]) {
-            acc[course] = []
-          }
-          acc[course].push(attendee)
-        })
-        return acc
-      },
-      {} as Record<string, typeof attendees>,
-    )
+    const attendeesByCourse: Record<string, typeof attendees> =
+      attendees.reduce(
+        (acc, attendee) => {
+          attendee.courses.forEach((course) => {
+            if (!acc[course]) {
+              acc[course] = []
+            }
+            acc[course].push(attendee)
+          })
+          return acc
+        },
+        {} as Record<string, typeof attendees>,
+      )
 
     // Build full list of course type slugs from CourseCategory and sort them
     const allCourseTypes: string[] = Array.from(
@@ -320,15 +324,26 @@ export default async () => {
       })
     }
 
-    // Stats for all course types (including empty ones), ordered by COURSE_ORDER and index
-    const stats = allCourseTypes.map((course) => {
+    // Stats should be based on actual courseStories (not CourseCategory),
+    // but still include empty ones and be ordered by COURSE_ORDER and numeric suffix
+    const courseSlugsSorted = courseStories
+      .map((s) => s.slug)
+      .sort(sortCourseTypes)
+
+    const stats = courseSlugsSorted.map((course) => {
       const courseStory = coursesBySlug[course]
-      const seatLimit = courseStory?.content?.seatLimit || '?'
+      const rawSeatLimit = courseStory?.content?.seatLimit
+      const seatLimit =
+        typeof rawSeatLimit === 'number'
+          ? rawSeatLimit
+          : Number.isFinite(Number(rawSeatLimit))
+            ? Number(rawSeatLimit)
+            : undefined
       const totalAttendees = attendeesByCourse[course]?.length ?? 0
       return {
         course,
         totalAttendees,
-        seatLimit,
+        seatLimit: seatLimit ?? '?',
         availableSeats:
           typeof seatLimit === 'number' ? seatLimit - totalAttendees : '',
       }
