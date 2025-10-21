@@ -65,8 +65,8 @@ const withBackoff = async <T>(
   fn: () => Promise<T>,
   {
     retries = 6,
-    baseDelayMs = 500,
-    maxDelayMs = 30000,
+    baseDelayMs = 1000,
+    maxDelayMs = 60000,
     factor = 2,
     jitter = true,
   }: BackoffOptions = {},
