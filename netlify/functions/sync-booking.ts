@@ -10,6 +10,15 @@ const SCOPES = [
   'https://www.googleapis.com/auth/drive.file',
 ]
 
+const COURSE_ORDER = [
+  'ski-bambini',
+  'ski-beginner',
+  'ski-junior-champion',
+  'ski-champion',
+  'ski-erwachsene',
+  'snowboard',
+]
+
 // ----------------------------------------------------------------------------
 // GOOGLE SHEET
 // ----------------------------------------------------------------------------
@@ -265,14 +274,7 @@ export default async () => {
       })
     }
 
-    const StatOrder = [
-      'ski-bambini',
-      'ski-beginner',
-      'ski-junior-champion',
-      'ski-champion',
-      'ski-erwachsene',
-      'snowboard',
-    ]
+    const StatOrder = COURSE_ORDER
     const getStatOrder = (course) =>
       StatOrder.findIndex((order) => course.startsWith(order))
     const stats = Object.entries(attendeesByCourse)
