@@ -19,6 +19,34 @@ const COURSE_ORDER = [
   'snowboard',
 ]
 
+// Helpers to sort course slugs like "ski-beginner-1", "ski-beginner-2" by
+// base category order (COURSE_ORDER) and then numeric suffix.
+const splitCourseSlug = (slug: string) => {
+  const lastDash = slug.lastIndexOf('-')
+  if (lastDash > -1) {
+    const maybeNum = slug.slice(lastDash + 1)
+    if (/^\d+$/.test(maybeNum)) {
+      return { base: slug.slice(0, lastDash), index: parseInt(maybeNum, 10) }
+    }
+  }
+  return { base: slug, index: 0 }
+}
+
+const courseOrderIndex = (base: string) => {
+  const idx = COURSE_ORDER.findIndex((prefix) => base.startsWith(prefix))
+  return idx === -1 ? Number.MAX_SAFE_INTEGER : idx
+}
+
+const sortCourseTypes = (a: string, b: string) => {
+  const A = splitCourseSlug(a)
+  const B = splitCourseSlug(b)
+  const oa = courseOrderIndex(A.base)
+  const ob = courseOrderIndex(B.base)
+  if (oa !== ob) return oa - ob
+  if (A.base !== B.base) return A.base.localeCompare(B.base)
+  return A.index - B.index
+}
+
 // ----------------------------------------------------------------------------
 // GOOGLE SHEET
 // ----------------------------------------------------------------------------
@@ -106,10 +134,18 @@ export default async () => {
       sort_by: 'content.startDate:asc',
     })
 
-    const coursesBySlug = courseStories.reduce((acc, course) => {
-      acc[course.slug] = course
-      return acc
-    }, {})
+    // Load all course types from CourseCategory so we can always
+    // create/update every per-course sheet and include them in stats
+    const courseCategoryStories = await fetchStoriesSSR({
+      content_type: 'CourseCategory',
+      per_page: 50,
+    })
+
+    const coursesBySlug: Record<string, (typeof courseStories)[number]> =
+      courseStories.reduce((acc, course) => {
+        acc[course.slug] = course
+        return acc
+      }, {} as Record<string, (typeof courseStories)[number]>)
 
     // {
     //   _creationTime: 1699815755564.7134,
@@ -221,7 +257,7 @@ export default async () => {
       ],
     })
 
-    const attendeesByCourse = attendees.reduce(
+    const attendeesByCourse: Record<string, typeof attendees> = attendees.reduce(
       (acc, attendee) => {
         attendee.courses.forEach((course) => {
           if (!acc[course]) {
@@ -234,8 +270,14 @@ export default async () => {
       {} as Record<string, typeof attendees>,
     )
 
-    console.log('Save course sheets to google sheet')
-    for (const [course, courseAttendees] of Object.entries(attendeesByCourse)) {
+    // Build full list of course type slugs from CourseCategory and sort them
+    const allCourseTypes: string[] = Array.from(
+      new Set((courseCategoryStories as any[]).map((s: any) => String(s.slug))),
+    ).sort(sortCourseTypes)
+
+    console.log('Save course sheets to google sheet (all types)')
+    for (const course of allCourseTypes as string[]) {
+      const courseAttendees = attendeesByCourse[course] || []
       await saveGoogleSheet({
         tabName: course,
         data: [
@@ -256,17 +298,21 @@ export default async () => {
               (booking) => booking._id === attendee.bookingId,
             )
             return [
-              `${booking?.orderNumber}`,
+              `${booking?.orderNumber ?? ''}`,
               `${attendee.lastName}`,
               `${attendee.firstName}`,
               `${attendee.age}`,
               `${attendee.member}`,
               `${attendee.courses.join(', ')}`,
-              new Date(booking?._creationTime).toLocaleString('de-DE', {
-                timeZone: 'Europe/Berlin',
-              }),
-              `${attendee.lastName} ${attendee.firstName} (${attendee.age}) ✆ ${booking.phone}`,
-              booking?._id,
+              booking
+                ? new Date(booking._creationTime).toLocaleString('de-DE', {
+                    timeZone: 'Europe/Berlin',
+                  })
+                : '',
+              booking
+                ? `${attendee.lastName} ${attendee.firstName} (${attendee.age}) ✆ ${booking.phone}`
+                : '',
+              booking?._id ?? '',
               attendee._id,
             ]
           }),
@@ -274,24 +320,19 @@ export default async () => {
       })
     }
 
-    const StatOrder = COURSE_ORDER
-    const getStatOrder = (course) =>
-      StatOrder.findIndex((order) => course.startsWith(order))
-    const stats = Object.entries(attendeesByCourse)
-      .map(([course, courseAttendees]) => {
-        const courseStory = coursesBySlug[course]
-        const seatLimit = courseStory?.content?.seatLimit || '?'
-        const totalAttendees = courseAttendees.length
-        console.log('course', course)
-        return {
-          course,
-          totalAttendees,
-          seatLimit,
-          availableSeats: seatLimit - totalAttendees,
-        }
-      })
-      .sort((a, b) => a.course.localeCompare(b.course))
-      .sort((a, b) => getStatOrder(a.course) - getStatOrder(b.course))
+    // Stats for all course types (including empty ones), ordered by COURSE_ORDER and index
+    const stats = allCourseTypes.map((course) => {
+      const courseStory = coursesBySlug[course]
+      const seatLimit = courseStory?.content?.seatLimit || '?'
+      const totalAttendees = attendeesByCourse[course]?.length ?? 0
+      return {
+        course,
+        totalAttendees,
+        seatLimit,
+        availableSeats:
+          typeof seatLimit === 'number' ? seatLimit - totalAttendees : '',
+      }
+    })
 
     const statsData = [
       ['Kurs', 'Teilnehmerzahl', 'Plätze gesamt', 'Noch frei'],
