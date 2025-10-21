@@ -48,6 +48,53 @@ const sortCourses = (a: string, b: string) => {
 }
 
 // ----------------------------------------------------------------------------
+// Backoff utilities for Sheets write-quota (HTTP 429)
+// ----------------------------------------------------------------------------
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+type BackoffOptions = {
+  retries?: number
+  baseDelayMs?: number
+  maxDelayMs?: number
+  factor?: number
+  jitter?: boolean
+}
+
+const withBackoff = async <T>(
+  fn: () => Promise<T>,
+  {
+    retries = 6,
+    baseDelayMs = 500,
+    maxDelayMs = 30000,
+    factor = 2,
+    jitter = true,
+  }: BackoffOptions = {},
+): Promise<T> => {
+  let delay = baseDelayMs
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      return await fn()
+    } catch (error: any) {
+      const status = error?.response?.status ?? error?.status
+      if (status !== 429) throw error
+      if (attempt === retries) throw error
+      const jitterMs = jitter ? Math.random() * (delay * 0.5) : 0
+      const wait = Math.min(delay + jitterMs, maxDelayMs)
+      console.log(
+        `Sheets 429 - backing off ${Math.round(wait)}ms (attempt ${
+          attempt + 1
+        }/${retries})`,
+      )
+      await sleep(wait)
+      delay = Math.min(delay * factor, maxDelayMs)
+    }
+  }
+  // Unreachable, but TS appeasement
+  throw new Error('withBackoff: exhausted without throwing')
+}
+
+// ----------------------------------------------------------------------------
 // GOOGLE SHEET
 // ----------------------------------------------------------------------------
 
@@ -91,24 +138,41 @@ const getGoogleSpreadsheet = async () => {
   return doc
 }
 
-// Save data to a specific sheet tab
-const saveGoogleSheet = async ({ tabName, data }) => {
-  const doc = await getGoogleSpreadsheet()
+// Add rows in chunks to reduce API burst and 429s
+const addRowsInBatches = async (
+  sheet: any,
+  rows: any[],
+  chunkSize: number = 200,
+  delayMs: number = 100,
+) => {
+  for (let i = 0; i < rows.length; i += chunkSize) {
+    const chunk = rows.slice(i, i + chunkSize)
+    await withBackoff(() => sheet.addRows(chunk))
+    if (i + chunkSize < rows.length) {
+      await sleep(delayMs)
+    }
+  }
+}
 
+// Save data to a specific sheet tab (reusing provided doc)
+const saveGoogleSheet = async (
+  doc: GoogleSpreadsheet,
+  { tabName, data }: { tabName: string; data: any[] },
+) => {
   // Get or create the sheet
   let sheet = doc.sheetsByTitle[tabName]
   if (!sheet) {
-    sheet = await doc.addSheet({ title: tabName })
+    sheet = await withBackoff(() => doc.addSheet({ title: tabName }))
   }
 
   // Clear existing content
-  await sheet.clear()
+  await withBackoff(() => sheet.clear())
 
-  // Update with new data using setHeaderRow and addRows
+  // Update with new data using setHeaderRow and addRows (batched)
   if (data.length > 0) {
-    await sheet.setHeaderRow(data[0])
+    await withBackoff(() => sheet.setHeaderRow(data[0]))
     if (data.length > 1) {
-      await sheet.addRows(data.slice(1))
+      await addRowsInBatches(sheet, data.slice(1))
     }
   }
 
@@ -123,6 +187,9 @@ export default async () => {
     const httpClient = new ConvexHttpClient(
       Netlify.env.get('PUBLIC_CONVEX_URL'),
     )
+
+    // Initialize Google Spreadsheet once and reuse
+    const doc = await getGoogleSpreadsheet()
 
     console.log('Query bookings')
     const bookings = await httpClient.query(api.bookings.list)
@@ -170,7 +237,7 @@ export default async () => {
     // }
 
     console.log('Save bookings to google sheet')
-    await saveGoogleSheet({
+    await saveGoogleSheet(doc, {
       tabName: 'bookings',
       data: [
         [
@@ -225,7 +292,7 @@ export default async () => {
     // priceTotal: 177
 
     console.log('Save attendees to google sheet')
-    await saveGoogleSheet({
+    await saveGoogleSheet(doc, {
       tabName: 'attendees',
       data: [
         [
@@ -285,7 +352,7 @@ export default async () => {
       const updatedAt = `Aktualisiert am ${new Date().toLocaleString('de-DE', {
         timeZone: 'Europe/Berlin',
       })}`
-      await saveGoogleSheet({
+      await saveGoogleSheet(doc, {
         tabName: courseSlug,
         data: [
           [
@@ -327,6 +394,8 @@ export default async () => {
           [updatedAt],
         ],
       })
+      // Tiny pacing between sheets to reduce burst writes
+      await sleep(150)
     }
 
     // Stats should be based on actual courseStories (not CourseCategory),
@@ -381,7 +450,7 @@ export default async () => {
     ])
 
     console.log('Save stats to google sheet')
-    await saveGoogleSheet({
+    await saveGoogleSheet(doc, {
       tabName: 'overview',
       data: statsData,
     })
