@@ -29,6 +29,7 @@ export const add = mutation({
       member: args.member,
       courses: args.courses,
       priceTotal: args.priceTotal,
+      cancelled: args.cancelled || false,
     })
     return attendeeId
   },
@@ -53,7 +54,10 @@ export const addMultiple = mutation({
       args.attendees.map(async (attendee) => {
         const attendeeId = await ctx.db.insert('attendees', {
           bookingId: args.bookingId,
-          ...attendee,
+          ...{
+            ...attendee,
+            cancelled: false,
+          },
         })
         return attendeeId
       }),
