@@ -2,15 +2,12 @@ import { v } from 'convex/values'
 import { mutation, query } from './_generated/server'
 
 export const list = query({
-  args: { },
+  args: {},
   handler: async (ctx, args) => {
-    const attendees = await ctx.db
-      .query("attendees")
-      .order("asc")
-      .take(1000);
-    return attendees;
+    const attendees = await ctx.db.query('attendees').order('asc').take(1000)
+    return attendees
   },
-});
+})
 
 export const add = mutation({
   args: {
@@ -21,6 +18,7 @@ export const add = mutation({
     member: v.boolean(),
     courses: v.array(v.string()),
     priceTotal: v.number(),
+    cancelled: v.boolean(),
   },
   handler: async (ctx, args) => {
     const attendeeId = await ctx.db.insert('attendees', {

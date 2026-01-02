@@ -26,5 +26,6 @@ export default defineSchema({
     member: v.boolean(),
     courses: v.array(v.string()),
     priceTotal: v.number(),
+    cancelled: v.optional(v.boolean()),
   }),
 })
