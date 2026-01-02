@@ -274,8 +274,18 @@ export default async () => {
     })
 
     console.log('Query attendees')
-    const attendees = await httpClient.query(api.attendees.list)
-    console.log(`${attendees?.length || 0} attendees found`)
+    const allAttendees = await httpClient.query(api.attendees.list)
+
+    const cancelledAttendees = allAttendees.filter((attendee) => {
+      return attendee.cancelled === true
+    })
+    const attendees = allAttendees.filter((attendee) => {
+      return attendee.cancelled !== true
+    })
+
+    console.log(
+      `${allAttendees?.length || 0} attendees found (${attendees?.length || 0} active, ${cancelledAttendees?.length || 0} cancelled)`,
+    )
 
     // _creationTime: 1697840293766.5488,
     // _id: '3shjg6vek6d3k68kyj7xqvkn9k11jm8',
@@ -290,6 +300,7 @@ export default async () => {
     // lastName: 'Müller',
     // member: false,
     // priceTotal: 177
+    // cancelled: false
 
     console.log('Save attendees to google sheet')
     await saveGoogleSheet(doc, {
@@ -307,6 +318,42 @@ export default async () => {
           'Teilnehmer-ID',
         ],
         ...attendees.map((attendee) => {
+          const booking = bookings.find(
+            (booking) => booking._id === attendee.bookingId,
+          )
+          return [
+            booking?.orderNumber,
+            attendee.lastName,
+            attendee.firstName,
+            attendee.age,
+            attendee.member,
+            attendee.courses.join(', '),
+            new Date(booking?._creationTime).toLocaleString('de-DE', {
+              timeZone: 'Europe/Berlin',
+            }),
+            booking?._id,
+            attendee._id,
+          ]
+        }),
+      ],
+    })
+
+    console.log('Save cancelled attendees to google sheet')
+    await saveGoogleSheet(doc, {
+      tabName: 'cancellations',
+      data: [
+        [
+          'Buchungsnummer',
+          'Nachname',
+          'Vorname',
+          'Alter',
+          'Mitglied',
+          'Kurse',
+          'Gebucht am',
+          'Buchung-ID',
+          'Teilnehmer-ID',
+        ],
+        ...cancelledAttendees.map((attendee) => {
           const booking = bookings.find(
             (booking) => booking._id === attendee.bookingId,
           )
