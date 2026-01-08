@@ -1,0 +1,116 @@
+---
+import {
+  courseBambini,
+  courseBeginner,
+  courseJuniorChampion,
+  courseChampion,
+} from '@/data/course-info'
+import Alert from '@/components/Alert.astro'
+import Icon from '@/components/Icon.astro'
+import clsx from 'clsx'
+
+const courses = [
+  courseBambini,
+  courseBeginner,
+  courseJuniorChampion,
+  courseChampion,
+]
+---
+
+<div>
+  <h3 class='inline-flex flex-wrap items-center gap-x-3 gap-y-2'>
+    <span class='typo-hero-xs'>Kurse am 10./11. Januar 2026</span>
+  </h3>
+  <div class='prose mt-4 max-w-2xl space-y-2'>
+    <div class='inline-flex flex-wrap items-center gap-2'>
+      <strong> Skikurse finden statt </strong>
+      <span
+        class={clsx(
+          'bg-green-50 text-green-700 ring-green-600/20',
+          'mt-0.5 inline-block whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
+        )}
+      >
+        Kandel
+      </span>
+    </div>
+    {
+      /*
+  <Alert class='!my-6'>
+    <h3><strong>Kurse abgesagt</strong></h3>
+    <p>
+      Manchmal ist es einfach nicht einfach und die Lage ändert sich schnell.
+      Leider müssen wir die Kurse für Bambini, Beginner und Junior Champions
+      jetzt doch absagen.
+    </p>
+    <p>
+      Der Liftbertrieb auf dem Kandel wurde soeben aufgrund starker, nicht
+      nachlassender Windböen abgesagt. Bei diesen Verhältnissen können wir
+      leider auch die Bambini und Beginner Kurse nicht stattfinden lassen. Auch
+      die Anfahrt durch den Kandel bleibt damit nicht ohne erhöhtes Risiko.
+    </p>
+    <p>
+      Nach einem wunderschönen ersten Kurstag bei perfekten Verhältnissen ist
+      das Wetter heute leider nicht auf unserer Seite. Das ist sehr schade, wir
+      hätten euch heute gerne wiedergesehen. Wir bitten um euer Verständnis für
+      diese Entscheidung.
+    </p>
+    <p>Die Kurse sind damit aufgrund höherer Gewalt ersatzlos abgesagt.</p>
+  </Alert>
+   */
+    }
+    <Alert class='!my-6'>
+      <p>
+        <b>Wetterwarnung:</b> Für Freitag rechnet der Wetterdienst mit kräftigem
+        Schneefall, Schneeverwehungen und teils stürmischem Wind. Auch am Samstag
+        hält das winterliche Wetter mit teils intensivem Schneefall an. Wir beobachten
+        die Lage genau und müssen unter Umständen kurzfristig reagieren. Bitte informiert
+        euch deshalb am <b>Freitagabend ab 20 Uhr und Samstagmorgen</b> nochmals
+        über den Status eures Kurses.
+      </p>
+    </Alert>
+    <p>
+      Der Kandel trägt eine weiße Krone und über Nacht soll nochmals Schnee
+      kommen. Alle Skikurse können somit wie geplant auf dem
+      <a href='/skischule/treffpunkt/#kandel'> Kandel </a> statt finden.
+    </p>
+    <p>
+      <b>Liftkarten:</b> Alle Teilnehmer der Junior Champion und Champion Kurse benötigen
+      eine <a
+        href='https://www.kandellifte.de/liftpreise.html'
+        target='_blank'
+        rel='noreferrer noopener'>Liftkarte</a
+      >. Die Tageskarte kostet für Kinder 16 Euro. Bitte besorgt diese vor Ort
+      und beachtet, dass nur Barzahlungen (möglichst passend) akzeptiert werden.
+    </p>
+    <p>Wir freuen uns auf dich und deine Familie!</p>
+    <div class='mx-auto !mt-4 flow-root max-w-3xl space-y-6'>
+      {
+        courses.map((course) => (
+          <div>
+            <h5 class='font-bold'>{course.title}</h5>
+            <div class='prose mt-2 max-w-2xl'>
+              <p class='!mb-2 flex items-center gap-x-2'>
+                <Icon name='clock-24-regular' />
+                <span class='font-semibold'>Zeit</span>
+                <span>{course.duration}</span>
+              </p>
+              <p class='!mt-2 flex gap-x-2'>
+                <Icon name='location-24-regular' />
+                <span class='flex flex-wrap items-center gap-x-2'>
+                  <span class='font-semibold'>{course.meetingPointTitle}</span>
+                  <span>{course.meetingPoint}</span>
+                  <a
+                    href='/skischule/treffpunkt/'
+                    class='text-xs font-semibold text-sky-600'
+                  >
+                    Wo ist das?
+                  </a>
+                </span>
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
