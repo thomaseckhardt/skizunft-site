@@ -1,0 +1,43 @@
+---
+import {
+  courseBambini,
+  courseBeginner,
+  courseJuniorChampion,
+  courseChampion,
+} from '@/data/course-info'
+import Alert from '@/components/Alert.astro'
+import Icon from '@/components/Icon.astro'
+import clsx from 'clsx'
+
+const courses = [
+  courseBambini,
+  courseBeginner,
+  courseJuniorChampion,
+  courseChampion,
+]
+---
+
+<div>
+  <Alert class='!my-6'>
+    <p>
+      <b>Aktuelle Situation:</b> Wir planen alle Kurse weiterhin auf dem Kandel (es
+      wird keine Verlegung in ein anderes Skigebiet geben). Aktuell stürmt es dort
+      ordentlich und es hat zu schneien begonnen. Leider müssen wir weiterhin abwarten,
+      wie die Wetterlage morgen früh aussieht. Es stellen sich die Fragen, ob die
+      Schneemenge auch für die Liftkurse reicht und ob es nicht zu stürmisch für
+      einen sicheren Kursbetrieb ist.
+    </p>
+    <p>
+      <strong
+        >Wir haben uns daher dazu entschlossen alle Kurse erst um 10:30 Uhr zu
+        beginnen. Die Kurszeiten verschieben sich entsprechend nach hinten.</strong
+      >
+    </p>
+    <p>
+      Die finale Entscheidung können wir auf Grund dieser besonderen Wetterlage
+      aber leider erst morgen bis 8:30 Uhr treffen und informieren euch an
+      dieser Stelle. Wir hoffen auf euer Verständnis und freuen uns auf die
+      Kurse!
+    </p>
+  </Alert>
+</div>
