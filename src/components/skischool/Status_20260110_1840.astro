@@ -1,0 +1,37 @@
+---
+import {
+  courseBambini,
+  courseBeginner,
+  courseJuniorChampion,
+  courseChampion,
+} from '@/data/course-info'
+import Alert from '@/components/Alert.astro'
+import Icon from '@/components/Icon.astro'
+import clsx from 'clsx'
+
+const courses = [
+  courseBambini,
+  courseBeginner,
+  courseJuniorChampion,
+  courseChampion,
+]
+---
+
+<div>
+  <Alert class='!my-6'>
+    <p>
+      <b>Kursplanung für 11.01.2026:</b> Der Kurstag kann auf dem Kandel stattfinden.
+      🙌 <br />Mit dieser guten Portion Neuschnee sind die Pistenverhältnisse
+      top für unseren morgigen Skitag.
+    </p>
+    <p>
+      Wir wollen versuchen etwas verlorene Kurszeit von heute aufzuholen. Alle
+      Kurse starten daher um 10 Uhr. Auch die Bambini Kurse. Wir versuchen die
+      Bambini Kurse auf 2 Stunden oder mehr zu strecken. Die anderen Skikurse
+      wollen wir auf 2× 2,5 Stunden verlängern: Von 10 – 12:30 Uhr und von 13 –
+      15:30 Uhr. Das Ganze natürlich mit Blick auf die Kraft und das Gemüt eurer
+      Kinder.
+    </p>
+    <p>Wir freuen uns auf einen tollen Skitag mit euch!</p>
+  </Alert>
+</div>
