@@ -1,0 +1,42 @@
+---
+import {
+  courseBambini,
+  courseBeginner,
+  courseJuniorChampion,
+  courseChampion,
+} from '@/data/course-info'
+import Alert from '@/components/Alert.astro'
+import Icon from '@/components/Icon.astro'
+import clsx from 'clsx'
+
+const courses = [
+  courseBambini,
+  courseBeginner,
+  courseJuniorChampion,
+  courseChampion,
+]
+---
+
+<div>
+  <Alert class='!my-6'>
+    <p>
+      <b>Update 8:20 Uhr, 10.01.2026:</b> Nach Rücksprache mit dem Liftbetreiber
+      sowie unserem Nachbarverein SC Kandel haben wir uns nach sorgfältiger Abwägung
+      dazu entschieden, die Skikurse heute nicht durchzuführen. Die Wetterlage ist
+      weiterhin sehr herausfordernd: Starker Wind und anhaltender Schneefall lassen
+      einen sicheren Kursbetrieb derzeit nicht zu. Der Liftbetrieb wird heute insgesamt
+      nicht aufgenommen.
+    </p>
+    <p>
+      Manchmal ist es wie verhext – endlich liegt genügend Schnee, und dennoch
+      macht uns das Wetter einen Strich durch die Rechnung. Für die Durchführung
+      der Kurse am morgigen Sonntag sieht es nach aktuellem Stand jedoch gut
+      aus, da sich die Wetterlage bis dahin voraussichtlich beruhigen wird.
+    </p>
+    <p>
+      Aktuell prüfen wir, ob und wie wir den heutigen Ausfall morgen teilweise
+      ausgleichen können. Dazu melden wir uns im Laufe des Tages noch einmal.
+    </p>
+    <p>Vielen Dank für euer Verständnis – wir freuen uns auf morgen!</p>
+  </Alert>
+</div>
