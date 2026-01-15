@@ -1,0 +1,100 @@
+---
+import Alert from '@/components/Alert.astro'
+import Icon from '@/components/Icon.astro'
+import clsx from 'clsx'
+---
+
+<section>
+  <h3 class='inline-flex flex-wrap items-center gap-x-3 gap-y-2'>
+    <span class='typo-hero-xs'>Kurse am 17./18. Januar 2026</span>
+  </h3>
+  <div class='prose mt-4 max-w-2xl space-y-2'>
+    <div class='inline-flex flex-wrap items-center gap-2'>
+      <strong> Skikurse Bambini, Junior Champions und Champions </strong>
+      <span
+        class={clsx(
+          'bg-green-50 text-green-700 ring-green-600/20',
+          'mt-0.5 inline-block whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
+        )}
+      >
+        Muggenbrunn
+      </span>
+    </div>
+    <p>
+      Leider haben uns die warmen Temperaturen der letzten Tage den meisten
+      Schnee auf dem Kandel wegschmelzen lassen. Wir haben uns deshalb
+      entschieden, die Kurse nach <strong>Muggenbrunn</strong> zu verlegen.
+    </p>
+    <p>
+      Wir haben uns auch intensiv um eine Lösung für unsere <strong
+        >Bambini-Kurse</strong
+      > bemüht und freuen uns, dass auch diese in Muggenbrunn statt finden können.
+    </p>
+    <Alert class='!my-6'>
+      <h3 class='font-bold'>Kurszeiten und Treffpunkte:</h3>
+      <h4 class='font-bold'>Skikurs Bambini</h4>
+      <p class='!mb-2 flex items-center gap-x-2'>
+        <Icon name='clock-24-regular' />
+        <span class='font-semibold'>Zeit</span>
+        <span
+          >11:30 – 13 Uhr <span class='font-bold text-rose-600'
+            >← neue Zeit!</span
+          ></span
+        >
+      </p>
+      <p class='!mt-2 flex gap-x-2'>
+        <Icon name='location-24-regular' />
+        <span class='flex flex-wrap items-center gap-x-2'>
+          <span class='font-semibold'>Treffpunkt</span>
+          <span>Talstation Wasenlift, Muggenbrunn</span>
+          <a
+            href='/skischule/treffpunkt/#muggenbrunn'
+            class='text-xs font-semibold text-sky-600'
+          >
+            Wo ist das?
+          </a>
+        </span>
+      </p>
+      <h4 class='font-bold'>Skikurs Junior Champion &amp; Champion</h4>
+      <p class='!mb-2 flex items-center gap-x-2'>
+        <Icon name='clock-24-regular' />
+        <span class='font-semibold'>Zeit</span>
+        <span>10 – 12 Uhr und 13 – 15 Uhr</span>
+      </p>
+      <p class='!mt-2 flex gap-x-2'>
+        <Icon name='location-24-regular' />
+        <span class='flex flex-wrap items-center gap-x-2'>
+          <span class='font-semibold'>Treffpunkt</span>
+          <span>Talstation Wasenlift, Muggenbrunn</span>
+          <a
+            href='/skischule/treffpunkt/#muggenbrunn'
+            class='text-xs font-semibold text-sky-600'
+          >
+            Wo ist das?
+          </a>
+        </span>
+      </p>
+    </Alert>
+    <h4>Liftkarte</h4>
+    <p>
+      Alle Skikurse für Junior Champions und Champions benötigen eine Liftkarte.
+      <a
+        href='https://www.skizentrum-muggenbrunn.de/preise/'
+        target='_blank'
+        rel='noreferer'
+        >Tickets für das Skigebiet Muggenbrunn können online gekauft werden.</a
+      >
+    </p>
+    <p>
+      <a
+        href='https://wp.datacreate.de/skizentrummuggenbrunn/wp-content/uploads/sites/14/2021/11/2021-Panorma-Muggenbrunn-1.jpg'
+        target='_blank'
+      >
+        <img
+          src='https://wp.datacreate.de/skizentrummuggenbrunn/wp-content/uploads/sites/14/2021/11/2021-Panorma-Muggenbrunn-1.jpg'
+          class='block w-full'
+        />
+      </a>
+    </p>
+  </div>
+</section>
