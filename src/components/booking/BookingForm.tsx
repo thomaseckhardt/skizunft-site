@@ -102,8 +102,8 @@ export default function BookingForm({
   const location = useLocation()
   const params = new URLSearchParams(location.search)
   const discountCode = params.get('code')
-  // const discountRate = discountCode === 'brettlemarkt2025' ? 0.1 : 0
-  const discountRate = 0
+  const discountRate = discountCode === 'brettlemarkt2026' ? 0.1 : 0
+  // const discountRate = 0
 
   // --------------------------------------------------
 
