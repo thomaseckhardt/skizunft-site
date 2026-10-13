@@ -8,10 +8,10 @@ Legend: **[unverified]** means no primary source confirmed it. Effort ratings (S
 
 ## Context from this repo and account
 
-- `main` runs Astro `3.2.3` (`package-lock.json`). It has no SSR adapter and no `output` setting in `astro.config.mjs`, so it is fully static today. Server code lives only in `netlify/functions/*.ts`, which use the v1 Lambda-style `Handler` export. (#4 says "Astro 4.x, `output: 'hybrid'`"; that matches a different branch, not `main`.)
+- `main` runs Astro `4.16.17` (`package.json`, `package-lock.json`) with the `@astrojs/netlify` adapter and `output: 'hybrid'` in `astro.config.mjs`: pages are prerendered by default, and single pages opt into on-demand rendering with `export const prerender = false` (e.g. `src/pages/booking/admin.astro`). Further server code lives in `netlify/functions/*.ts`.
 - The current npm versions are `astro` 7.3.8 and `@astrojs/netlify` 8.2.9 (`npm view`, 2026-10-13).
 - Netlify account (read via the Netlify MCP): site `skizunftkollnau` is on plan `nf_team_pro`, in team "Friendly Developer" (type "Pro", 1 member). The API response does not say whether this is a **legacy** or **credit-based** Pro plan **[unverified]**. That matters below: Netlify Database is credit-based only, and Identity limits on legacy plans depend on the plan's "Identity service level".
-- The repo sends mail through `@netlify/emails` (Netlify Email Integration). #4 says Brevo is the provider; the provider is configured outside the repo.
+- Booking emails are sent through Brevo's transactional API (`@getbrevo/brevo` in `netlify/functions/send-booking-confirmation-v2.ts` / `send-booking-notification-v2.ts`); the older v1 functions use `@netlify/emails`.
 
 ### Cross-cutting facts that apply to every option
 
