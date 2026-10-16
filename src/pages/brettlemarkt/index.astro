@@ -1,4 +1,5 @@
 ---
+import Alert from '@/components/Alert.astro'
 import Ablauf from '@/components/sections/brettlemarkt/Ablauf.astro'
 import Page from '@/layouts/Page.astro'
 
@@ -32,6 +33,13 @@ const festhalleLinkProps = {
           Bratwurst und Getränke warten auf dich.
         </p>
       </div>
+      <Alert class='mx-auto mt-8 max-w-2xl'>
+        <p>
+          Bitte beachtet, dass vor Ort <strong>nur Barzahlungen</strong> möglich sind.
+          Wir behalten uns vor, <strong>minderwertige oder in die Jahre gekommene
+          Artikel abzulehnen</strong>.
+        </p>
+      </Alert>
     </div>
   </main>
   <Ablauf festhalleLinkProps={festhalleLinkProps} />
