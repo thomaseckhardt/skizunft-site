@@ -1,0 +1,10 @@
+name,slug,category,startDate,endDate,seatLimit
+Ski Bambini 1,ski-bambini-1,ski-bambini,2027-01-02,2027-01-03,8
+Ski Beginner 1,ski-beginner-1,ski-beginner,2027-01-02,2027-01-03,8
+Ski Junior Champion 1,ski-junior-champion-1,ski-junior-champion,2027-01-02,2027-01-03,8
+Ski Bambini 2,ski-bambini-2,ski-bambini,2027-01-23,2027-01-24,16
+Ski Beginner 2,ski-beginner-2,ski-beginner,2027-01-23,2027-01-24,8
+Ski Champion 2,ski-champion-2,ski-champion,2027-01-23,2027-01-24,10
+Ski Beginner 3,ski-beginner-3,ski-beginner,2027-01-30,2027-01-31,8
+Ski Junior Champion 3,ski-junior-champion-3,ski-junior-champion,2027-01-30,2027-01-31,8
+Ski Champion 3,ski-champion-3,ski-champion,2027-01-30,2027-01-31,10

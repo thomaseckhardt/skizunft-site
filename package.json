@@ -20,6 +20,7 @@
     "sb:components": "storyblok components pull --space 256004 --verbose --separate-files",
     "sb:types": "storyblok types generate --space 256004 --verbose --separate-files --strict --type-prefix Storyblok",
     "sb:sync": "pnpm run sb:components && pnpm run sb:types",
+    "sb:courses": "node --env-file=.env --env-file=.env.local scripts/storyblok/upsert-courses.mjs",
     "tailwindcss": "npx tailwindcss -i ./src/styles/base.css -o ./tailwind/base.css --watch",
     "func:send-booking-confirmation": "netlify functions:invoke send-booking-confirmation-v2 --payload '{\"firstName\": \"John\", \"lastName\": \"Doe\", \"email\": \"thomas.eckhardt@web.de\", \"orderNumber\": \"123456\"}' --port 9999"
   },
