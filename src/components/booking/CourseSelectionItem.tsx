@@ -9,7 +9,7 @@ const BookingStateColors = {
   blue: 'text-sky-600',
 }
 
-export default function CourseSelection({ course, register, name }) {
+export default function CourseSelection({ course, inputProps }) {
   const bookingStateColor =
     BookingStateColors[course.bookingStateColor] ?? BookingStateColors.grey
 
@@ -28,7 +28,7 @@ export default function CourseSelection({ course, register, name }) {
         type="checkbox"
         className="peer sr-only"
         value={course.slug}
-        {...register(name)}
+        {...inputProps}
         disabled={course.disabled}
       />
       <div className="relative z-10 flex flex-1 items-center text-gray-900 peer-disabled:text-gray-500 peer-disabled:ring-gray-200">
