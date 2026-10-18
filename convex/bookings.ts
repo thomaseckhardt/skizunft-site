@@ -28,6 +28,7 @@ export const add = mutation({
     legalConfirmed: v.boolean(),
     privacyConfirmed: v.boolean(),
     newsletterConfirmed: v.boolean(),
+    photoConsent: v.optional(v.boolean()),
     returningCustomer: v.boolean(),
   },
   handler: async (ctx, args) => {
@@ -45,6 +46,7 @@ export const add = mutation({
       legalConfirmed: args.legalConfirmed,
       privacyConfirmed: args.privacyConfirmed,
       newsletterConfirmed: args.newsletterConfirmed,
+      photoConsent: args.photoConsent ?? false,
       returningCustomer: args.returningCustomer,
       orderNumber,
     })

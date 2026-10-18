@@ -15,6 +15,7 @@ export default defineSchema({
     legalConfirmed: v.boolean(),
     privacyConfirmed: v.boolean(),
     newsletterConfirmed: v.boolean(),
+    photoConsent: v.optional(v.boolean()),
     returningCustomer: v.boolean(),
     orderNumber: v.optional(v.string()),
   }),

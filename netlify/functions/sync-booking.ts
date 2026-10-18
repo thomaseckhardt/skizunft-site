@@ -316,6 +316,7 @@ export default async () => {
           'Gebucht am',
           'Buchung-ID',
           'Teilnehmer-ID',
+          'Fotos erlaubt',
         ],
         ...attendees.map((attendee) => {
           const booking = bookings.find(
@@ -333,6 +334,7 @@ export default async () => {
             }),
             booking?._id,
             attendee._id,
+            booking?.photoConsent ? 'ja' : 'nein',
           ]
         }),
       ],
@@ -352,6 +354,7 @@ export default async () => {
           'Gebucht am',
           'Buchung-ID',
           'Teilnehmer-ID',
+          'Fotos erlaubt',
         ],
         ...cancelledAttendees.map((attendee) => {
           const booking = bookings.find(
@@ -369,6 +372,7 @@ export default async () => {
             }),
             booking?._id,
             attendee._id,
+            booking?.photoConsent ? 'ja' : 'nein',
           ]
         }),
       ],
@@ -413,6 +417,7 @@ export default async () => {
             'Text Kurskarte',
             'Buchung-ID',
             'Teilnehmer-ID',
+            'Fotos erlaubt',
           ],
           ...courseAttendees.map((attendee) => {
             const booking = bookings.find(
@@ -435,6 +440,7 @@ export default async () => {
                 : '',
               booking?._id ?? '',
               attendee._id,
+              booking?.photoConsent ? 'ja' : 'nein',
             ]
           }),
           [],
