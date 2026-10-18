@@ -13,24 +13,29 @@ const items = [
     content: `Bitte überweise die Kursgebühren bis spätestens 5 Tage vor Kursbeginn per Banküberweisung auf unser Bankkonto. Alle Infor­mationen bekommst du in der Buchungs­bestätigung per Mail.`,
   },
   {
+    icon: 'clock-pause-24-regular',
+    headline: `Aufsicht und Mittagspause`,
+    content: `Wir betreuen die Kinder während der Kurszeiten. Bitte bring dein Kind persönlich zum Treffpunkt und hol es dort auch wieder ab. In der Mittagspause findet keine Betreuung statt.`,
+  },
+  {
     icon: 'calendar-question-mark-24-regular',
     headline: `Kursverlegung und Ausweichtermine`,
-    content: `Bei unsicherer Schneelage auf dem Kandel werden die Kurse (außer Bambini Kurse) automatisch in ein umliegendes Skigebiet verlegt. Ob und wo ein Kurs statt findet, geben wir idR. 2 Tage vor Kursbeginn gegen 20 Uhr auf unserer Website bekannt. Kursbeginn bei einer Verlegung ist 9:00 Uhr, der jeweilige Treffpunkt wird rechtzeitig bekannt gegeben.`,
+    content: `Bei unsicherer Schneelage auf dem Kandel werden die Kurse automatisch in ein umliegendes Skigebiet verlegt. Bei Bambini-Kursen entscheiden wir das je nach Lage für jeden Kurs einzeln. Ob und wo ein Kurs statt findet, geben wir idR. 2 Tage vor Kursbeginn gegen 20 Uhr auf unserer Website bekannt. Kursbeginn bei einer Verlegung ist 9:00 Uhr, der jeweilige Treffpunkt wird rechtzeitig bekannt gegeben.`,
   },
   {
     icon: 'weather-blowing-snow-24-regular',
-    headline: `Höhere Gewalt`,
-    content: `Muss ein Kurs aufgrund höherer Gewalt (fehlender Schnee, kritische Wetterlage wie Sturm) komplett entfallen, wird die Kursgebühr abzüglich der Bearbeitungsgebühr in Höhe von 5 € zurückerstattet. Kann mindestens ein Kurstag stattfinden, wird die gesamte Kursgebühr einbehalten.`,
+    headline: `Kursausfall`,
+    content: `Muss ein Kurs oder Kurstag ausfallen, weil z.&nbsp;B. Schnee fehlt oder Sturm herrscht, bieten wir dir nach Möglichkeit einen Nachholtermin an. Andernfalls erstatten wir die Kursgebühr anteilig für jeden ausgefallenen Kurstag. Ein begonnener Kurstag gilt als durchgeführt.`,
   },
   {
     icon: 'calendar-cancel-24-regular',
     headline: `Stornierung`,
-    content: `Eine Stornierung ist grundsätzlich bis 5 Tage vor Kursbeginn möglich. Die Bearbeitungsgebühr von 5 € wird einbehalten. Bei Nichterscheinen ohne rechtzeitige Stornierung wird die komplette Kursgebühr berechnet`,
+    content: `Eine Stornierung ist per E-Mail an skischule@szkollnau.de bis 5 Tage vor Kursbeginn möglich. Die Bearbeitungsgebühr von 5 € wird einbehalten. Bei späterer Stornierung oder Nichterscheinen wird die komplette Kursgebühr berechnet.`,
   },
   {
     icon: 'briefcase-medical-24-regular',
     headline: `Krankheitsfall`,
-    content: `Die Teilnahme an unseren Kursen ist nur ohne gesundheitliche Einschränkungen möglich. Stornierungen im Krankheitsfall sind gegen Vorlage eines ärztlichen Attest, bis Freitag vor Kursbeginn 14 Uhr per E-Mail an skischule@szkollnau.de möglich. Die Bearbeitungsgebühr von 5 € wird einbehalten.`,
+    content: `Die Teilnahme an unseren Kursen ist nur ohne gesundheitliche Einschränkungen möglich. Stornierungen im Krankheitsfall sind gegen Vorlage eines ärztlichen Attests bis Freitag vor Kursbeginn 14 Uhr per E-Mail an skischule@szkollnau.de möglich. Die Bearbeitungsgebühr von 5 € wird einbehalten.`,
   },
   {
     icon: 'shield-task-24-regular',
@@ -39,8 +44,8 @@ const items = [
   },
   {
     icon: 'building-government-24-regular',
-    headline: `Haftung`,
-    content: `Wir lehnen jegliche Haftung für Schäden oder Krankheiten ab, die während des Kursbetriebs entstehen.`,
+    headline: `Helmpflicht und Ausrüstung`,
+    content: `In allen Kursen besteht Helmpflicht. Für mitgebrachte Ausrüstung und Wertsachen haften wir nur bei Vorsatz oder grober Fahrlässigkeit.`,
   },
 ]
 ---
@@ -59,7 +64,8 @@ const items = [
         ermöglichen. Leider gibt es immer Dinge auf die wir keinen Einfluss
         haben. Damit du weißt, was passiert, wenn etwas nicht so läuft wie
         geplant, haben wir hier die wichtigsten Informationen für dich
-        zusammengefasst.
+        zusammengefasst. Verbindlich sind unsere
+        <a href='/agb/' class='font-semibold text-sky-600'>AGB</a>.
       </p>
     </div>
     <div class='mx-auto mt-16 lg:mt-24'>

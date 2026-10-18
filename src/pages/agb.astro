@@ -2,157 +2,370 @@
 import Page from '@/layouts/Page.astro'
 ---
 
-<Page title="AGB" description="Allgemeine Geschäftsbedingungen (AGB) des DSV-Skischule der Skizunft Kollnau e.V.">
+<Page
+  title="AGB"
+  description="Allgemeine Geschäftsbedingungen (AGB) der DSV-Skischule der Skizunft Kollnau e.V."
+>
   <main>
-    <div class="box prose mt-5 max-w-2xl">
-      <h1>Allgemeine Geschäftsbedingungen (AGB) der DSV-Skischule Skizunft Kollnau e.V.</h1>
-      <time datetime="2024-10-01">Stand: 01.10.2024</time>
-  <ol>
-    <li>
-      <h2>Geltungsbereich</h2>
-      <p>
-        Diese AGB gelten für alle Ski- und Snowboardkurse sowie sonstige
-        Veranstaltungen des Skiclubs Skizunft Kollnau e.V.
-      </p>
-    </li>
-    <li>
-      <h2>Mitgliedschaft und Kursteilnahme</h2>
+    <div class="agb box prose mt-5 max-w-2xl">
+      <h1>
+        Allgemeine Geschäftsbedingungen (AGB) der DSV-Skischule der Skizunft
+        Kollnau e.V.
+      </h1>
+      <time datetime="2026-10-17">Stand: 17.10.2026</time>
       <ol>
-        <li>
-          Für die Teilnahme an Kursen des Skiclubs Skizunft Kollnau e.V. ist
-          keine Vereinsmitgliedschaft erforderlich. Mitglieder erhalten jedoch
-          einen Rabatt auf die Kursgebühr.
+        <li id="geltungsbereich">
+          <h2>Anbieter und Geltungsbereich</h2>
+          <ol>
+            <li>
+              Anbieter der Kurse ist die Skizunft Kollnau e.V., Friedrichstraße
+              8a, 79183 Waldkirch, eingetragen im Vereinsregister des Amtsgerichts
+              Freiburg unter VR 280033, vertreten durch den Vorstand (im
+              Folgenden „Verein“). Die Kurse werden von der DSV-Skischule des Vereins
+              (im Folgenden „Skischule“) durchgeführt. Kontakt: <a
+                href="mailto:skischule@szkollnau.de">skischule@szkollnau.de</a
+              >.
+            </li>
+            <li>
+              Diese AGB gelten für alle Ski- und Snowboardkurse der Skischule.
+              Für andere Angebote und Veranstaltungen des Vereins gelten sie
+              nicht.
+            </li>
+            <li>
+              „Buchende Person“ ist, wer die Buchung vornimmt und damit
+              Vertragspartner des Vereins wird. „Teilnehmende“ sind die
+              Personen, die am Kurs teilnehmen. Bei minderjährigen Teilnehmenden
+              ist die buchende Person in der Regel ein Elternteil oder eine
+              andere erziehungsberechtigte Person.
+            </li>
+          </ol>
+        </li>
+        <li id="vertragsschluss">
+          <h2>Buchung und Vertragsschluss</h2>
+          <ol>
+            <li>
+              Die Kursbeschreibungen auf der Website sind kein bindendes
+              Angebot. Mit dem Absenden der Buchung über die Website gibt die
+              buchende Person ein verbindliches Angebot zum Abschluss eines
+              Vertrags über die gewählten Kurse ab.
+            </li>
+            <li>
+              Der Vertrag kommt zustande, wenn der Verein die Buchung per E-Mail
+              bestätigt.
+            </li>
+            <li>
+              Bucht die buchende Person für andere Personen, insbesondere für
+              Kinder, versichert sie, dazu berechtigt zu sein. Sie ist zur
+              Zahlung der gesamten Kursgebühren verpflichtet.
+            </li>
+            <li>
+              Da es sich um Freizeitangebote zu festen Terminen handelt, besteht
+              kein gesetzliches Widerrufsrecht (§&nbsp;312g Abs.&nbsp;2
+              Nr.&nbsp;9 BGB). Die Möglichkeit zur Stornierung nach <a
+                href="#stornierung">Ziffer&nbsp;9</a
+              > bleibt davon unberührt.
+            </li>
+          </ol>
+        </li>
+        <li id="preise">
+          <h2>Preise und Mitgliederpreis</h2>
+          <ol>
+            <li>
+              Es gelten die bei der Buchung angezeigten Preise. Liftkarten,
+              Anreise, Ausrüstung und Verpflegung sind nicht in der Kursgebühr
+              enthalten.
+            </li>
+            <li>
+              Für die Teilnahme ist keine Vereinsmitgliedschaft erforderlich.
+              Teilnehmende, die Mitglied der Skizunft Kollnau e.V. sind,
+              erhalten den ermäßigten Mitgliederpreis. Wurde bei der Buchung
+              fälschlich eine Mitgliedschaft angegeben, berechnet der Verein den
+              regulären Preis.
+            </li>
+            <li>
+              Rabattcodes gelten nur für den jeweils angegebenen Aktionszeitraum
+              und können nicht nachträglich auf bestehende Buchungen angerechnet
+              werden.
+            </li>
+          </ol>
+        </li>
+        <li id="zahlung">
+          <h2>Zahlung</h2>
+          <ol>
+            <li>
+              Die Kursgebühren sind bis spätestens 5 Tage vor Kursbeginn per
+              Banküberweisung auf das in der Buchungsbestätigung angegebene
+              Konto des Vereins zu zahlen. Bei einer Buchung, die weniger als 5
+              Tage vor Kursbeginn erfolgt, sind die Kursgebühren sofort fällig.
+            </li>
+            <li>
+              Geht die Zahlung nicht fristgerecht ein, kann der Verein nach
+              erfolgloser Zahlungserinnerung vom Vertrag zurücktreten und den
+              Platz anderweitig vergeben.
+            </li>
+          </ol>
+        </li>
+        <li id="kursdurchfuehrung">
+          <h2>Kursdurchführung und Aufsicht</h2>
+          <ol>
+            <li>
+              Die Kurse finden in Gruppen statt, die nach Alter und Können
+              eingeteilt werden. Die Skischule kann Teilnehmende in eine andere
+              Gruppe oder Könnensstufe einteilen, wenn dies für einen sicheren
+              und sinnvollen Kursablauf erforderlich ist. Ein Anspruch auf eine
+              bestimmte Gruppe oder Skilehrerin bzw. einen bestimmten Skilehrer
+              besteht nicht.
+            </li>
+            <li>
+              Die Aufsicht der Skischule beginnt mit der Übergabe am Treffpunkt
+              zu Kursbeginn und endet zum Kursende am Treffpunkt. Kinder müssen
+              am Treffpunkt persönlich übergeben und dort von einer
+              erziehungsberechtigten oder von ihr beauftragten Person abgeholt
+              werden.
+            </li>
+            <li>
+              In der Mittagspause findet keine Betreuung durch die Skischule
+              statt. Die Kinder werden zu Beginn der Mittagspause am Treffpunkt
+              abgeholt und nach der Mittagspause dort wieder übergeben. Während
+              der Mittagspause liegt die Aufsicht bei den Erziehungsberechtigten.
+            </li>
+          </ol>
+        </li>
+        <li id="ausruestung">
+          <h2>Ausrüstung, Gesundheit und Verhalten</h2>
+          <ol>
+            <li>
+              In allen Kursen besteht Helmpflicht. Die Teilnehmenden benötigen
+              eine vollständige, technisch einwandfreie Ausrüstung mit
+              fachgerecht eingestellter Bindung sowie wettergerechte Kleidung.
+              Die Liftkarte kaufen die Teilnehmenden selbst.
+            </li>
+            <li>
+              Die Teilnahme ist nur ohne gesundheitliche Einschränkungen
+              möglich, die einer sicheren Teilnahme entgegenstehen. Mit der
+              Buchung bestätigt die buchende Person, dass die Teilnehmenden
+              gesundheitlich in der Lage sind, am Kurs teilzunehmen. Für den
+              Kurs wichtige Hinweise (z.&nbsp;B. Allergien, Vorerkrankungen,
+              notwendige Medikamente) teilt sie der Skischule vor Kursbeginn
+              mit.
+            </li>
+            <li>
+              Die Teilnehmenden haben den Anweisungen der Skilehrerinnen und
+              Skilehrer zu folgen und die FIS-Verhaltensregeln einzuhalten.
+            </li>
+            <li>
+              Teilnehmende ohne Helm oder mit ungeeigneter Ausrüstung sowie
+              Teilnehmende, die trotz Ermahnung gegen Anweisungen oder
+              Sicherheitsregeln verstoßen, kann die Skischule vom Kurs
+              ausschließen. Der Anspruch auf die Kursgebühr bleibt in diesem
+              Fall bestehen.
+            </li>
+          </ol>
+        </li>
+        <li id="mindestteilnehmerzahl">
+          <h2>Mindestteilnehmerzahl</h2>
+          <ol>
+            <li>
+              Die Mindestteilnehmerzahl beträgt 5 Personen pro Kurs. Wird sie
+              nicht erreicht, kann der Verein den Kurs absagen. Die buchende
+              Person wird darüber per E-Mail informiert. Bereits gezahlte
+              Kursgebühren werden in diesem Fall vollständig erstattet.
+            </li>
+          </ol>
+        </li>
+        <li id="verlegung-und-ausfall">
+          <h2>Kursverlegung und Kursausfall</h2>
+          <ol>
+            <li>
+              Bei unsicherer Schneelage auf dem Kandel werden die Kurse
+              automatisch in ein umliegendes Skigebiet im Schwarzwald verlegt
+              (z.&nbsp;B. Muggenbrunn oder Feldberg). Ob und wo ein Kurs
+              stattfindet, gibt die Skischule in der Regel 2 Tage vor
+              Kursbeginn gegen 20 Uhr auf ihrer Website bekannt. Bei einer
+              Verlegung beginnt der Kurs um 9:00 Uhr, der jeweilige Treffpunkt
+              wird rechtzeitig bekannt gegeben.
+            </li>
+            <li>
+              Eine Verlegung ist keine Absage. Mehrkosten für die Anreise und
+              für Liftkarten im anderen Skigebiet tragen die Teilnehmenden.
+            </li>
+            <li>
+              Bambini-Kurse werden nicht automatisch verlegt. Ob ein
+              Bambini-Kurs auf dem Kandel stattfindet, in ein anderes Skigebiet
+              verlegt wird oder ausfällt, entscheidet die Skischule für jeden
+              Kurs einzeln je nach Lage.
+            </li>
+            <li>
+              Kann ein Kurs oder ein einzelner Kurstag aus Gründen, die der
+              Verein nicht zu vertreten hat, nicht stattfinden (z.&nbsp;B.
+              Schneemangel ohne Ausweichmöglichkeit, Sturm, Lawinengefahr,
+              Ausfall der Liftanlagen oder behördliche Anordnungen), bietet die
+              Skischule nach Möglichkeit einen Nachholtermin an. Andernfalls
+              wird die Kursgebühr für jeden ausgefallenen Kurstag anteilig
+              erstattet. Eine Bearbeitungsgebühr fällt dabei nicht an.
+            </li>
+            <li>
+              Ein Kurstag, der begonnen hat, gilt als durchgeführt, auch wenn er
+              aus den genannten Gründen vorzeitig beendet werden muss.
+            </li>
+          </ol>
+        </li>
+        <li id="stornierung">
+          <h2>Stornierung durch die buchende Person</h2>
+          <ol>
+            <li>
+              Eine Stornierung ist per E-Mail an <a
+                href="mailto:skischule@szkollnau.de">skischule@szkollnau.de</a
+              > möglich. Maßgeblich ist der Eingang der E-Mail.
+            </li>
+            <li>
+              Bei einer Stornierung bis spätestens 5 Tage vor Kursbeginn wird
+              die Kursgebühr abzüglich einer Bearbeitungsgebühr von 5&nbsp;€
+              erstattet.
+            </li>
+            <li>
+              Bei einer späteren Stornierung oder bei Nichterscheinen ohne
+              Stornierung wird die gesamte Kursgebühr berechnet.
+            </li>
+            <li>
+              Im Krankheitsfall ist eine Stornierung gegen Vorlage eines
+              ärztlichen Attests bis spätestens Freitag vor Kursbeginn um 14 Uhr
+              per E-Mail an <a href="mailto:skischule@szkollnau.de"
+                >skischule@szkollnau.de</a
+              > möglich. Die Kursgebühr wird abzüglich einer Bearbeitungsgebühr
+              von 5&nbsp;€ erstattet.
+            </li>
+            <li>
+              Der buchenden Person bleibt der Nachweis vorbehalten, dass dem
+              Verein kein oder ein wesentlich geringerer Schaden entstanden ist.
+            </li>
+          </ol>
+        </li>
+        <li id="versicherung">
+          <h2>Versicherung</h2>
+          {/* TODO: Confirm the actual insurance coverage for members and non-members. */}
+          <ol>
+            <li>
+              Vereinsmitglieder sind während der Kurse über den Verein
+              versichert. Für Nicht-Mitglieder besteht während der Kurse nur ein
+              eingeschränkter Versicherungsschutz. Der Verein empfiehlt
+              Nicht-Mitgliedern daher ausdrücklich den Abschluss einer
+              Versicherung über den Deutschen Skiverband.
+            </li>
+          </ol>
+        </li>
+        <li id="haftung">
+          <h2>Haftung</h2>
+          <ol>
+            <li>
+              Ski- und Snowboardfahren ist mit Verletzungsrisiken verbunden, die
+              sich auch bei sorgfältiger Kursdurchführung nicht vollständig
+              ausschließen lassen.
+            </li>
+            <li>
+              Der Verein haftet unbeschränkt für Schäden aus der Verletzung des
+              Lebens, des Körpers oder der Gesundheit sowie für Schäden, die auf
+              Vorsatz oder grober Fahrlässigkeit beruhen.
+            </li>
+            <li>
+              Für sonstige Schäden haftet der Verein bei leichter Fahrlässigkeit
+              nur, wenn eine wesentliche Vertragspflicht verletzt wurde, also
+              eine Pflicht, deren Erfüllung die ordnungsgemäße Durchführung des
+              Kurses überhaupt erst ermöglicht und auf deren Einhaltung die
+              Teilnehmenden regelmäßig vertrauen dürfen. In diesem Fall ist die
+              Haftung auf den vorhersehbaren, vertragstypischen Schaden
+              begrenzt. Im Übrigen ist die Haftung für leichte Fahrlässigkeit
+              ausgeschlossen.
+            </li>
+            <li>
+              Für mitgebrachte Ausrüstung, Kleidung und Wertsachen haftet der
+              Verein nur nach Ziffer&nbsp;11.2.
+            </li>
+            <li>
+              Diese Haftungsregeln gelten auch für die Skilehrerinnen und
+              Skilehrer sowie alle weiteren für den Verein tätigen Personen.
+            </li>
+          </ol>
+        </li>
+        <li id="datenschutz">
+          <h2>Datenschutz und Fotos</h2>
+          <ol>
+            <li>
+              Der Verein verarbeitet die bei der Buchung angegebenen Daten zur
+              Durchführung und Abwicklung der Kurse. Einzelheiten stehen in der <a
+                href="/datenschutz/">Datenschutzerklärung</a
+              >.
+            </li>
+            <li>
+              Fotos und Videos, auf denen Teilnehmende zu erkennen sind,
+              veröffentlicht der Verein nur, wenn die buchende Person bei der
+              Buchung gesondert eingewilligt hat. Die Einwilligung ist freiwillig
+              und kann jederzeit für die Zukunft per E-Mail an <a
+                href="mailto:info@szkollnau.de">info@szkollnau.de</a
+              > widerrufen werden.
+            </li>
+          </ol>
+        </li>
+        <li id="schlussbestimmungen">
+          <h2>Schlussbestimmungen</h2>
+          <ol>
+            <li>
+              Es gilt die Fassung dieser AGB, die zum Zeitpunkt der Buchung
+              gültig ist.
+            </li>
+            <li>
+              Es gilt das Recht der Bundesrepublik Deutschland. Zwingende
+              Verbraucherschutzvorschriften bleiben unberührt.
+            </li>
+            <li>
+              Der Verein ist nicht bereit und nicht verpflichtet, an
+              Streitbeilegungsverfahren vor einer
+              Verbraucherschlichtungsstelle teilzunehmen.
+            </li>
+            <li>
+              Sollte eine Bestimmung dieser AGB unwirksam sein, bleiben die
+              übrigen Bestimmungen davon unberührt.
+            </li>
+          </ol>
         </li>
       </ol>
-    </li>
-    <li>
-      <h2>Anmeldung und Zahlung</h2>
-      <ol>
-        <li>
-          Die Anmeldung zu Kursen erfolgt über die Website des Vereins oder
-          schriftlich. Mit der Anmeldung verpflichtet sich der Teilnehmer zur
-          Zahlung der anfallenden Gebühren.
-        </li>
-        <li>
-          Die Kursgebühren sind bis spätestens 5 Tage vor Kursbeginn per
-          Banküberweisung auf das Bankkonto des Vereins zu überweisen. Erfolgt
-          keine fristgerechte Zahlung, behält sich der Verein das Recht vor, den
-          Platz anderweitig zu vergeben.
-        </li>
-      </ol>
-    </li>
-    <li>
-      <h2>Mindestteilnehmerzahl</h2>
-      <ol>
-        <li>
-          Die Mindestteilnehmerzahl für einen Kurs beträgt 5 Personen. Sollte
-          diese nicht erreicht werden, behält sich der Verein das Recht vor, den
-          Kurs abzusagen. In diesem Fall werden bereits gezahlte Kursgebühren
-          vollständig zurückerstattet.
-        </li>
-      </ol>
-    </li>
-    <li>
-      <h2>Kursverlegung und Ausweichtermine</h2>
-      <ol>
-        <li>
-          Bei unsicherer Schneelage auf dem Kandel werden die Kurse (außer
-          Bambini-Kurse) automatisch in ein umliegendes Skigebiet verlegt. Die
-          Bekanntgabe, ob und wo ein Kurs stattfindet, erfolgt in der Regel 2
-          Tage vor Kursbeginn gegen 20 Uhr auf unserer Website. Bei Verlegung
-          beginnt der Kurs um 9:00 Uhr, der jeweilige Treffpunkt wird
-          rechtzeitig bekannt gegeben.
-        </li>
-      </ol>
-    </li>
-    <li>
-      <h2>Höhere Gewalt</h2>
-      <ol>
-        <li>
-          Muss ein Kurs aufgrund höherer Gewalt (z. B. fehlender Schnee,
-          kritische Wetterbedingungen wie Sturm) abgesagt werden, wird die
-          Kursgebühr abzüglich einer Bearbeitungsgebühr von 5 € zurückerstattet.
-          Findet mindestens ein Kurstag statt, wird die gesamte Kursgebühr
-          einbehalten.
-        </li>
-      </ol>
-    </li>
-    <li>
-      <h2>Stornierung und Krankheitsfall</h2>
-      <ol>
-        <li>
-          Eine Stornierung ist bis spätestens 5 Tage vor Kursbeginn möglich. In
-          diesem Fall wird eine Bearbeitungsgebühr von 5 € einbehalten. Bei
-          Nichterscheinen ohne rechtzeitige Stornierung wird die gesamte
-          Kursgebühr berechnet. 7.2 Im Krankheitsfall ist eine Stornierung gegen
-          Vorlage eines ärztlichen Attests bis spätestens Freitag vor Kursbeginn
-          um 14 Uhr per E-Mail an skischule@szkollnau.de möglich. Auch in diesem
-          Fall wird eine Bearbeitungsgebühr von 5 € einbehalten.
-        </li>
-      </ol>
-    </li>
-    <li>
-      <h2>Gesundheitszustand und Sicherheitsvorkehrungen</h2>
-      <ol>
-        <li>
-          Die Teilnahme an den Kursen ist nur ohne gesundheitliche
-          Einschränkungen möglich. Jeder Teilnehmer bestätigt mit seiner
-          Anmeldung, gesundheitlich in der Lage zu sein, an den Kursen
-          teilzunehmen. 8.2 Teilnehmer sind verpflichtet, den Anweisungen der
-          Kursleiter Folge zu leisten. Bei Verstößen gegen
-          Sicherheitsvorschriften kann der Teilnehmer vom Kurs ausgeschlossen
-          werden. Eine Erstattung der Kursgebühr erfolgt in diesem Fall nicht.
-        </li>
-      </ol>
-    </li>
-    <li>
-      <h2>Versicherungsschutz</h2>
-      <ol>
-        <li>
-          Alle Vereinsmitglieder sind über die Dauer des Kurses versichert. Für
-          Nicht-Mitglieder besteht nur ein bedingter Versicherungsschutz während
-          der Kursdauer. Der Verein empfiehlt Nicht-Mitgliedern daher
-          ausdrücklich den Abschluss einer Versicherung über den Deutschen
-          Skiverband.
-        </li>
-      </ol>
-    </li>
-    <li>
-      <h2>Haftung</h2>
-      <ol>
-        <li>
-          Der Skiclub Skizunft Kollnau e.V. übernimmt keine Haftung für
-          Personen-, Sachschäden oder Krankheiten, die während des Kursbetriebs
-          entstehen, es sei denn, es liegt vorsätzliches oder grob fahrlässiges
-          Verhalten vor.
-        </li>
-      </ol>
-    </li>
-    <li>
-      <h2>Datenschutz</h2>
-      <ol>
-        <li>
-          Der Verein verarbeitet die personenbezogenen Daten der Teilnehmer nur
-          für interne Zwecke gemäß der geltenden Datenschutzbestimmungen. Eine
-          Weitergabe an Dritte erfolgt nur mit Zustimmung der betroffenen
-          Personen oder wenn dies gesetzlich vorgeschrieben ist.
-        </li>
-      </ol>
-    </li>
-    <li>
-      <h2>Schlussbestimmungen</h2>
-      <ol>
-        <li>
-          Änderungen der AGB werden den Mitgliedern schriftlich oder per E-Mail
-          bekannt gegeben. Sie gelten als genehmigt, wenn nicht innerhalb von
-          vier Wochen schriftlich widersprochen wird. 12.2 Sollte eine
-          Bestimmung dieser AGB unwirksam sein, bleiben die übrigen Bestimmungen
-          davon unberührt.
-        </li>
-      </ol>
-    </li>
-  </ol>
-</div>
-
+    </div>
   </main>
 </Page>
+
+<style>
+  .agb > ol {
+    counter-reset: section;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .agb > ol > li {
+    counter-increment: section;
+    padding-left: 0;
+  }
+
+  .agb > ol > li > h2::before {
+    content: counter(section) '. ';
+  }
+
+  .agb > ol > li > ol {
+    counter-reset: clause;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .agb > ol > li > ol > li {
+    counter-increment: clause;
+    position: relative;
+    padding-left: 2.75rem;
+  }
+
+  .agb > ol > li > ol > li::before {
+    content: counter(section) '.' counter(clause);
+    position: absolute;
+    left: 0;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+</style>

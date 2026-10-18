@@ -347,7 +347,7 @@ export default function BookingConfirmation({
                     <span>Kursbuchung wird gesendet …</span>
                   </span>
                 ) : (
-                  <span>Kursbuchung senden</span>
+                  <span>Zahlungspflichtig buchen</span>
                 )}
               </button>
             </div>
