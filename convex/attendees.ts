@@ -9,6 +9,23 @@ export const list = query({
   },
 })
 
+/**
+ * Seats taken per course slug by attendees who have not cancelled.
+ * Public, so it returns counts only and no personal data.
+ */
+export const seatsTaken = query({
+  args: {},
+  handler: async (ctx) => {
+    const attendees = await ctx.db.query('attendees').collect()
+    const seats: Record<string, number> = {}
+    for (const attendee of attendees) {
+      if (attendee.cancelled) continue
+      for (const slug of attendee.courses) seats[slug] = (seats[slug] ?? 0) + 1
+    }
+    return seats
+  },
+})
+
 export const add = mutation({
   args: {
     bookingId: v.id('bookings'),

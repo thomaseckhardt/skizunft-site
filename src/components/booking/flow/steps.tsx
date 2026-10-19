@@ -6,6 +6,12 @@ import CourseSelectionItem from '../CourseSelectionItem'
 import type { Pricing } from '../pricing'
 import TextField from '../TextField'
 import {
+  countBookingSeats,
+  getFreeSeats,
+  withAvailability,
+  type SeatsTaken,
+} from './availability'
+import {
   getMatchingCategories,
   type Discipline,
   type FlowAction,
@@ -35,6 +41,7 @@ export type StepProps = {
   dispatch: Dispatch<FlowAction>
   catalog: Catalog
   pricing: Pricing
+  seatsTaken: SeatsTaken | undefined
   onBack: () => void
 }
 
@@ -288,12 +295,16 @@ export function SkillLevelStep({ state, dispatch, catalog }: StepProps) {
 // --------------------------------------------------
 
 export function CoursesStep(props: StepProps) {
-  const { state, dispatch, catalog } = props
+  const { state, dispatch, catalog, seatsTaken } = props
   const { draft } = state
   const category = getCategory(props)
-  const categoryCourses = catalog.courses.filter(
-    (course) => category && course.categoryId === category.id,
-  )
+  // Other attendees of this booking take seats as well.
+  const bookingSeats = countBookingSeats(state.attendees, draft.attendeeId)
+  const categoryCourses = catalog.courses
+    .filter((course) => category && course.categoryId === category.id)
+    .map((course) =>
+      withAvailability(course, getFreeSeats(course, seatsTaken, bookingSeats)),
+    )
   const hasBookableCourses = categoryCourses.some((course) => !course.disabled)
   const [selected, setSelected] = useState<string[]>(draft.courses)
   const [error, setError] = useState<string>()
@@ -316,10 +327,15 @@ export function CoursesStep(props: StepProps) {
       setError('Bitte wähle mindestens einen Termin aus.')
       return
     }
-    // Keep the catalog order, regardless of the order of clicks.
+    // Keep the catalog order, regardless of the order of clicks, and drop
+    // courses that were fully booked in the meantime.
     const courses = categoryCourses
+      .filter(({ slug, disabled }) => selected.includes(slug) && !disabled)
       .map(({ slug }) => slug)
-      .filter((slug) => selected.includes(slug))
+    if (courses.length === 0) {
+      setError('Der gewählte Termin ist inzwischen leider ausgebucht.')
+      return
+    }
     dispatch({ type: 'setCourses', courses })
   }
 
@@ -358,8 +374,10 @@ export function CoursesStep(props: StepProps) {
                 alreadyBooked
                   ? {
                       ...course,
+                      availability: undefined,
                       disabled: true,
                       bookingStateMessage: 'bereits ausgewählt',
+                      bookingStateColor: 'grey',
                     }
                   : course
               }

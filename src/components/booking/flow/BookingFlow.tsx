@@ -1,5 +1,7 @@
 import Icon from '@/components/Icon'
+import { useQueries } from 'convex/react'
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
+import { api } from '../../../../convex/_generated/api'
 import { createPricing, getDiscountRate } from '../pricing'
 import useSubmitBooking from '../useSubmitBooking'
 import {
@@ -27,6 +29,7 @@ import {
   type Catalog,
   type StepProps,
 } from './steps'
+import type { SeatsTaken } from './availability'
 import SummaryStep from './SummaryStep'
 
 const storageKey = 'skizunft-booking-flow-v1'
@@ -55,6 +58,24 @@ const clearState = () => {
   } catch {
     // Storage may be unavailable, e.g. in private windows.
   }
+}
+
+// Defined once, so the subscription is not set up again on every render.
+const seatsTakenQuery = {
+  seatsTaken: { query: api.attendees.seatsTaken, args: {} },
+}
+
+/**
+ * Seats taken per course, live from Convex. Undefined while loading or when
+ * the query fails, so the flow keeps working without automatic booking states.
+ */
+const useSeatsTaken = (): SeatsTaken | undefined => {
+  const { seatsTaken } = useQueries(seatsTakenQuery)
+  const failed = seatsTaken instanceof Error
+  useEffect(() => {
+    if (failed) console.error('Could not load the seats taken', seatsTaken)
+  }, [failed])
+  return failed ? undefined : seatsTaken
 }
 
 const getHistoryDepth = (): number | undefined =>
@@ -91,6 +112,7 @@ export default function BookingFlow({
   )
   const [state, dispatch] = useReducer(reducer, undefined, loadState)
   const submitted = useRef(false)
+  const seatsTaken = useSeatsTaken()
 
   const discountRate = getDiscountRate(
     new URLSearchParams(window.location.search).get('code'),
@@ -160,6 +182,7 @@ export default function BookingFlow({
     dispatch,
     catalog,
     pricing,
+    seatsTaken,
     onBack: goBack,
   }
   const StepComponent = step === 'summary' ? undefined : stepComponents[step]

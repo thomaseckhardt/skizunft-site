@@ -20,6 +20,28 @@ Ski or Snowboard.
 **Skill Level** (UI: Könnensstufe):
 How advanced the attendee is — Beginner, Junior Champion or Champion.
 
+### Availability
+
+**Seat Limit** (UI: Plätze gesamt):
+The maximum number of attendees a course can take. A course without a seat limit has no automatic availability.
+_Avoid_: Capacity, Kontingent
+
+**Free Seats** (UI: freie Plätze):
+The seat limit minus the attendees booked onto the course who have not cancelled.
+_Avoid_: Available seats, Restplätze
+
+**Few Seats Left** (UI: Nur noch wenige Plätze frei):
+A course with one or two free seats. It can still be booked.
+
+**Fully Booked** (UI: ausgebucht):
+A course with no free seats. It can no longer be booked.
+
+**Closed** (UI: ausgebucht):
+A course the ski school team has closed for booking by hand, whether or not it is fully booked. Bookers see it as fully booked.
+
+**Canceled** (UI: abgesagt):
+A course that will not take place.
+
 ### Booking
 
 **Booking** (UI: Buchung):

@@ -3,6 +3,7 @@ import { formatPrice } from '@/utils/format'
 import clsx from 'clsx'
 import { useState, type ReactNode } from 'react'
 import type { BookingValues } from '../useSubmitBooking'
+import { countBookingSeats, isNoLongerBookable } from './availability'
 import type { ContactStepId, FlowAttendee } from './flowState'
 import type { StepProps } from './steps'
 import {
@@ -21,6 +22,7 @@ export default function SummaryStep({
   dispatch,
   catalog,
   pricing,
+  seatsTaken,
   submitBooking,
   onSubmitted,
   onCancel,
@@ -47,6 +49,17 @@ export default function SummaryStep({
   const getCourse = (slug: string) =>
     catalog.courses.find((course) => course.slug === slug)
 
+  // Once sent, the booking counts towards the seats taken itself, so the
+  // check only applies before.
+  const bookingSeats = countBookingSeats(attendees)
+  const unbookableCourses = isLocked
+    ? []
+    : Object.keys(bookingSeats).filter((slug) => {
+        const course = getCourse(slug)
+        return course && isNoLongerBookable(course, seatsTaken, bookingSeats)
+      })
+  const hasUnbookableCourses = unbookableCourses.length > 0
+
   const editContact = (step: ContactStepId) =>
     dispatch({ type: 'editContact', step })
 
@@ -72,7 +85,7 @@ export default function SummaryStep({
   }
 
   const submit = async () => {
-    if (isLocked) return
+    if (isLocked || hasUnbookableCourses) return
 
     const nextErrors = [
       attendees.length === 0 && 'Bitte wähle mindestens einen Kurs aus.',
@@ -149,6 +162,12 @@ export default function SummaryStep({
                         <span>
                           {getCourse(slug)?.name} ·{' '}
                           {getCourse(slug)?.dateShortFormatted}
+                          {unbookableCourses.includes(slug) && (
+                            <span className="font-medium text-rose-700">
+                              {' '}
+                              · inzwischen ausgebucht
+                            </span>
+                          )}
                         </span>
                         {!isLocked && (
                           <button
@@ -317,6 +336,18 @@ export default function SummaryStep({
         </section>
 
         <div className="space-y-4">
+          {hasUnbookableCourses && (
+            <Notice tone="error">
+              <p>
+                {unbookableCourses.length === 1
+                  ? 'Ein gewählter Kurs ist'
+                  : 'Einige gewählte Kurse sind'}{' '}
+                inzwischen leider ausgebucht. Bitte entferne{' '}
+                {unbookableCourses.length === 1 ? 'ihn' : 'sie'} aus deiner
+                Buchung oder wähle einen anderen Termin.
+              </p>
+            </Notice>
+          )}
           {errors.length > 0 && (
             <Notice tone="error">
               <ul role="list" className="list-disc space-y-1 pl-5">
@@ -355,7 +386,7 @@ export default function SummaryStep({
             )}
             <PrimaryButton
               onClick={submit}
-              disabled={isLocked}
+              disabled={isLocked || hasUnbookableCourses}
               className={clsx('sm:ml-auto', isSubmitting && 'cursor-wait')}
             >
               {isSubmitting ? (
