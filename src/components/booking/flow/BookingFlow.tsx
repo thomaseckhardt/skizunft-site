@@ -18,7 +18,6 @@ import {
   AttendeeChoiceStep,
   AttendeeNameStep,
   BookerLastNameStep,
-  BookerNameStep,
   CoursesStep,
   DisciplineStep,
   EmailStep,
@@ -32,7 +31,7 @@ import {
 import type { SeatsTaken } from './availability'
 import SummaryStep from './SummaryStep'
 
-const storageKey = 'skizunft-booking-flow-v1'
+const storageKey = 'skizunft-booking-flow-v2'
 
 const loadState = (): FlowState => {
   try {
@@ -85,7 +84,6 @@ const stepComponents: Record<
   Exclude<StepId, 'summary'>,
   (props: StepProps) => JSX.Element
 > = {
-  bookerName: BookerNameStep,
   attendeeChoice: AttendeeChoiceStep,
   discipline: DisciplineStep,
   age: AgeStep,

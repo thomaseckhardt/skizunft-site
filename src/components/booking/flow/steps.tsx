@@ -65,40 +65,6 @@ const getCategory = ({
 
 // --------------------------------------------------
 
-export function BookerNameStep({ state, dispatch }: StepProps) {
-  const [firstName, setFirstName] = useState(state.booker.firstName)
-  const [error, setError] = useState<string>()
-
-  const submit = () => {
-    if (!firstName.trim()) {
-      setError('Bitte gib deinen Vornamen an.')
-      return
-    }
-    dispatch({ type: 'setBookerFirstName', firstName: firstName.trim() })
-  }
-
-  return (
-    <FormStep
-      title="Hallo! Wie heißt du?"
-      description="Schön, dass du einen Kurs bei der Skischule der Skizunft Kollnau buchen möchtest."
-      onSubmit={submit}
-    >
-      <TextField
-        label="Dein Vorname"
-        id="booker-firstName"
-        fieldId="booker-firstName"
-        input={textInput(firstName, setFirstName, {
-          autoFocus: true,
-          autoComplete: 'given-name',
-        })}
-        error={error}
-      />
-    </FormStep>
-  )
-}
-
-// --------------------------------------------------
-
 export function AttendeeChoiceStep({ state, dispatch }: StepProps) {
   const choices = [
     ...state.attendees.map((attendee) => ({
@@ -131,12 +97,12 @@ export function AttendeeChoiceStep({ state, dispatch }: StepProps) {
 // --------------------------------------------------
 
 export function DisciplineStep({ state, dispatch, catalog }: StepProps) {
-  const { draft, booker, attendees } = state
+  const { draft, attendees } = state
   const isFirstCourse = attendees.length === 0 && draft.isNewAttendee
 
   const title = draft.isNewAttendee
     ? isFirstCourse
-      ? `Hallo ${booker.firstName}! Welchen Kurs möchtest du buchen?`
+      ? 'Hallo, welchen Kurs möchtest du buchen?'
       : 'Welchen Kurs möchtest du buchen?'
     : `Welchen Kurs möchte ${draft.firstName} machen?`
 
@@ -448,12 +414,6 @@ export function AttendeeNameStep({ state, dispatch }: StepProps) {
     lastName?: string
   }>({})
 
-  const fillInBooker = () => {
-    setFirstName(state.booker.firstName)
-    setLastName(state.booker.lastName)
-    setErrors({})
-  }
-
   const submit = () => {
     const nextErrors = {
       firstName: firstName.trim() ? undefined : 'Bitte gib den Vornamen an.',
@@ -473,12 +433,6 @@ export function AttendeeNameStep({ state, dispatch }: StepProps) {
       title="Wie heißt die Person, die am Kurs teilnimmt?"
       onSubmit={submit}
     >
-      <div>
-        <LinkButton onClick={fillInBooker}>
-          <Icon name="person-24-regular" />
-          <span>Ich selbst</span>
-        </LinkButton>
-      </div>
       <div className="grid gap-6 sm:grid-cols-2">
         <TextField
           label="Vorname"
@@ -619,7 +573,7 @@ export function BookerLastNameStep({ state, dispatch }: StepProps) {
 
   return (
     <FormStep
-      title={`Fast geschafft, ${state.booker.firstName}! Wie lautet dein Nachname?`}
+      title="Fast geschafft! Wie heißt du?"
       description="Du bist unser Vertragspartner und die Kontaktperson, an die wir uns in allen Fragen zum Kursbetrieb wenden."
       onSubmit={submit}
     >
@@ -629,6 +583,7 @@ export function BookerLastNameStep({ state, dispatch }: StepProps) {
           id="booker-firstName"
           fieldId="booker-firstName"
           input={textInput(firstName, setFirstName, {
+            autoFocus: !firstName,
             autoComplete: 'given-name',
           })}
           error={errors.firstName}
@@ -638,7 +593,7 @@ export function BookerLastNameStep({ state, dispatch }: StepProps) {
           id="booker-lastName"
           fieldId="booker-lastName"
           input={textInput(lastName, setLastName, {
-            autoFocus: true,
+            autoFocus: !!firstName,
             autoComplete: 'family-name',
           })}
           error={errors.lastName}

@@ -1,7 +1,6 @@
 export type Discipline = 'Ski' | 'Snowboard'
 
 export type StepId =
-  | 'bookerName'
   | 'attendeeChoice'
   | 'discipline'
   | 'age'
@@ -69,7 +68,6 @@ export type FlowState = {
 }
 
 export type FlowAction =
-  | { type: 'setBookerFirstName'; firstName: string }
   | { type: 'chooseAttendee'; attendeeId: string | null }
   | { type: 'chooseDiscipline'; discipline: Discipline }
   | { type: 'setAge'; age: number }
@@ -93,7 +91,6 @@ export type FlowAction =
 
 /** Step order used for the progress bar. */
 const progressOrder: StepId[] = [
-  'bookerName',
   'discipline',
   'age',
   'skillLevel',
@@ -156,7 +153,7 @@ const draftFromAttendee = (attendee: FlowAttendee): Draft => ({
 })
 
 export const createInitialState = (): FlowState => ({
-  steps: ['bookerName'],
+  steps: ['discipline'],
   returnToSummary: false,
   booker: {
     firstName: '',
@@ -269,15 +266,6 @@ export const createFlowReducer =
   (categories: CourseCategory[]) =>
   (state: FlowState, action: FlowAction): FlowState => {
     switch (action.type) {
-      case 'setBookerFirstName':
-        return push(
-          {
-            ...state,
-            booker: { ...state.booker, firstName: action.firstName },
-          },
-          state.attendees.length > 0 ? 'attendeeChoice' : 'discipline',
-        )
-
       case 'chooseAttendee': {
         const attendee = state.attendees.find(
           ({ id }) => id === action.attendeeId,
