@@ -138,6 +138,18 @@ export default function BookingFlow({
     window.history.replaceState({ flowDepth: depth - 1 }, '')
   }, [depth])
 
+  const cancel = useCallback(() => {
+    dispatch({ type: 'reset' })
+    // Walk the history back to the first step, so the browser back button
+    // does not lead into the discarded flow.
+    const historyDepth = getHistoryDepth() ?? 0
+    if (historyDepth > 0) {
+      window.history.go(-historyDepth)
+    } else {
+      window.history.replaceState({ ...window.history.state, flowDepth: 0 }, '')
+    }
+  }, [])
+
   const onSubmitted = useCallback(() => {
     submitted.current = true
     clearState()
@@ -187,6 +199,7 @@ export default function BookingFlow({
             {...stepProps}
             submitBooking={submitBooking}
             onSubmitted={onSubmitted}
+            onCancel={cancel}
           />
         )}
       </div>

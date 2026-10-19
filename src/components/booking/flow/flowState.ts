@@ -89,6 +89,7 @@ export type FlowAction =
   | { type: 'removeAttendee'; attendeeId: string }
   | { type: 'goto'; step: StepId }
   | { type: 'popTo'; depth: number }
+  | { type: 'reset' }
 
 /** Step order used for the progress bar. */
 const progressOrder: StepId[] = [
@@ -459,5 +460,8 @@ export const createFlowReducer =
           returnToSummary: false,
           steps: state.steps.slice(0, action.depth + 1),
         }
+
+      case 'reset':
+        return createInitialState()
     }
   }

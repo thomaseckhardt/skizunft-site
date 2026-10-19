@@ -10,6 +10,7 @@ import {
   LinkButton,
   Notice,
   PrimaryButton,
+  SecondaryButton,
   StepShell,
 } from './ui'
 
@@ -22,9 +23,11 @@ export default function SummaryStep({
   pricing,
   submitBooking,
   onSubmitted,
+  onCancel,
 }: StepProps & {
   submitBooking: (values: BookingValues) => Promise<boolean>
   onSubmitted: () => void
+  onCancel: () => void
 }) {
   const { booker, attendees } = state
   const [legalConfirmed, setLegalConfirmed] = useState(false)
@@ -35,6 +38,7 @@ export default function SummaryStep({
   // Kept after closing, so the dialog content stays during the leave transition.
   const [attendeeToRemove, setAttendeeToRemove] = useState<FlowAttendee>()
   const [confirmOpen, setConfirmOpen] = useState(false)
+  const [cancelOpen, setCancelOpen] = useState(false)
 
   const isSubmitting = submitState === 'submitting'
   const isLocked = isSubmitting || submitState === 'mailFailed'
@@ -342,39 +346,47 @@ export default function SummaryStep({
               </p>
             </Notice>
           )}
-          <PrimaryButton
-            onClick={submit}
-            disabled={isLocked}
-            className={clsx(isSubmitting && 'cursor-wait')}
-          >
-            {isSubmitting ? (
-              <span className="inline-flex items-center gap-x-2">
-                <svg
-                  className="h-5 w-5 animate-spin"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                <span>Buchung wird gesendet …</span>
-              </span>
-            ) : (
-              <span>Zahlungspflichtig buchen</span>
+          {/* Reversed on mobile, so the booking button stays on top. */}
+          <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
+            {!isLocked && (
+              <SecondaryButton onClick={() => setCancelOpen(true)}>
+                Abbrechen
+              </SecondaryButton>
             )}
-          </PrimaryButton>
+            <PrimaryButton
+              onClick={submit}
+              disabled={isLocked}
+              className={clsx('sm:ml-auto', isSubmitting && 'cursor-wait')}
+            >
+              {isSubmitting ? (
+                <span className="inline-flex items-center gap-x-2">
+                  <svg
+                    className="h-5 w-5 animate-spin"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  <span>Buchung wird gesendet …</span>
+                </span>
+              ) : (
+                <span>Zahlungspflichtig buchen</span>
+              )}
+            </PrimaryButton>
+          </div>
         </div>
       </div>
 
@@ -398,6 +410,21 @@ export default function SummaryStep({
             aus deiner Buchung entfernen?
           </p>
         )}
+      </ConfirmDialog>
+
+      <ConfirmDialog
+        open={cancelOpen}
+        title="Buchung abbrechen?"
+        confirmLabel="Buchung abbrechen"
+        cancelLabel="Weitermachen"
+        onConfirm={onCancel}
+        onClose={() => setCancelOpen(false)}
+      >
+        <p>
+          Alle bisherigen Eingaben – Teilnehmer:innen, Kurse und deine Daten –
+          werden zurückgesetzt und gehen verloren. Das lässt sich nicht
+          rückgängig machen.
+        </p>
       </ConfirmDialog>
     </StepShell>
   )

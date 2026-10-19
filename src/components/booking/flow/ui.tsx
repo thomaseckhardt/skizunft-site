@@ -220,6 +220,7 @@ export function ConfirmDialog({
   open,
   title,
   confirmLabel,
+  cancelLabel = 'Abbrechen',
   onConfirm,
   onClose,
   children,
@@ -227,6 +228,7 @@ export function ConfirmDialog({
   open: boolean
   title: ReactNode
   confirmLabel: string
+  cancelLabel?: string
   onConfirm: () => void
   onClose: () => void
   children: ReactNode
@@ -241,7 +243,7 @@ export function ConfirmDialog({
         <div className="flex min-h-full items-end justify-center p-4 sm:items-center">
           <DialogPanel
             transition
-            className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl transition duration-200 data-[closed]:translate-y-4 data-[closed]:opacity-0 sm:data-[closed]:translate-y-0 sm:data-[closed]:scale-95"
+            className="w-full max-w-lg rounded-lg bg-white p-6 shadow-xl transition duration-200 data-[closed]:translate-y-4 data-[closed]:opacity-0 sm:data-[closed]:translate-y-0 sm:data-[closed]:scale-95"
           >
             <div className="flex gap-x-4">
               <div className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-red-100">
@@ -259,11 +261,13 @@ export function ConfirmDialog({
               </div>
             </div>
             <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-              <SecondaryButton onClick={onClose}>Abbrechen</SecondaryButton>
+              <SecondaryButton onClick={onClose} className="whitespace-nowrap">
+                {cancelLabel}
+              </SecondaryButton>
               <button
                 type="button"
                 onClick={onConfirm}
-                className="inline-flex w-full items-center justify-center rounded-full bg-red-600 px-8 py-3 text-base font-semibold text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto"
+                className="inline-flex w-full items-center justify-center whitespace-nowrap rounded-full bg-red-600 px-8 py-3 text-base font-semibold text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto"
               >
                 {confirmLabel}
               </button>
