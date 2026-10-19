@@ -78,3 +78,7 @@
   from = "/buchungssystem"
   to = "/buchung/"
 
+[[redirects]]
+  from = "/buchung/schritt-fuer-schritt"
+  to = "/buchung/"
+

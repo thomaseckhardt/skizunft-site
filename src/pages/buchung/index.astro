@@ -1,5 +1,5 @@
 ---
-import BookingPage from '@/components/booking/BookingPage'
+import BookingFlowPage from '@/components/booking/flow/BookingFlowPage'
 import Page from '@/layouts/Page.astro'
 import {
   bookingClosedRedirect,
@@ -11,11 +11,11 @@ import {
 const { courses, courseCategories, disciplines } = await loadBookingData()
 ---
 
-<Page title='Buchung' description=''>
+<Page title="Buchung" description="">
   <main>
-    <div class='box mt-5'>
-      <BookingPage
-        client:only='react'
+    <div class="box mt-5 pb-24">
+      <BookingFlowPage
+        client:only="react"
         disciplines={disciplines}
         courses={courses}
         courseCategories={courseCategories}
