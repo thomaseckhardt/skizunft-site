@@ -138,7 +138,10 @@ export function ChoiceList<T>({
   return (
     <div className="space-y-3">
       {choices.map((choice) => {
-        const isSelected = selected !== undefined && choice.value === selected
+        const isSelected =
+          !choice.disabled &&
+          selected !== undefined &&
+          choice.value === selected
         return (
           <button
             key={String(choice.value)}
@@ -147,10 +150,12 @@ export function ChoiceList<T>({
             onClick={() => onSelect(choice.value)}
             className={clsx(
               'relative flex w-full items-center rounded-lg bg-white p-4 text-left shadow-sm ring-inset focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-600',
-              isSelected ? 'ring-2 ring-sky-600' : 'ring-1 ring-gray-300',
               choice.disabled
-                ? 'cursor-not-allowed bg-gray-50'
-                : 'hover:ring-sky-400',
+                ? // Rings can't be dashed, so disabled choices use an outline.
+                  'cursor-not-allowed bg-gray-50 outline-dashed outline-1 -outline-offset-1 outline-gray-300'
+                : isSelected
+                  ? 'ring-2 ring-sky-600 hover:ring-sky-400'
+                  : 'ring-1 ring-gray-300 hover:ring-sky-400',
             )}
           >
             <span className="flex flex-1 flex-col">

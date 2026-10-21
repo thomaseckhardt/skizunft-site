@@ -33,6 +33,7 @@ export const disciplines = {
     description: 'Ab 4 Jahren',
     minAge: 4,
     maxAge: 99,
+    enabled: true,
   },
   [Discipline.Snowboard]: {
     value: Discipline.Snowboard,
@@ -40,6 +41,10 @@ export const disciplines = {
     description: 'Für Kinder ab 6 bis einschließlich 13 Jahren',
     minAge: 6,
     maxAge: 13,
+    enabled: false,
+    // Shown in place of the description while the discipline is disabled.
+    disabledMessage:
+      'Die Termine für die Snowboardkurse stehen noch nicht fest. Schau bald wieder vorbei!',
   },
 }
 

@@ -17,6 +17,9 @@ _Avoid_: Course date, Termin, Kurstermin
 **Discipline** (UI: Disziplin):
 Ski or Snowboard.
 
+**Disabled Discipline** (UI: ausgegraut mit Hinweis):
+A discipline that can't be chosen in the booking flow for now, e.g. while its course dates are not yet known. The booking flow shows it greyed out, with a configured message in place of its description.
+
 **Skill Level** (UI: Könnensstufe):
 How advanced the attendee is — Beginner, Junior Champion or Champion.
 

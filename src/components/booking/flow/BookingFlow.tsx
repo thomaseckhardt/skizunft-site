@@ -212,7 +212,7 @@ export default function BookingFlow({
           style={{ width: `${getProgress(step) * 100}%` }}
         />
       </div>
-      <div className="mt-10" key={`${depth}-${step}`}>
+      <div className="mt-6" key={`${depth}-${step}`}>
         {StepComponent ? (
           <StepComponent {...stepProps} />
         ) : (

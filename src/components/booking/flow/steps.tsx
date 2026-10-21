@@ -32,7 +32,13 @@ export type Catalog = {
   courseCategories: any[]
   disciplines: Record<
     Discipline,
-    { value: Discipline; label: string; description: string }
+    {
+      value: Discipline
+      label: string
+      description: string
+      enabled: boolean
+      disabledMessage?: string
+    }
   >
 }
 
@@ -107,6 +113,15 @@ export function DisciplineStep({ state, dispatch, catalog }: StepProps) {
     : `Welchen Kurs möchte ${draft.firstName} machen?`
 
   const choices = Object.values(catalog.disciplines).map((discipline) => {
+    if (!discipline.enabled) {
+      return {
+        value: discipline.value,
+        label: discipline.label,
+        description: discipline.disabledMessage,
+        disabled: true,
+      }
+    }
+
     // The age of an already known attendee rules out unsuitable disciplines.
     const unavailable =
       !draft.isNewAttendee &&
