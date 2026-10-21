@@ -203,6 +203,7 @@ export function AgeStep({ state, dispatch, catalog, onBack }: StepProps) {
       onSubmit={submit}
     >
       <TextField
+        size="lg"
         label="Alter in Jahren"
         id="attendee-age"
         fieldId="attendee-age"
@@ -450,6 +451,7 @@ export function AttendeeNameStep({ state, dispatch }: StepProps) {
     >
       <div className="grid gap-6 sm:grid-cols-2">
         <TextField
+          size="lg"
           label="Vorname"
           id="attendee-firstName"
           fieldId="attendee-firstName"
@@ -457,6 +459,7 @@ export function AttendeeNameStep({ state, dispatch }: StepProps) {
           error={errors.firstName}
         />
         <TextField
+          size="lg"
           label="Nachname"
           id="attendee-lastName"
           fieldId="attendee-lastName"
@@ -594,6 +597,7 @@ export function BookerLastNameStep({ state, dispatch }: StepProps) {
     >
       <div className="grid gap-6 sm:grid-cols-2">
         <TextField
+          size="lg"
           label="Dein Vorname"
           id="booker-firstName"
           fieldId="booker-firstName"
@@ -604,6 +608,7 @@ export function BookerLastNameStep({ state, dispatch }: StepProps) {
           error={errors.firstName}
         />
         <TextField
+          size="lg"
           label="Dein Nachname"
           id="booker-lastName"
           fieldId="booker-lastName"
@@ -641,6 +646,7 @@ export function EmailStep({ state, dispatch }: StepProps) {
       onSubmit={submit}
     >
       <TextField
+        size="lg"
         label="Deine E-Mail"
         id="booker-email"
         fieldId="booker-email"
@@ -675,6 +681,7 @@ export function PhoneStep({ state, dispatch }: StepProps) {
       onSubmit={submit}
     >
       <TextField
+        size="lg"
         label="Deine Telefonnummer"
         id="booker-phone"
         fieldId="booker-phone"
@@ -721,6 +728,7 @@ export function AddressStep({ state, dispatch }: StepProps) {
     <FormStep title="Wie lautet deine Rechnungsadresse?" onSubmit={submit}>
       <div className="grid gap-6 sm:grid-cols-3">
         <TextField
+          size="lg"
           label="Straße und Hausnummer"
           id="booker-address"
           fieldId="booker-address"
@@ -732,6 +740,7 @@ export function AddressStep({ state, dispatch }: StepProps) {
           error={errors.address}
         />
         <TextField
+          size="lg"
           label="PLZ"
           id="booker-zip"
           fieldId="booker-zip"
@@ -742,6 +751,7 @@ export function AddressStep({ state, dispatch }: StepProps) {
           error={errors.zip}
         />
         <TextField
+          size="lg"
           label="Ort"
           id="booker-city"
           fieldId="booker-city"

@@ -504,17 +504,14 @@ function Checkbox({
           disabled={disabled}
           onChange={(event) => onChange(event.target.checked)}
           aria-describedby={`${id}-description`}
-          className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-600"
+          className="h-5 w-5 rounded border-gray-300 text-sky-600 focus:ring-sky-600"
         />
       </div>
-      <div className="ml-3 text-sm leading-6">
+      <div className="ml-3 text-base leading-6">
         <label htmlFor={id} className="font-medium text-gray-900">
           {label}
         </label>
-        <p
-          id={`${id}-description`}
-          className="prose prose-sm prose-gray text-gray-500"
-        >
+        <p id={`${id}-description`} className="prose prose-gray text-gray-500">
           {children}
         </p>
       </div>
