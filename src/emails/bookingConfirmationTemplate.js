@@ -16,12 +16,15 @@ export default `<mjml>
       </mj-column>
     </mj-section>
     <mj-section padding="20px 20px 0 20px" background-color="#FFFFFF" border-radius="16px 16px 0px 0px">
-      <mj-column width="50%">
-        <mj-image src="https://www.szkollnau.de/mailing/logo-skizunft-mailing.png" alt="Skizunft Kollnau" width="62px" height="48px" padding="0px" align="left"></mj-image>
-      </mj-column>
-      <mj-column width="50%">
-        <mj-image src="https://www.szkollnau.de/mailing/dsv-skischule-kollnau-mailing.png" alt="DSV-Skischule Skizunft Kollnau" width="194px" height="36px" padding="0px" align="right"></mj-image>
-      </mj-column>
+      <!-- mj-group keeps both logos side by side instead of stacking on mobile -->
+      <mj-group>
+        <mj-column width="30%" vertical-align="middle">
+          <mj-image src="https://www.szkollnau.de/mailing/logo-skizunft-mailing.png" alt="Skizunft Kollnau" width="62px" height="48px" padding="0px" align="left"></mj-image>
+        </mj-column>
+        <mj-column width="70%" vertical-align="middle">
+          <mj-image src="https://www.szkollnau.de/mailing/dsv-skischule-kollnau-mailing.png" alt="DSV-Skischule Skizunft Kollnau" width="194px" height="36px" padding="0px" align="right"></mj-image>
+        </mj-column>
+      </mj-group>
     </mj-section>
     <mj-section padding="20px 20px 0 20px" background-color="#FFFFFF">
       <mj-column>
