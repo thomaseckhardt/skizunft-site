@@ -23,8 +23,6 @@ export default async function (req: Request) {
     })
   }
 
-  console.log('Payload:', payload)
-
   const emailHtml = renderBookingConfirmation(payload, {
     origin: new URL(req.url).origin,
   })
