@@ -8,6 +8,13 @@
   command = "npm run build"
   publish = "dist"
 
+# Production deploys push the Convex functions and schema as well, so the
+# frontend and Convex never drift apart. Requires CONVEX_DEPLOY_KEY (production
+# key of the live deployment) in the Netlify environment variables. Other
+# contexts keep the plain build, so previews never touch the production backend.
+[context.production]
+  command = "npx convex deploy --cmd 'npm run build' --cmd-url-env-var-name PUBLIC_CONVEX_URL"
+
 [dev]
   command = "npm run dev"
 
