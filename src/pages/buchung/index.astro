@@ -1,8 +1,7 @@
 ---
 import BookingFlowPage from '@/components/booking/flow/BookingFlowPage'
-import Logo from '@/components/Logo.astro'
+import BookingHeader from '@/components/booking/BookingHeader.astro'
 import Page from '@/layouts/Page.astro'
-import DsvSkischule from '@/images/dsv-skischule.svg'
 import {
   bookingClosedRedirect,
   bookingEnabled,
@@ -16,18 +15,7 @@ const { courses, courseCategories, disciplines } = await loadBookingData()
 <Page title="Buchung" description="" hideHeader>
   <main>
     <div class="box mt-5 pb-24">
-      <header class="mx-auto mb-6 flex max-w-2xl justify-between gap-x-4 items-end">
-        <a href="/" class="justify-self-start">
-          <span class="sr-only">Skizunft Kollnau e.V.</span>
-          <Logo className="h-10 w-auto text-brandblue-800 sm:h-12" />
-        </a>
-        <p class="text-center font-hero text-xl leading-5 sm:text-2xl">Skizunft Kollnau e.V.<br/>Kursbuchung 2026/27</p>
-        <img
-          src={DsvSkischule.src}
-          alt="DSV Skischule Skizunft Kollnau e.V."
-          class="h-4 w-auto justify-self-end sm:h-6 mb-1"
-        />
-      </header>
+      <BookingHeader />
       <BookingFlowPage
         client:only="react"
         disciplines={disciplines}

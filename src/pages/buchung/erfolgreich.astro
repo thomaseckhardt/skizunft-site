@@ -1,19 +1,18 @@
 ---
-import CheckoutPage from '@/layouts/CheckoutPage.astro'
-import FormSteps from '@/components/FormSteps.astro'
-
-const key = 'booking'
+import BookingHeader from '@/components/booking/BookingHeader.astro'
+import Page from '@/layouts/Page.astro'
 ---
 
-<CheckoutPage
+<Page
   title="Deine Buchung war erfolgreich"
   description=""
   className="bg-gray-50"
+  hideHeader
 >
-  <div x-data={key}>
-    <FormSteps />
-    <div class="box mt-20 pb-24 sm:pb-32">
-      <div class="mx-auto max-w-2xl text-center">
+  <main>
+    <div class="box mt-5 pb-24 sm:pb-32">
+      <BookingHeader />
+      <div class="mx-auto mt-20 max-w-2xl text-center">
         <h1 class="typo-hero text-sky-600">Super!</h1>
         <div class="typo-hero text-brandblue-700">
           Deine Buchung war erfolgreich.
@@ -37,34 +36,5 @@ const key = 'booking'
         </div>
       </div>
     </div>
-  </div>
-</CheckoutPage>
-
-<script is:inline define:vars={{ key }}>
-  document.addEventListener('alpine:init', () => {
-    currentStep = 2
-    const steps = [
-      {
-        index: 0,
-        slug: 'selection',
-        label: 'Kurs auswählen',
-      },
-      {
-        index: 1,
-        slug: 'booking',
-        label: 'Kurs buchen',
-      },
-      {
-        index: 2,
-        slug: 'complete',
-        label: 'Fertig!',
-      },
-    ]
-
-    Alpine.data(key, () => ({
-      currentStep,
-      step: steps[currentStep],
-      steps,
-    }))
-  })
-</script>
+  </main>
+</Page>
