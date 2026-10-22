@@ -1,5 +1,6 @@
 ---
 import BookingHeader from '@/components/booking/BookingHeader.astro'
+import PaymentDetails from '@/components/booking/PaymentDetails'
 import Page from '@/layouts/Page.astro'
 ---
 
@@ -22,7 +23,10 @@ import Page from '@/layouts/Page.astro'
           <p class="font-bold text-brandred-500">
             Bitte prüfe gegebenenfalls auch deinen SPAM-Ordner.
           </p>
-          <p class="mt-6">
+        </div>
+        <PaymentDetails client:only="react" />
+        <div class="mt-12 font-hero text-2xl text-brandblue-700">
+          <p>
             Erfahre im Abschnitt <a
               href="/skischule/#ablauf-4"
               class="underline">Kursablauf</a

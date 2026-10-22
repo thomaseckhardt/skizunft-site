@@ -1,6 +1,8 @@
 import { useMutation } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
+import { getPaymentReference } from '@/utils/payment'
 import { buildMailingData } from './buildMailingData'
+import { savePaymentSession } from './paymentSession'
 import type { Pricing } from './pricing'
 
 export type BookingValues = {
@@ -118,6 +120,11 @@ export default function useSubmitBooking({
     const confirmationMail = await triggerConfirmationMail(mailingData)
     if (confirmationMail.status < 400) {
       console.log('confirmationMail success')
+      savePaymentSession({
+        amount: mailingData.amount,
+        reference: getPaymentReference(mailingData),
+        firstCourseStart: mailingData.firstCourseStart,
+      })
       setTimeout(() => {
         window.location.replace('/buchung/erfolgreich')
       }, 100)
