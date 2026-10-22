@@ -144,29 +144,7 @@ export default `<mjml>
 
     <mj-section background-color="#FFFFFF">
       <mj-column width="100%">
-        <mj-text font-weight="300" font-size="24px" line-height="32px">
-          Kundeninformationen
-        </mj-text>
-      </mj-column>
-      <mj-column width="50%">
-        <mj-text padding="5px 25px" font-weight="400" font-size="14px" line-height="20px">
-          {{firstName}} {{lastName}}<br />
-          {{address}}<br />
-          {{zip}} {{city}}<br />
-          {{country}}
-        </mj-text>
-      </mj-column>
-      <mj-column width="50%">
-        <mj-text padding="5px 25px" font-weight="400" font-size="14px" line-height="20px">
-          {{email}}<br />
-          {{phone}}
-        </mj-text>
-      </mj-column>
-    </mj-section>
-
-    <mj-section background-color="#FFFFFF">
-      <mj-column width="100%">
-        <mj-text padding="25px 25px 0 25px" font-size="13px" line-height="20px" color="#6b7280">
+        <mj-text padding="0 25px" font-size="13px" line-height="20px" color="#6b7280">
           F&uuml;r diese Buchung besteht kein Widerrufsrecht (&sect;&nbsp;312g
           Abs.&nbsp;2 Nr.&nbsp;9 BGB). Die Bedingungen f&uuml;r eine Stornierung
           findest du in Ziffer&nbsp;9 unserer
