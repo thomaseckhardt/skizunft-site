@@ -61,9 +61,13 @@ const getGoogleSpreadsheet = async () => {
 export default async () => {
   try {
     console.log('Establish db connection')
-    const httpClient = new ConvexHttpClient(
-      Netlify.env.get('PUBLIC_CONVEX_URL'),
-    )
+    // PUBLIC_CONVEX_URL only exists at build time (set by `convex deploy`), so
+    // functions read the deployment URL from a runtime variable.
+    const convexUrl = Netlify.env.get('CONVEX_URL')
+    if (!convexUrl) {
+      throw new Error('CONVEX_URL environment variable is not set')
+    }
+    const httpClient = new ConvexHttpClient(convexUrl)
 
     // Initialize Google Spreadsheet once and reuse
     const doc = await getGoogleSpreadsheet()
