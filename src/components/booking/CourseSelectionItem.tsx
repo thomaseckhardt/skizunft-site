@@ -9,11 +9,18 @@ const BookingStateColors = {
   blue: 'text-sky-600',
 }
 
-export default function CourseSelection({ course, register, name }) {
+export default function CourseSelection({ course, inputProps }) {
   const bookingStateColor =
     BookingStateColors[course.bookingStateColor] ?? BookingStateColors.grey
 
-  const bookingStateMessage = course.closed
+  // Courses of the booking flow carry their availability, which also decides
+  // the booking state, see flow/availability.ts.
+  const hasAvailability = course.availability !== undefined
+  const isUnavailable = hasAvailability
+    ? course.availability === 'closed' || course.availability === 'fullyBooked'
+    : course.closed
+
+  const bookingStateMessage = isUnavailable
     ? 'ausgebucht'
     : course.bookingStateMessage
 
@@ -28,7 +35,7 @@ export default function CourseSelection({ course, register, name }) {
         type="checkbox"
         className="peer sr-only"
         value={course.slug}
-        {...register(name)}
+        {...inputProps}
         disabled={course.disabled}
       />
       <div className="relative z-10 flex flex-1 items-center text-gray-900 peer-disabled:text-gray-500 peer-disabled:ring-gray-200">
@@ -48,7 +55,8 @@ export default function CourseSelection({ course, register, name }) {
         <span
           className={clsx(
             'relative z-10 ml-5 pl-6 text-right text-sm',
-            'peer-disabled:text-gray-500 peer-disabled:ring-gray-200',
+            !hasAvailability &&
+              'peer-disabled:text-gray-500 peer-disabled:ring-gray-200',
             'peer-checked:hidden',
             bookingStateColor,
           )}
@@ -56,7 +64,7 @@ export default function CourseSelection({ course, register, name }) {
           {bookingStateMessage}
         </span>
       )}
-      {!course.disabled && !course.closed && bookingStateMessage && (
+      {!course.disabled && !isUnavailable && bookingStateMessage && (
         <Icon
           name="calendar-info-20-regular"
           className={clsx(
@@ -66,10 +74,13 @@ export default function CourseSelection({ course, register, name }) {
           size={20}
         />
       )}
-      {course.closed && (
+      {isUnavailable && (
         <Icon
           name="warning-20-regular"
-          className="relative z-10 ml-2 hidden text-gray-500 peer-disabled:block"
+          className={clsx(
+            'relative z-10 ml-2 hidden peer-disabled:block',
+            hasAvailability ? bookingStateColor : 'text-gray-500',
+          )}
           size={20}
         />
       )}

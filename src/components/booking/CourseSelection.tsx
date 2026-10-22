@@ -17,8 +17,7 @@ export default function CourseSelection({
         <CourseSelectionItem
           key={course.id}
           course={course}
-          register={register}
-          name={name}
+          inputProps={register(name)}
         />
       ))}
         <div className="hidden">

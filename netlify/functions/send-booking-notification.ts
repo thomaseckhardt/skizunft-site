@@ -8,13 +8,6 @@ const handler: Handler = async function (event) {
     }
   }
 
-  // if (process.env.BOOKING_EMAIL_FROM) {
-  //   return {
-  //     statusCode: 400,
-  //     body: JSON.stringify('Booking email address required'),
-  //   }
-  // }
-
   const data = JSON.parse(event.body)
 
   if (!data.email) {
