@@ -561,7 +561,6 @@ export function NextStep(props: StepProps) {
       title="Möchtest du einen weiteren Kurs buchen?"
       onBack={onBack}
       actions={
-        // Duplicates the "finish" choice above, so it can't be missed.
         state.attendees.length > 0 && (
           <PrimaryButton
             tone="red"
@@ -581,12 +580,6 @@ export function NextStep(props: StepProps) {
               label: 'Weiteren Kurs buchen',
               description:
                 'Für eine bereits angemeldete oder eine weitere Person',
-            },
-            {
-              value: 'finish' as const,
-              label: 'Buchung abschließen',
-              description: 'Weiter zu deinen Kontaktdaten',
-              disabled: state.attendees.length === 0,
             },
           ]}
           onSelect={(type) => dispatch({ type })}
