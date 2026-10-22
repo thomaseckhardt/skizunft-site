@@ -51,7 +51,7 @@ export default `<mjml>
             </mj-text>
           <mj-raw>{{/each}}</mj-raw>
           <mj-text padding="5px 25px" font-weight="400" font-size="14px" line-height="20px" align="right">
-            <mj-raw>{%if member %}</mj-raw>Vereinsmitglied <mj-raw>{% endif %}</mj-raw> {{price}}
+            {{#if member}}Vereinsmitglied {{/if}} {{price}}
           </mj-text>
           <mj-divider border-width="1px" border-color="lightgrey" />
         </mj-column>
