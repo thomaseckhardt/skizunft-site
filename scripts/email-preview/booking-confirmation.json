@@ -1,0 +1,39 @@
+{
+  "firstName": "Julia",
+  "lastName": "Müller",
+  "address": "Hauptstraße 12",
+  "zip": "79183",
+  "city": "Waldkirch",
+  "country": "Deutschland",
+  "email": "julia.mueller@example.com",
+  "phone": "0761 123456",
+  "price": "212,40 €",
+  "amount": 212.4,
+  "subtotal": "236,00 €",
+  "discount": "-23,60 €",
+  "orderNumber": "178312",
+  "firstCourseStart": "2027-01-02T09:00:00.000Z",
+  "attendees": [
+    {
+      "firstName": "Lena",
+      "lastName": "Müller",
+      "age": 10,
+      "member": true,
+      "price": "98,00 €",
+      "courses": [
+        { "name": "Ski Junior Champion 1", "date": "02.–03.01.2027" }
+      ]
+    },
+    {
+      "firstName": "Paul",
+      "lastName": "Müller",
+      "age": 7,
+      "member": false,
+      "price": "138,00 €",
+      "courses": [
+        { "name": "Ski Anfänger 1", "date": "02.–03.01.2027" },
+        { "name": "Ski Anfänger 2", "date": "30.–31.01.2027" }
+      ]
+    }
+  ]
+}

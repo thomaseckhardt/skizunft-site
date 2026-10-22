@@ -1,4 +1,4 @@
-import { formatPrice } from '@/utils/format'
+import { buildMailingData } from '@/components/booking/buildMailingData'
 
 const getAttendeeTotalPrice = ({ attendee, courses, courseCategories }) => {
   const total = Array.isArray(attendee?.courses)
@@ -114,45 +114,22 @@ export const sendConfirmationManually = async ({
     orderNumber: booking.orderNumber,
   }
 
-  const mailingData = {
-    firstName: bookingData.firstName,
-    lastName: bookingData.lastName,
-    address: bookingData.address,
-    zip: bookingData.zip,
-    city: bookingData.city,
-    country: bookingData.country,
-    email: bookingData.email,
-    phone: bookingData.phone,
-    price: formatPrice(bookingData.priceTotal),
-    subtotal: formatPrice(
-      getSubtotal({ attendees: attendeesData, courses, courseCategories }),
-    ),
-    discount: formatPrice(
-      getDiscount({ attendees: attendeesData, courses, courseCategories }),
-    ),
+  const mailingData = buildMailingData({
+    booking: bookingData,
     orderNumber: bookingData.orderNumber,
-
-    attendees: attendeesData.map((attendee) => {
-      const attendeeCourses = Array.isArray(attendee.courses)
-        ? attendee.courses.map((courseSlug, index) => {
-            const course = courses.find((course) => courseSlug === course.slug)
-            return {
-              name: course.name,
-              date: course.dateShortFormatted,
-            }
-          })
-        : []
-
-      return {
-        firstName: attendee.firstName,
-        lastName: attendee.lastName,
-        age: attendee.age,
-        member: attendee.member,
-        price: formatPrice(attendee.priceTotal),
-        courses: attendeeCourses,
-      }
+    attendees: attendeesData,
+    courses,
+    subtotal: getSubtotal({
+      attendees: attendeesData,
+      courses,
+      courseCategories,
     }),
-  }
+    discount: getDiscount({
+      attendees: attendeesData,
+      courses,
+      courseCategories,
+    }),
+  })
 
   console.log('Send confirmation mail', mailingData)
 

@@ -1,6 +1,6 @@
 import * as brevo from '@getbrevo/brevo'
 import mjml2html from 'mjml'
-import emailMjml from './email-booking-notification'
+import emailMjml from '@/emails/bookingNotificationTemplate'
 import Handlebars from 'handlebars'
 
 export default async function (req: Request) {

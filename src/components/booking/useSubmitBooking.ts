@@ -1,6 +1,8 @@
-import { formatPrice } from '@/utils/format'
 import { useMutation } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
+import { getPaymentReference } from '@/utils/payment'
+import { buildMailingData } from './buildMailingData'
+import { savePaymentSession } from './paymentSession'
 import type { Pricing } from './pricing'
 
 export type BookingValues = {
@@ -104,49 +106,25 @@ export default function useSubmitBooking({
       bookingId,
     })
 
-    const mailingData = {
-      firstName: bookingData.firstName,
-      lastName: bookingData.lastName,
-      address: bookingData.address,
-      zip: bookingData.zip,
-      city: bookingData.city,
-      country: bookingData.country,
-      email: bookingData.email,
-      phone: bookingData.phone,
-      price: formatPrice(bookingData.priceTotal),
-      subtotal: formatPrice(getSubtotal(attendeesData)),
-      discount: formatPrice(getDiscount(attendeesData)),
+    const mailingData = buildMailingData({
+      booking: bookingData,
       orderNumber,
-
-      attendees: attendeesData.map((attendee) => {
-        const attendeeCourses = Array.isArray(attendee.courses)
-          ? attendee.courses.map((courseSlug) => {
-              const course = courses.find(
-                (course) => courseSlug === course.slug,
-              )
-              return {
-                name: course.name,
-                date: course.dateShortFormatted,
-              }
-            })
-          : []
-
-        return {
-          firstName: attendee.firstName,
-          lastName: attendee.lastName,
-          age: attendee.age,
-          member: attendee.member,
-          price: formatPrice(attendee.priceTotal),
-          courses: attendeeCourses,
-        }
-      }),
-    }
+      attendees: attendeesData,
+      courses,
+      subtotal: getSubtotal(attendeesData),
+      discount: getDiscount(attendeesData),
+    })
 
     triggerNotificationMail(mailingData)
 
     const confirmationMail = await triggerConfirmationMail(mailingData)
     if (confirmationMail.status < 400) {
       console.log('confirmationMail success')
+      savePaymentSession({
+        amount: mailingData.amount,
+        reference: getPaymentReference(mailingData),
+        firstCourseStart: mailingData.firstCourseStart,
+      })
       setTimeout(() => {
         window.location.replace('/buchung/erfolgreich')
       }, 100)
