@@ -5,7 +5,7 @@ import { Tab } from '@headlessui/react'
 
 const tabs = [
   { name: 'Beginner', current: true },
-  { name: 'Jr Champion', current: false },
+  { name: 'Junior Champion', current: false },
   { name: 'Champion', current: false },
 ]
 const panels = [
@@ -131,7 +131,7 @@ export default function Example(props) {
                 leaveTo="translate-x-full"
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                  <Tab.Group>
+                  <Tab.Group as="div" className="h-full">
                     <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
                       <div className="p-6">
                         <div className="flex items-start justify-between">
@@ -181,14 +181,12 @@ export default function Example(props) {
                           </Tab.List>
                         </div>
                       </div>
-                      <Tab.Panels>
-                        <div className="flex-1 divide-y divide-gray-200 overflow-y-auto">
-                          {panels.map((panel) => (
-                            <Tab.Panel key={panel.name}>
-                              <div className="px-5 py-6">{panel.content}</div>
-                            </Tab.Panel>
-                          ))}
-                        </div>
+                      <Tab.Panels className="flex-1 divide-y divide-gray-200 overflow-y-auto">
+                        {panels.map((panel) => (
+                          <Tab.Panel key={panel.name}>
+                            <div className="px-5 py-6">{panel.content}</div>
+                          </Tab.Panel>
+                        ))}
                       </Tab.Panels>
                     </div>
                   </Tab.Group>
