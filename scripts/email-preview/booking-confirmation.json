@@ -8,9 +8,11 @@
   "email": "julia.mueller@example.com",
   "phone": "0761 123456",
   "price": "212,40 €",
+  "amount": 212.4,
   "subtotal": "236,00 €",
   "discount": "-23,60 €",
   "orderNumber": "178312",
+  "firstCourseStart": "2027-01-02T09:00:00.000Z",
   "attendees": [
     {
       "firstName": "Lena",
