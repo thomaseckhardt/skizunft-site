@@ -24,7 +24,6 @@ export default function SummaryStep({
   catalog,
   pricing,
   seatsTaken,
-  onBack,
   submitBooking,
   onSubmitted,
   onCancel,
@@ -379,13 +378,9 @@ export default function SummaryStep({
               </p>
             </Notice>
           )}
-          <StepActions onBack={isLocked ? undefined : onBack}>
+          <StepActions>
             {!isLocked && (
-              // At the very bottom on mobile, after "Zurück".
-              <SecondaryButton
-                onClick={() => setCancelOpen(true)}
-                className="order-first sm:order-none"
-              >
+              <SecondaryButton onClick={() => setCancelOpen(true)}>
                 Abbrechen
               </SecondaryButton>
             )}

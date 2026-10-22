@@ -6,7 +6,7 @@ import Footer from '../components/Footer.astro'
 import clsx from 'clsx'
 import HeaderBanner from '@/components/HeaderBanner.astro'
 
-const { title, description, className } = Astro.props
+const { title, description, className, hideHeader = false } = Astro.props
 
 const showBanner = false
 ---
@@ -18,7 +18,7 @@ const showBanner = false
 
   <body class={clsx(className)}>
     {showBanner && <HeaderBanner />}
-    <HeaderNew client:load />
+    {!hideHeader && <HeaderNew client:load />}
     <slot />
     <Footer />
     <script>
