@@ -135,7 +135,7 @@ export default `<mjml>
           <mj-raw>{{#if payment.giroCodeUrl}}</mj-raw>
           <mj-image src="{{payment.giroCodeUrl}}" alt="GiroCode f&uuml;r die &Uuml;berweisung" width="150px" height="150px" padding="10px 25px 0 25px"></mj-image>
           <mj-text align="center" font-size="12px" line-height="16px" color="#0369a1" padding="8px 25px 0 25px">
-            Mit deiner Banking-App scannen
+            Scanne den QR-Code mit deiner Banking-App (GiroCode)
           </mj-text>
           <mj-raw>{{/if}}</mj-raw>
         </mj-column>

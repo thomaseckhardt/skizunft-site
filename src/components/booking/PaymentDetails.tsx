@@ -131,7 +131,7 @@ export default function PaymentDetails() {
             className="mx-auto bg-white"
           />
           <figcaption className="mt-2 text-sm text-sky-700">
-            Mit deiner Banking-App scannen
+            Scanne den QR-Code mit deiner Banking-App (GiroCode)
           </figcaption>
         </figure>
       </div>
