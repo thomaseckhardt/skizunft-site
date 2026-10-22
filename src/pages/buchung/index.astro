@@ -27,7 +27,10 @@ const { courses, courseCategories, disciplines } = await loadBookingData()
   define:vars={{ bookingEnabled, internalBookingKey, bookingClosedRedirect }}
 >
   const urlSearchParams = new URLSearchParams(window.location.search)
-  if (!bookingEnabled && urlSearchParams.get('key') !== internalBookingKey) {
+  const hasInternalKey =
+    internalBookingKey !== '' &&
+    urlSearchParams.get('key') === internalBookingKey
+  if (!bookingEnabled && !hasInternalKey) {
     window.location.href = bookingClosedRedirect
   }
 </script>

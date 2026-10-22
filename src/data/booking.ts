@@ -2,7 +2,7 @@ import { fetchStories } from '@/storyblok/utils/fetchStories'
 
 export const bookingClosedRedirect = '/buchung/geschlossen/'
 export const bookingEnabled = import.meta.env.PUBLIC_BOOKING_ENABLED === 'true'
-export const internalBookingKey = 'H7GFS8JHA91HFASLKWH7GFG'
+export const internalBookingKey = import.meta.env.PUBLIC_BOOKING_KEY ?? ''
 
 const categoryOrder = ['Beginner', 'Junior_Champion', 'Champion']
 
