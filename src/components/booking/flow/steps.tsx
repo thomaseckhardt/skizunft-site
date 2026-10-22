@@ -473,6 +473,7 @@ export function AttendeeNameStep({ state, dispatch, onBack }: StepProps) {
           label="Vorname"
           id="attendee-firstName"
           fieldId="attendee-firstName"
+          placeholder="der teilnehmenden Person"
           input={textInput(firstName, setFirstName, { autoFocus: true })}
           error={errors.firstName}
         />
@@ -481,6 +482,7 @@ export function AttendeeNameStep({ state, dispatch, onBack }: StepProps) {
           label="Nachname"
           id="attendee-lastName"
           fieldId="attendee-lastName"
+          placeholder="der teilnehmenden Person"
           input={textInput(lastName, setLastName)}
           error={errors.lastName}
         />
