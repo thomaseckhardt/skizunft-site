@@ -7,9 +7,15 @@
 
 # Production deploys push the Convex functions and schema as well, so the
 # frontend and Convex never drift apart. Requires CONVEX_DEPLOY_KEY (production
-# key of the live deployment) in the Netlify environment variables. Other
-# contexts keep the plain build, so previews never touch the production backend.
+# key of the live deployment) in the Netlify environment variables.
 [context.production]
+  command = "npx convex deploy --cmd 'npm run build' --cmd-url-env-var-name PUBLIC_CONVEX_URL"
+
+# Deploy previews get their own, empty Convex preview deployment. In this
+# context CONVEX_DEPLOY_KEY holds a preview deploy key, so previews never
+# touch the production backend. ADMIN_API_SECRET of the preview deployments
+# is set as a default environment variable in the Convex dashboard.
+[context.deploy-preview]
   command = "npx convex deploy --cmd 'npm run build' --cmd-url-env-var-name PUBLIC_CONVEX_URL"
 
 [dev]

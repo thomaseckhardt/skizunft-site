@@ -48,11 +48,19 @@ export const disciplines = {
   },
 }
 
+/** Throws when Storyblok could not be reached. fetchStories returns the error. */
+const assertStories = (stories: unknown, contentType: string) => {
+  if (!Array.isArray(stories)) {
+    throw new Error(`Could not load ${contentType} stories`, { cause: stories })
+  }
+}
+
 export async function loadBookingData() {
   const courseCategoryStories = await fetchStories({
     content_type: 'CourseCategory',
     per_page: 50,
   })
+  assertStories(courseCategoryStories, 'CourseCategory')
   const courseCategories = courseCategoryStories
     .map((story: any) => {
       const { price, priceMember, minAge, maxAge, ...storyContent } =
@@ -88,6 +96,7 @@ export async function loadBookingData() {
     per_page: 50,
     sort_by: 'content.startDate:asc',
   })
+  assertStories(courseStories, 'Course')
   const courses = courseStories.map((story: any) => {
     const startDate = new Date(`${story.content.startDate}+0000`)
     const endDate = new Date(`${story.content.endDate}+0000`)

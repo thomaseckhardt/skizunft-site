@@ -1,9 +1,4 @@
-import { useMutation } from 'convex/react'
-import { api } from '../../../convex/_generated/api'
-import { getPaymentReference } from '@/utils/payment'
-import { buildMailingData } from './buildMailingData'
 import { savePaymentSession } from './paymentSession'
-import type { Pricing } from './pricing'
 
 export type BookingValues = {
   firstName: string
@@ -17,6 +12,8 @@ export type BookingValues = {
   legalConfirmed: boolean
   privacyConfirmed: boolean
   photoConsent?: boolean
+  /** Honeypot field, rendered hidden. People leave it empty. */
+  website?: string
   attendees: {
     firstName: string
     lastName: string
@@ -26,112 +23,47 @@ export type BookingValues = {
   }[]
 }
 
-const triggerConfirmationMail = async (data) => {
-  try {
-    const response = fetch(`/api/send-booking-confirmation-v2`, {
-      method: 'POST',
-      // NOTE: bigint values are not supported by JSON.stringify
-      // I used as attendee.age which is now a number
-      // Leave code for reference
-      body: JSON.stringify(data, (key, value) => {
-        return typeof value === 'bigint' ? value.toString() : value
-      }),
-    })
-    return response
-  } catch (error) {
-    console.log('error', error)
-    return error
-  }
-}
-
-const triggerNotificationMail = async (data) => {
-  try {
-    fetch(`/api/send-booking-notification-v2`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-    })
-    return {
-      statusCode: 200,
-    }
-  } catch (error) {
-    console.log('error', error)
-    return error
-  }
+type SubmitResponse = {
+  orderNumber: string
+  amount: number
+  reference: string
+  firstCourseStart?: string
+  confirmationSent: boolean
 }
 
 /**
- * Stores the booking with its attendees, sends the confirmation and
- * notification mails and redirects to the success page.
- * Resolves to false when the confirmation mail could not be sent.
+ * Posts the booking to the booking submission, which calculates the prices,
+ * stores the booking and sends the mails, then redirects to the success
+ * page. Resolves to false when the booking was stored but the confirmation
+ * mail could not be sent. Throws when the booking was not stored.
  */
-export default function useSubmitBooking({
-  courses,
-  pricing,
-}: {
-  courses: any[]
-  pricing: Pricing
-}) {
-  const insertBooking = useMutation(api.bookings.add)
-  const insertAttendees = useMutation(api.attendees.addMultiple)
-  const { getAttendeeTotalPrice, getSubtotal, getDiscount, getTotalPrice } =
-    pricing
-
-  return async (data: BookingValues) => {
-    const attendeesData = data.attendees.map((attendee) => ({
-      ...attendee,
-      priceTotal: getAttendeeTotalPrice(attendee),
-    }))
-
-    const bookingData = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      address: data.address,
-      zip: data.zip,
-      city: data.city,
-      country: data.country,
-      email: data.email,
-      phone: data.phone,
-      priceTotal: getTotalPrice(attendeesData),
-      legalConfirmed: data.legalConfirmed,
-      privacyConfirmed: data.privacyConfirmed,
-      newsletterConfirmed: false,
-      photoConsent: data.photoConsent ?? false,
-      returningCustomer: false,
+export default function useSubmitBooking() {
+  return async (values: BookingValues) => {
+    const params = new URLSearchParams(window.location.search)
+    const response = await fetch('/buchung/absenden', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...values,
+        discountCode: params.get('code') ?? undefined,
+        bookingKey: params.get('key') ?? undefined,
+      }),
+    })
+    if (!response.ok) {
+      throw new Error(`Booking submission failed: ${response.status}`)
     }
 
-    const { bookingId, orderNumber } = await insertBooking(bookingData)
+    const result: SubmitResponse = await response.json()
+    if (!result.confirmationSent) return false
 
-    await insertAttendees({
-      attendees: attendeesData,
-      bookingId,
+    savePaymentSession({
+      amount: result.amount,
+      reference: result.reference,
+      firstCourseStart: result.firstCourseStart,
     })
-
-    const mailingData = buildMailingData({
-      booking: bookingData,
-      orderNumber,
-      attendees: attendeesData,
-      courses,
-      subtotal: getSubtotal(attendeesData),
-      discount: getDiscount(attendeesData),
-    })
-
-    triggerNotificationMail(mailingData)
-
-    const confirmationMail = await triggerConfirmationMail(mailingData)
-    if (confirmationMail.status < 400) {
-      console.log('confirmationMail success')
-      savePaymentSession({
-        amount: mailingData.amount,
-        reference: getPaymentReference(mailingData),
-        firstCourseStart: mailingData.firstCourseStart,
-      })
-      setTimeout(() => {
-        window.location.replace('/buchung/erfolgreich')
-      }, 100)
-      return true
-    }
-
-    console.log('confirmationMail error')
-    return false
+    setTimeout(() => {
+      window.location.replace('/buchung/erfolgreich')
+    }, 100)
+    return true
   }
 }
