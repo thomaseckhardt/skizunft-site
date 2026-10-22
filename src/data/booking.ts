@@ -55,8 +55,14 @@ const assertStories = (stories: unknown, contentType: string) => {
   }
 }
 
-export async function loadBookingData() {
-  const courseCategoryStories = await fetchStories({
+/**
+ * Loads the course catalog. API routes pass their own story fetcher, see
+ * src/server/booking/fetchStories.ts.
+ */
+export async function loadBookingData(
+  fetchCatalogStories: (query: Record<string, unknown>) => Promise<any> = fetchStories,
+) {
+  const courseCategoryStories = await fetchCatalogStories({
     content_type: 'CourseCategory',
     per_page: 50,
   })
@@ -91,7 +97,7 @@ export async function loadBookingData() {
     {} as Record<string, any>,
   )
 
-  const courseStories = await fetchStories({
+  const courseStories = await fetchCatalogStories({
     content_type: 'Course',
     per_page: 50,
     sort_by: 'content.startDate:asc',

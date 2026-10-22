@@ -4,6 +4,7 @@ import type { Id } from '../../../../convex/_generated/dataModel'
 import { loadBookingData } from '@/data/booking'
 import { getAdminConvex } from '@/server/booking/adminConvex'
 import { requireServerEnv } from '@/server/booking/env'
+import { fetchStoriesForEndpoint } from '@/server/booking/fetchStories'
 import {
   mailingDataFromBooking,
   sendBookingMail,
@@ -36,7 +37,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     return new Response('Booking not found', { status: 404 })
   }
   const { booking, attendees } = result
-  const { courses } = await loadBookingData()
+  const { courses } = await loadBookingData(fetchStoriesForEndpoint)
 
   const sent = await sendBookingMail(
     mail,

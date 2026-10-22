@@ -5,6 +5,7 @@ import { api } from '../../../convex/_generated/api'
 import type { Id } from '../../../convex/_generated/dataModel'
 import { bookingEnabled, internalBookingKey, loadBookingData } from '@/data/booking'
 import { requireServerEnv } from '@/server/booking/env'
+import { fetchStoriesForEndpoint } from '@/server/booking/fetchStories'
 import { mailingDataFromBooking, sendBookingMail } from '@/server/booking/mails'
 import { parseSubmission } from '@/server/booking/parseSubmission'
 import { prepareBooking } from '@/server/booking/prepareBooking'
@@ -41,7 +42,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   let catalog: Awaited<ReturnType<typeof loadBookingData>>
   try {
-    catalog = await loadBookingData()
+    catalog = await loadBookingData(fetchStoriesForEndpoint)
   } catch (error) {
     console.error('Could not load the course catalog', error)
     return json({ error: 'unavailable' }, 503)
