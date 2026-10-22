@@ -1,7 +1,5 @@
 import * as brevo from '@getbrevo/brevo'
-import mjml2html from 'mjml'
-import emailMjml from './email-booking-confirmation'
-import Handlebars from 'handlebars'
+import { renderBookingConfirmation } from '@/emails/renderBookingConfirmation'
 
 export default async function (req: Request) {
   if (req.body === null) {
@@ -27,10 +25,7 @@ export default async function (req: Request) {
 
   console.log('Payload:', payload)
 
-  const { html: emailTemplate } = mjml2html(emailMjml, {
-    validationLevel: 'strict',
-  })
-  const emailHtml = Handlebars.compile(emailTemplate)({ ...payload })
+  const emailHtml = renderBookingConfirmation(payload)
 
   let apiInstance = new brevo.TransactionalEmailsApi()
   apiInstance.setApiKey(

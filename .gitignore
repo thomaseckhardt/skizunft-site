@@ -12,6 +12,9 @@ dist/
 # dependencies
 node_modules/
 
+# local email preview
+email-preview.html
+
 # logs
 npm-debug.log*
 yarn-debug.log*

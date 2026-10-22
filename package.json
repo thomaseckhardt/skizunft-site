@@ -12,6 +12,7 @@
     "astro": "astro",
     "test": "vitest",
     "coverage": "vitest run --coverage",
+    "email:preview": "vite-node scripts/email-preview/render.ts && open email-preview.html",
     "sb-login": "storyblok login",
     "sb-pull-components": "dotenv -e ./.env.local cross-var storyblok pull-components --space %STORYBLOK_SPACE%",
     "sb-generate-types": "dotenv -e ./.env.local cross-var storyblok-generate-ts source=./components.%STORYBLOK_SPACE%.json target=./src/types/storyblok-component-types.d.ts",
