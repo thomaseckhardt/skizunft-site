@@ -348,20 +348,6 @@ export function CoursesStep(props: StepProps) {
       onSubmit={submit}
       onBack={onBack}
     >
-      <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1 rounded-lg bg-gray-50 p-4 text-sm text-gray-700">
-        <div>
-          <span className="text-lg font-semibold text-gray-900">
-            {category.priceFormatted}
-          </span>{' '}
-          pro Kurs
-        </div>
-        <div>
-          <span className="text-lg font-semibold text-sky-600">
-            {category.priceMemberFormatted}
-          </span>{' '}
-          pro Kurs für Vereinsmitglieder
-        </div>
-      </div>
       <div className="space-y-2">
         {categoryCourses.map((course) => {
           const alreadyBooked = draft.baseCourses.includes(course.slug)
@@ -386,6 +372,20 @@ export function CoursesStep(props: StepProps) {
             />
           )
         })}
+      </div>
+      <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1 rounded-lg bg-gray-50 p-4 text-sm text-gray-700">
+        <div>
+          <span className="text-lg font-semibold text-gray-900">
+            {category.priceFormatted}
+          </span>{' '}
+          pro Kurs
+        </div>
+        <div>
+          <span className="text-lg font-semibold text-sky-600">
+            {category.priceMemberFormatted}
+          </span>{' '}
+          pro Kurs für Vereinsmitglieder
+        </div>
       </div>
       {error && <Notice tone="error">{error}</Notice>}
     </FormStep>

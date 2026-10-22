@@ -27,7 +27,7 @@ export default function CourseSelection({ course, inputProps }) {
   return (
     <label
       className={clsx(
-        'relative flex rounded-lg bg-white p-4 text-sm shadow-sm focus:outline-none md:items-center',
+        'relative flex rounded-lg bg-white p-4 text-base shadow-sm focus:outline-none md:items-center',
         course.disabled ? 'cursor-not-allowed' : 'cursor-pointer',
       )}
     >
