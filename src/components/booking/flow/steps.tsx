@@ -557,7 +557,22 @@ export function NextStep(props: StepProps) {
   const { state, dispatch, onBack } = props
 
   return (
-    <StepShell title="Möchtest du einen weiteren Kurs buchen?" onBack={onBack}>
+    <StepShell
+      title="Möchtest du einen weiteren Kurs buchen?"
+      onBack={onBack}
+      actions={
+        // Duplicates the "finish" choice above, so it can't be missed.
+        state.attendees.length > 0 && (
+          <PrimaryButton
+            tone="red"
+            className="sm:ml-auto"
+            onClick={() => dispatch({ type: 'finish' })}
+          >
+            Buchung abschließen
+          </PrimaryButton>
+        )
+      }
+    >
       <div className="space-y-8">
         <ChoiceList
           choices={[

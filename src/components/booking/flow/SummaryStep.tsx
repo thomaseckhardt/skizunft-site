@@ -385,6 +385,7 @@ export default function SummaryStep({
               </SecondaryButton>
             )}
             <PrimaryButton
+              tone="red"
               onClick={submit}
               disabled={isLocked || hasUnbookableCourses}
               className={clsx('sm:ml-auto', isSubmitting && 'cursor-wait')}

@@ -104,14 +104,20 @@ export function FormStep({
 
 export function PrimaryButton({
   children,
+  tone = 'sky',
   className = undefined,
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  /** `red` makes the button stand out more, e.g. to finish the booking. */
+  tone?: 'sky' | 'red'
+}) {
   return (
     <button
       type="button"
       className={clsx(
-        'inline-flex w-full items-center justify-center rounded-full border border-transparent bg-sky-600 px-8 py-3 text-base font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto',
+        'inline-flex w-full items-center justify-center rounded-full border border-transparent px-8 py-3 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto',
+        tone === 'sky' && 'bg-sky-600 hover:bg-sky-700 focus:ring-sky-500',
+        tone === 'red' && 'bg-red-600 hover:bg-red-700 focus:ring-red-500',
         className,
       )}
       {...props}
