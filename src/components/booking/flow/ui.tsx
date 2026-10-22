@@ -11,10 +11,16 @@ import type { FormEvent, ReactNode } from 'react'
 export function StepShell({
   title,
   description = undefined,
+  onBack = undefined,
+  actions = undefined,
   children,
 }: {
   title: ReactNode
   description?: ReactNode
+  /** Shows a "Zurück" button in the footer; omitted on the first step. */
+  onBack?: () => void
+  /** The step's own footer buttons, next to "Zurück". */
+  actions?: ReactNode
   children?: ReactNode
 }) {
   return (
@@ -26,6 +32,33 @@ export function StepShell({
         <div className="mt-3 text-base text-gray-600">{description}</div>
       )}
       <div className="mt-8">{children}</div>
+      {(onBack || actions) && (
+        <StepActions onBack={onBack} className="mt-8">
+          {actions}
+        </StepActions>
+      )}
+    </div>
+  )
+}
+
+/**
+ * The footer row of a step: "Zurück" on the left, the step's own buttons
+ * after it. Main buttons align right via `sm:ml-auto`.
+ */
+export function StepActions({
+  onBack = undefined,
+  className = undefined,
+  children,
+}: {
+  onBack?: () => void
+  className?: string
+  children?: ReactNode
+}) {
+  return (
+    // Reversed on mobile, so the main button stays on top.
+    <div className={clsx('flex flex-col-reverse gap-3 sm:flex-row', className)}>
+      {onBack && <SecondaryButton onClick={onBack}>Zurück</SecondaryButton>}
+      {children}
     </div>
   )
 }
@@ -34,12 +67,14 @@ export function StepShell({
 export function FormStep({
   title,
   description = undefined,
+  onBack = undefined,
   onSubmit,
   submitLabel = 'Weiter',
   children,
 }: {
   title: ReactNode
   description?: ReactNode
+  onBack?: () => void
   onSubmit: () => void
   submitLabel?: string
   children: ReactNode
@@ -50,14 +85,20 @@ export function FormStep({
   }
 
   return (
-    <StepShell title={title} description={description}>
-      <form onSubmit={handleSubmit} noValidate>
+    <form onSubmit={handleSubmit} noValidate>
+      <StepShell
+        title={title}
+        description={description}
+        onBack={onBack}
+        actions={
+          <PrimaryButton type="submit" className="sm:ml-auto">
+            {submitLabel}
+          </PrimaryButton>
+        }
+      >
         <div className="space-y-6">{children}</div>
-        <div className="mt-8">
-          <PrimaryButton type="submit">{submitLabel}</PrimaryButton>
-        </div>
-      </form>
-    </StepShell>
+      </StepShell>
+    </form>
   )
 }
 
@@ -123,6 +164,53 @@ export type Choice<T> = {
   label: ReactNode
   description?: ReactNode
   disabled?: boolean
+}
+
+/**
+ * A step answered by picking a choice, which continues immediately. The
+ * "Weiter" button continues with the stored choice, e.g. after going back.
+ */
+export function ChoiceStep<T>({
+  title,
+  description = undefined,
+  onBack = undefined,
+  choices,
+  selected = undefined,
+  onSelect,
+  children = undefined,
+}: {
+  title: ReactNode
+  description?: ReactNode
+  onBack?: () => void
+  choices: Choice<T>[]
+  selected?: T
+  onSelect: (value: T) => void
+  children?: ReactNode
+}) {
+  const canContinue = choices.some(
+    (choice) =>
+      !choice.disabled && selected !== undefined && choice.value === selected,
+  )
+
+  return (
+    <StepShell
+      title={title}
+      description={description}
+      onBack={onBack}
+      actions={
+        <PrimaryButton
+          disabled={!canContinue}
+          onClick={() => onSelect(selected as T)}
+          className="sm:ml-auto"
+        >
+          Weiter
+        </PrimaryButton>
+      }
+    >
+      <ChoiceList choices={choices} selected={selected} onSelect={onSelect} />
+      {children}
+    </StepShell>
+  )
 }
 
 /** Large tappable options; selecting one immediately answers the step. */

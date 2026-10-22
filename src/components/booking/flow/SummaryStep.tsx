@@ -12,6 +12,7 @@ import {
   Notice,
   PrimaryButton,
   SecondaryButton,
+  StepActions,
   StepShell,
 } from './ui'
 
@@ -23,6 +24,7 @@ export default function SummaryStep({
   catalog,
   pricing,
   seatsTaken,
+  onBack,
   submitBooking,
   onSubmitted,
   onCancel,
@@ -377,10 +379,13 @@ export default function SummaryStep({
               </p>
             </Notice>
           )}
-          {/* Reversed on mobile, so the booking button stays on top. */}
-          <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
+          <StepActions onBack={isLocked ? undefined : onBack}>
             {!isLocked && (
-              <SecondaryButton onClick={() => setCancelOpen(true)}>
+              // At the very bottom on mobile, after "Zurück".
+              <SecondaryButton
+                onClick={() => setCancelOpen(true)}
+                className="order-first sm:order-none"
+              >
                 Abbrechen
               </SecondaryButton>
             )}
@@ -417,7 +422,7 @@ export default function SummaryStep({
                 <span>Zahlungspflichtig buchen</span>
               )}
             </PrimaryButton>
-          </div>
+          </StepActions>
         </div>
       </div>
 

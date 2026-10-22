@@ -1,4 +1,3 @@
-import Icon from '@/components/Icon'
 import { useQueries } from 'convex/react'
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
 import { api } from '../../../../convex/_generated/api'
@@ -181,26 +180,14 @@ export default function BookingFlow({
     catalog,
     pricing,
     seatsTaken,
-    onBack: goBack,
+    onBack: depth > 0 ? goBack : undefined,
   }
   const StepComponent = step === 'summary' ? undefined : stepComponents[step]
 
   return (
     <div className="mx-auto max-w-2xl">
-      <div className="flex h-10 items-center">
-        {depth > 0 && (
-          <button
-            type="button"
-            onClick={goBack}
-            className="-ml-1 inline-flex items-center gap-x-1 rounded-full py-2 pr-3 text-sm font-medium text-gray-600 hover:text-gray-900"
-          >
-            <Icon name="chevron-left-20-regular" size={20} />
-            Zurück
-          </button>
-        )}
-      </div>
       <div
-        className="mt-2 h-1.5 overflow-hidden rounded-full bg-gray-200"
+        className="h-1.5 overflow-hidden rounded-full bg-gray-200"
         role="progressbar"
         aria-label="Fortschritt der Buchung"
         aria-valuemin={0}

@@ -19,6 +19,7 @@ import {
 } from './flowState'
 import {
   ChoiceList,
+  ChoiceStep,
   FormStep,
   LinkButton,
   Notice,
@@ -48,7 +49,8 @@ export type StepProps = {
   catalog: Catalog
   pricing: Pricing
   seatsTaken: SeatsTaken | undefined
-  onBack: () => void
+  /** Undefined on the first step, where there is nothing to go back to. */
+  onBack?: () => void
 }
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -71,7 +73,7 @@ const getCategory = ({
 
 // --------------------------------------------------
 
-export function AttendeeChoiceStep({ state, dispatch }: StepProps) {
+export function AttendeeChoiceStep({ state, dispatch, onBack }: StepProps) {
   const choices = [
     ...state.attendees.map((attendee) => ({
       value: attendee.id,
@@ -89,7 +91,10 @@ export function AttendeeChoiceStep({ state, dispatch }: StepProps) {
   ]
 
   return (
-    <StepShell title="Für wen möchtest du einen weiteren Kurs buchen?">
+    <StepShell
+      title="Für wen möchtest du einen weiteren Kurs buchen?"
+      onBack={onBack}
+    >
       <ChoiceList
         choices={choices}
         onSelect={(attendeeId) =>
@@ -102,7 +107,12 @@ export function AttendeeChoiceStep({ state, dispatch }: StepProps) {
 
 // --------------------------------------------------
 
-export function DisciplineStep({ state, dispatch, catalog }: StepProps) {
+export function DisciplineStep({
+  state,
+  dispatch,
+  catalog,
+  onBack,
+}: StepProps) {
   const { draft, attendees } = state
   const isFirstCourse = attendees.length === 0 && draft.isNewAttendee
 
@@ -142,15 +152,15 @@ export function DisciplineStep({ state, dispatch, catalog }: StepProps) {
   })
 
   return (
-    <StepShell title={title}>
-      <ChoiceList
-        choices={choices}
-        selected={draft.discipline}
-        onSelect={(discipline) =>
-          dispatch({ type: 'chooseDiscipline', discipline })
-        }
-      />
-    </StepShell>
+    <ChoiceStep
+      title={title}
+      onBack={onBack}
+      choices={choices}
+      selected={draft.discipline}
+      onSelect={(discipline) =>
+        dispatch({ type: 'chooseDiscipline', discipline })
+      }
+    />
   )
 }
 
@@ -201,6 +211,7 @@ export function AgeStep({ state, dispatch, catalog, onBack }: StepProps) {
         discipline && `${discipline.label}: ${discipline.description}`
       }
       onSubmit={submit}
+      onBack={onBack}
     >
       <TextField
         size="lg"
@@ -235,7 +246,12 @@ export function AgeStep({ state, dispatch, catalog, onBack }: StepProps) {
 
 // --------------------------------------------------
 
-export function SkillLevelStep({ state, dispatch, catalog }: StepProps) {
+export function SkillLevelStep({
+  state,
+  dispatch,
+  catalog,
+  onBack,
+}: StepProps) {
   const [infoOpen, setInfoOpen] = useState(false)
   const categories = getMatchingCategories(
     catalog.courseCategories,
@@ -244,7 +260,7 @@ export function SkillLevelStep({ state, dispatch, catalog }: StepProps) {
   )
 
   return (
-    <StepShell
+    <ChoiceStep
       title="Welche Könnensstufe passt?"
       description={
         <div className="space-y-3">
@@ -258,26 +274,25 @@ export function SkillLevelStep({ state, dispatch, catalog }: StepProps) {
           </LinkButton>
         </div>
       }
+      onBack={onBack}
+      choices={categories.map((category) => ({
+        value: category.id,
+        label: category.name,
+      }))}
+      selected={state.draft.categoryId}
+      onSelect={(categoryId) =>
+        dispatch({ type: 'chooseCategory', categoryId })
+      }
     >
-      <ChoiceList
-        choices={categories.map((category) => ({
-          value: category.id,
-          label: category.name,
-        }))}
-        selected={state.draft.categoryId}
-        onSelect={(categoryId) =>
-          dispatch({ type: 'chooseCategory', categoryId })
-        }
-      />
       <CategoryInformationDialog open={infoOpen} setOpen={setInfoOpen} />
-    </StepShell>
+    </ChoiceStep>
   )
 }
 
 // --------------------------------------------------
 
 export function CoursesStep(props: StepProps) {
-  const { state, dispatch, catalog, seatsTaken } = props
+  const { state, dispatch, catalog, seatsTaken, onBack } = props
   const { draft } = state
   const category = getCategory(props)
   // Other attendees of this booking take seats as well.
@@ -331,6 +346,7 @@ export function CoursesStep(props: StepProps) {
         </>
       }
       onSubmit={submit}
+      onBack={onBack}
     >
       <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1 rounded-lg bg-gray-50 p-4 text-sm text-gray-700">
         <div>
@@ -398,6 +414,7 @@ function NoCoursesMessage({
           ? `Für „${categoryName}“ können wir dir aktuell keinen freien Termin anbieten.`
           : 'Für deine Auswahl können wir dir aktuell keinen freien Termin anbieten.'
       }
+      onBack={onBack}
     >
       <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         {hasSkillLevelChoice && (
@@ -422,7 +439,7 @@ function NoCoursesMessage({
 
 // --------------------------------------------------
 
-export function AttendeeNameStep({ state, dispatch }: StepProps) {
+export function AttendeeNameStep({ state, dispatch, onBack }: StepProps) {
   const [firstName, setFirstName] = useState(state.draft.firstName)
   const [lastName, setLastName] = useState(state.draft.lastName)
   const [errors, setErrors] = useState<{
@@ -448,6 +465,7 @@ export function AttendeeNameStep({ state, dispatch }: StepProps) {
     <FormStep
       title="Wie heißt die Person, die am Kurs teilnimmt?"
       onSubmit={submit}
+      onBack={onBack}
     >
       <div className="grid gap-6 sm:grid-cols-2">
         <TextField
@@ -474,32 +492,29 @@ export function AttendeeNameStep({ state, dispatch }: StepProps) {
 // --------------------------------------------------
 
 export function MembershipStep(props: StepProps) {
-  const { state, dispatch } = props
+  const { state, dispatch, onBack } = props
   const category = getCategory(props)
 
   return (
-    <StepShell
+    <ChoiceStep
       title={`Ist ${state.draft.firstName} Vereinsmitglied der Skizunft Kollnau?`}
       description="Vereinsmitglieder zahlen für alle Kurse den reduzierten Mitgliederpreis."
-    >
-      <ChoiceList
-        choices={[
-          {
-            value: true,
-            label: 'Ja, ist Vereinsmitglied',
-            description:
-              category && `${category.priceMemberFormatted} pro Kurs`,
-          },
-          {
-            value: false,
-            label: 'Nein, kein Vereinsmitglied',
-            description: category && `${category.priceFormatted} pro Kurs`,
-          },
-        ]}
-        selected={state.draft.member}
-        onSelect={(member) => dispatch({ type: 'setMembership', member })}
-      />
-    </StepShell>
+      onBack={onBack}
+      choices={[
+        {
+          value: true,
+          label: 'Ja, ist Vereinsmitglied',
+          description: category && `${category.priceMemberFormatted} pro Kurs`,
+        },
+        {
+          value: false,
+          label: 'Nein, kein Vereinsmitglied',
+          description: category && `${category.priceFormatted} pro Kurs`,
+        },
+      ]}
+      selected={state.draft.member}
+      onSelect={(member) => dispatch({ type: 'setMembership', member })}
+    />
   )
 }
 
@@ -537,10 +552,10 @@ export function CartOverview({ state, catalog, pricing }: StepProps) {
 }
 
 export function NextStep(props: StepProps) {
-  const { state, dispatch } = props
+  const { state, dispatch, onBack } = props
 
   return (
-    <StepShell title="Möchtest du einen weiteren Kurs buchen?">
+    <StepShell title="Möchtest du einen weiteren Kurs buchen?" onBack={onBack}>
       <div className="space-y-8">
         <ChoiceList
           choices={[
@@ -567,7 +582,7 @@ export function NextStep(props: StepProps) {
 
 // --------------------------------------------------
 
-export function BookerLastNameStep({ state, dispatch }: StepProps) {
+export function BookerLastNameStep({ state, dispatch, onBack }: StepProps) {
   const [firstName, setFirstName] = useState(state.booker.firstName)
   const [lastName, setLastName] = useState(state.booker.lastName)
   const [errors, setErrors] = useState<{
@@ -594,6 +609,7 @@ export function BookerLastNameStep({ state, dispatch }: StepProps) {
       title="Fast geschafft! Wie heißt du?"
       description="Du bist unser Vertragspartner und die Kontaktperson, an die wir uns in allen Fragen zum Kursbetrieb wenden."
       onSubmit={submit}
+      onBack={onBack}
     >
       <div className="grid gap-6 sm:grid-cols-2">
         <TextField
@@ -623,7 +639,7 @@ export function BookerLastNameStep({ state, dispatch }: StepProps) {
   )
 }
 
-export function EmailStep({ state, dispatch }: StepProps) {
+export function EmailStep({ state, dispatch, onBack }: StepProps) {
   const [email, setEmail] = useState(state.booker.email)
   const [error, setError] = useState<string>()
 
@@ -644,6 +660,7 @@ export function EmailStep({ state, dispatch }: StepProps) {
       title="Wie lautet deine E-Mail-Adresse?"
       description="An diese E-Mail-Adresse schicken wir die Buchungsbestätigung. Darüber hinaus melden wir uns nur, wenn es kursrelevante Informationen gibt."
       onSubmit={submit}
+      onBack={onBack}
     >
       <TextField
         size="lg"
@@ -662,7 +679,7 @@ export function EmailStep({ state, dispatch }: StepProps) {
   )
 }
 
-export function PhoneStep({ state, dispatch }: StepProps) {
+export function PhoneStep({ state, dispatch, onBack }: StepProps) {
   const [phone, setPhone] = useState(state.booker.phone)
   const [error, setError] = useState<string>()
 
@@ -679,6 +696,7 @@ export function PhoneStep({ state, dispatch }: StepProps) {
       title="Unter welcher Telefonnummer erreichen wir dich?"
       description="Am besten eine Nummer, unter der wir dich auch am Tag des Kurses gut erreichen."
       onSubmit={submit}
+      onBack={onBack}
     >
       <TextField
         size="lg"
@@ -698,7 +716,7 @@ export function PhoneStep({ state, dispatch }: StepProps) {
   )
 }
 
-export function AddressStep({ state, dispatch }: StepProps) {
+export function AddressStep({ state, dispatch, onBack }: StepProps) {
   const [address, setAddress] = useState(state.booker.address)
   const [zip, setZip] = useState(state.booker.zip)
   const [city, setCity] = useState(state.booker.city)
@@ -725,7 +743,11 @@ export function AddressStep({ state, dispatch }: StepProps) {
   }
 
   return (
-    <FormStep title="Wie lautet deine Rechnungsadresse?" onSubmit={submit}>
+    <FormStep
+      title="Wie lautet deine Rechnungsadresse?"
+      onSubmit={submit}
+      onBack={onBack}
+    >
       <div className="grid gap-6 sm:grid-cols-3">
         <TextField
           size="lg"
