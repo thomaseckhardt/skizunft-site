@@ -68,16 +68,20 @@ export default async () => {
       throw new Error('CONVEX_URL environment variable is not set')
     }
     const httpClient = new ConvexHttpClient(convexUrl)
+    const secret = Netlify.env.get('ADMIN_API_SECRET')
+    if (!secret) {
+      throw new Error('ADMIN_API_SECRET environment variable is not set')
+    }
 
     // Initialize Google Spreadsheet once and reuse
     const doc = await getGoogleSpreadsheet()
 
     console.log('Query bookings')
-    const bookings = await httpClient.query(api.bookings.list)
+    const bookings = await httpClient.query(api.bookings.list, { secret })
     console.log(`${bookings.length} bookings found`)
 
     console.log('Query attendees')
-    const attendees = await httpClient.query(api.attendees.list)
+    const attendees = await httpClient.query(api.attendees.list, { secret })
     console.log(`${attendees.length} attendees found`)
 
     const courses = await fetchStoriesSSR({

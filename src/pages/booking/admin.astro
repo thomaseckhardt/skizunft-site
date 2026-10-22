@@ -1,95 +1,123 @@
 ---
+// Local admin area. Runs only under `pnpm admin` (see src/middleware.ts) and
+// loads the bookings on the server, so no booking data reaches a public API.
 import Page from '@/layouts/Page.astro'
-import Wrapper from './Wrapper'
-import { fetchStories } from '@/storyblok/utils/fetchStories'
+import { loadBookingData } from '@/data/booking'
+import { getAdminConvex } from '@/server/booking/adminConvex'
+import { formatPrice } from '@/utils/format'
+import { api } from '../../../convex/_generated/api'
 
 export const prerender = false
 
-const categoryOrder = ['Beginner', 'Junior_Champion', 'Champion']
+const { convex, secret } = getAdminConvex()
+const [bookings, attendees, { courses }] = await Promise.all([
+  convex.query(api.bookings.list, { secret }),
+  convex.query(api.attendees.list, { secret }),
+  loadBookingData(),
+])
 
-const dateFormat = new Intl.DateTimeFormat('de-DE', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
+const courseNames = new Map(
+  courses.map((course: any) => [
+    course.slug,
+    `${course.name} (${course.dateShortFormatted})`,
+  ]),
+)
+const dateTimeFormat = new Intl.DateTimeFormat('de-DE', {
+  dateStyle: 'short',
+  timeStyle: 'short',
+  timeZone: 'Europe/Berlin',
 })
-const dateShortFormat = new Intl.DateTimeFormat('de-DE', {
-  year: 'numeric',
-  month: 'numeric',
-  day: 'numeric',
-})
-const currencyFormat = new Intl.NumberFormat('de-DE', {
-  style: 'currency',
-  currency: 'EUR',
-})
+const formatTime = (time?: number) =>
+  time === undefined ? '–' : dateTimeFormat.format(new Date(time))
 
-const courseCategoryStories = await fetchStories({
-  content_type: 'CourseCategory',
-  per_page: 50,
-})
-const courseCategories = courseCategoryStories
-  .map((story) => {
-    const { price, priceMember, minAge, maxAge, ...storyContent } =
-      story.content
+const rows = [...bookings].reverse().map((booking) => ({
+  ...booking,
+  attendees: attendees.filter((a) => a.bookingId === booking._id),
+}))
 
-    return {
-      ...storyContent,
-      price: parseFloat(price),
-      priceMember: parseFloat(priceMember),
-      priceFormatted: currencyFormat.format(price),
-      priceMemberFormatted: currencyFormat.format(priceMember),
-      minAge: parseInt(minAge),
-      maxAge: parseInt(maxAge),
-      id: story.uuid,
-      slug: story.slug,
-    }
-  })
-  .sort(
-    (a, b) =>
-      categoryOrder.indexOf(a.skillLevel) - categoryOrder.indexOf(b.skillLevel),
-  )
-const courseCategoriesById = courseCategories.reduce((acc, category) => {
-  acc[category.id] = category
-  return acc
-}, {})
-
-const courseStories = await fetchStories({
-  content_type: 'Course',
-  per_page: 50,
-  sort_by: 'content.startDate:asc',
-})
-const courses = courseStories.map((story) => {
-  const startDate = new Date(`${story.content.startDate}+0000`)
-  const endDate = new Date(`${story.content.endDate}+0000`)
-  const {
-    category: categoryId,
-    closed = false,
-    canceled = false,
-    ...storyContent
-  } = story.content
-
-  return {
-    canceled,
-    closed,
-    disabled: closed || canceled,
-    state: undefined,
-    stateColor: undefined,
-    // price: category.price,
-    //         priceMember: category.priceMember,
-    ...storyContent,
-    catgeory: courseCategoriesById[categoryId],
-    categoryId,
-    id: story.uuid,
-    name: story.name,
-    slug: story.slug,
-    startDate,
-    endDate,
-    dateFormatted: dateFormat.formatRange(startDate, endDate),
-    dateShortFormatted: dateShortFormat.formatRange(startDate, endDate),
-  }
-})
+const flash = Astro.url.searchParams
+const flashStatus = flash.get('status')
 ---
 
 <Page title="Booking Admin">
-  <main>Hello</main>
-  <Wrapper client:load courses={courses} courseCategories={courseCategories} />
+  <main class="box space-y-8 py-10">
+    <h1 class="text-2xl font-semibold">Bookings ({rows.length})</h1>
+
+    {
+      flashStatus && (
+        <p
+          class:list={[
+            'rounded px-4 py-2',
+            flashStatus === 'sent'
+              ? 'bg-green-100 text-green-900'
+              : 'bg-red-100 text-red-900',
+          ]}
+        >
+          {flash.get('mail')} mail for #{flash.get('order')}:{' '}
+          {flashStatus === 'sent' ? 'sent' : 'failed'}
+        </p>
+      )
+    }
+
+    {
+      rows.map((booking) => (
+        <section class="space-y-3 rounded border border-gray-200 p-4">
+          <div class="flex flex-wrap items-baseline justify-between gap-2">
+            <h2 class="text-lg font-semibold">
+              #{booking.orderNumber ?? '–'} · {booking.firstName}{' '}
+              {booking.lastName}
+            </h2>
+            <span class="text-sm text-gray-500">
+              {formatTime(booking._creationTime)}
+            </span>
+          </div>
+          <p class="text-sm">
+            {booking.email} · {booking.phone} · {booking.address},{' '}
+            {booking.zip} {booking.city}
+          </p>
+          <p class="text-sm">
+            Total {formatPrice(booking.priceTotal)}
+            {booking.discountCode && ` · Discount Code ${booking.discountCode}`}
+          </p>
+
+          <ul class="list-disc pl-5 text-sm">
+            {booking.attendees.map((attendee) => (
+              <li class:list={[attendee.cancelled && 'line-through']}>
+                {attendee.firstName} {attendee.lastName}, {attendee.age}
+                {attendee.member && ' · Member'} ·{' '}
+                {formatPrice(attendee.priceTotal)} ·{' '}
+                {attendee.courses
+                  .map((slug) => courseNames.get(slug) ?? slug)
+                  .join(', ')}
+              </li>
+            ))}
+          </ul>
+
+          <div class="flex flex-wrap gap-4 text-sm">
+            {(['confirmation', 'notification'] as const).map((mail) => (
+              <form method="post" action="/booking/admin/resend">
+                <input type="hidden" name="bookingId" value={booking._id} />
+                <input type="hidden" name="mail" value={mail} />
+                <span>
+                  {mail}:{' '}
+                  {formatTime(
+                    mail === 'confirmation'
+                      ? booking.confirmationSentAt
+                      : booking.notificationSentAt,
+                  )}
+                </span>{' '}
+                <button
+                  type="submit"
+                  class="rounded-full bg-sky-600 px-4 py-1 font-medium text-white hover:bg-sky-700"
+                  onclick={`return confirm('Send the ${mail} mail for #${booking.orderNumber}?')`}
+                >
+                  Send
+                </button>
+              </form>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </main>
 </Page>

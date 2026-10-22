@@ -48,11 +48,25 @@ export const disciplines = {
   },
 }
 
-export async function loadBookingData() {
-  const courseCategoryStories = await fetchStories({
+/** Throws when Storyblok could not be reached. fetchStories returns the error. */
+const assertStories = (stories: unknown, contentType: string) => {
+  if (!Array.isArray(stories)) {
+    throw new Error(`Could not load ${contentType} stories`, { cause: stories })
+  }
+}
+
+/**
+ * Loads the course catalog. API routes pass their own story fetcher, see
+ * src/server/booking/fetchStories.ts.
+ */
+export async function loadBookingData(
+  fetchCatalogStories: (query: Record<string, unknown>) => Promise<any> = fetchStories,
+) {
+  const courseCategoryStories = await fetchCatalogStories({
     content_type: 'CourseCategory',
     per_page: 50,
   })
+  assertStories(courseCategoryStories, 'CourseCategory')
   const courseCategories = courseCategoryStories
     .map((story: any) => {
       const { price, priceMember, minAge, maxAge, ...storyContent } =
@@ -83,11 +97,12 @@ export async function loadBookingData() {
     {} as Record<string, any>,
   )
 
-  const courseStories = await fetchStories({
+  const courseStories = await fetchCatalogStories({
     content_type: 'Course',
     per_page: 50,
     sort_by: 'content.startDate:asc',
   })
+  assertStories(courseStories, 'Course')
   const courses = courseStories.map((story: any) => {
     const startDate = new Date(`${story.content.startDate}+0000`)
     const endDate = new Date(`${story.content.endDate}+0000`)

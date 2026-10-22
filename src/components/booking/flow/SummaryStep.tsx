@@ -36,6 +36,7 @@ export default function SummaryStep({
   const [legalConfirmed, setLegalConfirmed] = useState(false)
   const [privacyConfirmed, setPrivacyConfirmed] = useState(false)
   const [photoConsent, setPhotoConsent] = useState(false)
+  const [website, setWebsite] = useState('')
   const [errors, setErrors] = useState<string[]>([])
   const [submitState, setSubmitState] = useState<SubmitState>('idle')
   // Kept after closing, so the dialog content stays during the leave transition.
@@ -105,6 +106,7 @@ export default function SummaryStep({
         legalConfirmed,
         privacyConfirmed,
         photoConsent,
+        website,
         attendees: attendees.map(
           ({ firstName, lastName, age, member, courses }) => ({
             firstName,
@@ -334,6 +336,18 @@ export default function SummaryStep({
             Ich kann sie jederzeit für die Zukunft per E-Mail an
             info@szkollnau.de widerrufen.
           </Checkbox>
+          {/* Honeypot: hidden from people, bots that fill every field fill it */}
+          <div aria-hidden="true" className="absolute -left-[9999px]">
+            <label htmlFor="website">Website</label>
+            <input
+              id="website"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={website}
+              onChange={(event) => setWebsite(event.target.value)}
+            />
+          </div>
         </section>
 
         <div className="space-y-4">

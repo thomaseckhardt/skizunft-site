@@ -115,7 +115,7 @@ export default function BookingFlow({
     new URLSearchParams(window.location.search).get('code'),
   )
   const pricing = createPricing({ courses, courseCategories, discountRate })
-  const submitBooking = useSubmitBooking({ courses, pricing })
+  const submitBooking = useSubmitBooking()
 
   const depth = state.steps.length - 1
   const step = getCurrentStep(state)

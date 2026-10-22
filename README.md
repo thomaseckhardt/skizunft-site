@@ -58,6 +58,9 @@ All commands are run from the root of the project, from a terminal:
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
+| `pnpm admin`              | Starts the local admin area at `localhost:4321/booking/admin` |
+
+The admin area only runs locally. `pnpm admin` reads `ADMIN_CONVEX_URL`, `ADMIN_API_SECRET` and `BREVO_API_KEY` from `.env.admin.local` (gitignored). On a deployed site `/booking/admin` returns 404.
 
 ## � Environment Variables
 
@@ -67,7 +70,9 @@ The following environment variables need to be configured for the application to
 
 | Variable                        | Description                                                  | Example                           |
 | :------------------------------ | :----------------------------------------------------------- | :-------------------------------- |
-| `PUBLIC_CONVEX_URL`            | Convex database URL                                          | `https://xxx.convex.cloud`        |
+| `PUBLIC_CONVEX_URL`            | Convex database URL. Set by `convex deploy` on Netlify builds | `https://xxx.convex.cloud`        |
+| `CONVEX_URL`                   | Convex database URL for the booking sync function (production) | `https://xxx.convex.cloud`        |
+| `ADMIN_API_SECRET`             | Secret of the server-side callers of the Convex booking functions. Same value in Convex | Generated with `openssl rand -hex 32` |
 | `GOOGLE_SHEET_ID`              | Google Spreadsheet ID for booking sync                       | `1y_-G-GcrR_70YL3B1pOFRFiVK...`   |
 | `GOOGLE_SERVICE_ACCOUNT_EMAIL` | Google Service Account email for JWT authentication          | `service@project.iam.gserviceaccount.com` |
 | `GOOGLE_PRIVATE_KEY`           | Google Service Account private key (include `\n` for newlines) | `-----BEGIN PRIVATE KEY-----\n...` |

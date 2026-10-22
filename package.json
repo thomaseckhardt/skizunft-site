@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "PUBLIC_ENV=development astro dev --host",
+    "admin": "dotenv -e ./.env.admin.local -- astro dev",
     "develop": "npm run dev",
     "start": "npm run dev",
     "build": "PUBLIC_ENV=production astro build",

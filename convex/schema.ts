@@ -18,7 +18,10 @@ export default defineSchema({
     photoConsent: v.optional(v.boolean()),
     returningCustomer: v.boolean(),
     orderNumber: v.optional(v.string()),
-  }),
+    discountCode: v.optional(v.string()),
+    confirmationSentAt: v.optional(v.number()),
+    notificationSentAt: v.optional(v.number()),
+  }).index('by_orderNumber', ['orderNumber']),
   attendees: defineTable({
     bookingId: v.id('bookings'),
     firstName: v.string(),
@@ -28,5 +31,5 @@ export default defineSchema({
     courses: v.array(v.string()),
     priceTotal: v.number(),
     cancelled: v.optional(v.boolean()),
-  }),
+  }).index('by_bookingId', ['bookingId']),
 })
