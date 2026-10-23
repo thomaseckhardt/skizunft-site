@@ -135,8 +135,8 @@ const { points, label } = Astro.props
         Popup,
       } = sdk
 
+      // The EU endpoints (config.useEuEndpoints) require a paid plan.
       config.apiKey = apiKey
-      config.useEuEndpoints = true
       config.telemetry = false
       config.caching = false
 
@@ -177,8 +177,12 @@ const { points, label } = Astro.props
       })
 
       // An exhausted quota or a rejected key fails before the style loads.
+      // The SDK then retries with its default style on its own, so the map
+      // is only hidden here; removing it mid-retry throws inside the SDK.
       let loaded = false
+      let failed = false
       map.once('load', () => {
+        if (failed) return
         loaded = true
         // The caption only makes sense once the markers are on screen.
         container
@@ -188,8 +192,8 @@ const { points, label } = Astro.props
       })
       map.on('error', (event) => {
         console.error('[MeetingPointMap]', event.error)
-        if (!loaded) {
-          map.remove()
+        if (!loaded && !failed) {
+          failed = true
           showFallback(container)
         }
       })
