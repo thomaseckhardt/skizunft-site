@@ -156,6 +156,10 @@ const { points, label } = Astro.props
         navigationControl: false,
         geolocateControl: false,
         terrainControl: false,
+        // Globe effects only; with the style's halo the SDK emits an error
+        // event for a layer it tries to remove before adding it.
+        halo: false,
+        space: false,
         locale,
       })
       map.addControl(new NavigationControl({ showCompass: false }))
@@ -176,9 +180,10 @@ const { points, label } = Astro.props
           .addTo(map)
       })
 
-      // An exhausted quota or a rejected key fails before the style loads.
-      // The SDK then retries with its default style on its own, so the map
-      // is only hidden here; removing it mid-retry throws inside the SDK.
+      // An exhausted quota or a rejected key fails with an HTTP error before
+      // the style loads. Other error events are not fatal and only logged.
+      // The SDK retries with its default style on its own, so the map is
+      // only hidden here; removing it mid-retry throws inside the SDK.
       let loaded = false
       let failed = false
       map.once('load', () => {
@@ -192,7 +197,9 @@ const { points, label } = Astro.props
       })
       map.on('error', (event) => {
         console.error('[MeetingPointMap]', event.error)
-        if (!loaded && !failed) {
+        const status = (event.error as { status?: number } | undefined)?.status
+        // A 404 only means a missing tile, the map itself still works.
+        if (!loaded && !failed && status !== undefined && status !== 404) {
           failed = true
           showFallback(container)
         }
