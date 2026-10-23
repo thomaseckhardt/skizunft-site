@@ -15,7 +15,6 @@ export default `<mjml>
             <p>
               <strong>{{firstName}} {{lastName}}</strong><br />
               {{address}}<br />
-              {{zip}} {{city}}<br />
               {{country}}
             </p>
             <p>
@@ -36,7 +35,7 @@ export default `<mjml>
             </tr>
             <mj-raw>{{#each attendees}}</mj-raw>
               <tr>
-                <td style="padding: 5px 0px">{{firstName}}</td>
+                <td style="padding: 5px 0px">{{firstName}} {{lastName}}</td>
                 <td style="padding: 5px 0px">{{#if member}}Ja{{else}}nein{{/if}}</td>
                 <td style="padding: 5px 0px">{{courses.length}} Kurse</td>
                 <td style="padding: 5px 0px;text-align:right;">{{price}}</td>
