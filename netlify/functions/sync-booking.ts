@@ -5,7 +5,7 @@ import { ConvexHttpClient } from 'convex/browser'
 import { GoogleSpreadsheet } from 'google-spreadsheet'
 import { JWT } from 'google-auth-library'
 import { buildBookingSheets } from '@/utils/bookingSheets'
-import { saveSheet, sleep } from '@/utils/googleSheets'
+import { saveSheets } from '@/utils/googleSheets'
 
 const SCOPES = [
   'https://www.googleapis.com/auth/spreadsheets',
@@ -96,12 +96,9 @@ export default async () => {
       })
     }
 
-    const sheets = buildBookingSheets({ bookings, attendees, courses })
-    for (const sheet of sheets) {
-      await saveSheet(doc, sheet)
-      // Tiny pacing between sheets to reduce burst writes
-      await sleep(150)
-    }
+    // Netlify cancels a scheduled run after about 15 s and invokes it again,
+    // so all sheets are written in a few batched requests.
+    await saveSheets(doc, buildBookingSheets({ bookings, attendees, courses }))
 
     console.log('Sync completed successfully!')
   } catch (error) {
