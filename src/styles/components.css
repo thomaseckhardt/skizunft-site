@@ -34,6 +34,7 @@
   @apply !leading-none;
   @apply tracking-tight;
   @apply md:text-7xl;
+  /* @apply font-bold; */
 }
 
 .typo-hero-md {
