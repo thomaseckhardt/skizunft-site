@@ -39,6 +39,7 @@
     "@getbrevo/brevo": "^2.2.0",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
+    "@maptiler/sdk": "^4.2.0",
     "@netlify/functions": "^2.8.2",
     "@storyblok/astro": "^5.0.2",
     "@tailwindcss/container-queries": "^0.1.1",

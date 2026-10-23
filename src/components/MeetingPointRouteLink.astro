@@ -1,0 +1,20 @@
+---
+import Icon from '@/components/Icon.astro'
+import { googleMapsRouteUrl, type MeetingPoint } from '@/data/meeting-points'
+
+type Props = {
+  point: MeetingPoint
+}
+
+const { point } = Astro.props
+---
+
+<a
+  href={googleMapsRouteUrl(point)}
+  target='_blank'
+  rel='noopener noreferrer'
+  class='link mt-3 inline-flex items-center gap-x-1.5 text-sm'
+>
+  <Icon name='location-24-regular' size={20} />
+  Route auf Google Maps anzeigen
+</a>
