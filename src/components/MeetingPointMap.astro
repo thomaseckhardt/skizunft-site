@@ -9,32 +9,38 @@ type Props = {
 const { points, label } = Astro.props
 ---
 
-<div
-  class='relative aspect-[4/3] min-h-[400px] max-w-full overflow-hidden rounded bg-slate-100'
->
+<figure>
   <div
-    class='absolute inset-0'
-    role='region'
-    aria-label={label}
-    data-meeting-point-map={JSON.stringify(points)}
+    class='relative aspect-[4/3] min-h-[400px] max-w-full overflow-hidden rounded bg-slate-100'
   >
-  </div>
-  <div
-    class='absolute inset-0 hidden items-center justify-center p-6 text-center text-sm text-gray-600'
-    data-meeting-point-map-fallback
-  >
-    Die Karte ist derzeit nicht verfügbar. Nutze den Link „Route auf Google Maps
-    anzeigen“ beim jeweiligen Treffpunkt.
-  </div>
-  <noscript>
     <div
-      class='absolute inset-0 flex items-center justify-center p-6 text-center text-sm text-gray-600'
+      class='absolute inset-0'
+      role='region'
+      aria-label={label}
+      data-meeting-point-map={JSON.stringify(points)}
     >
-      Für die Karte wird JavaScript benötigt. Nutze den Link „Route auf Google
-      Maps anzeigen“ beim jeweiligen Treffpunkt.
     </div>
-  </noscript>
-</div>
+    <div
+      class='absolute inset-0 hidden items-center justify-center p-6 text-center text-sm text-gray-600'
+      data-meeting-point-map-fallback
+    >
+      Die Karte ist derzeit nicht verfügbar. Nutze den Link „Route auf Google Maps
+      anzeigen“ beim jeweiligen Treffpunkt.
+    </div>
+    <noscript>
+      <div
+        class='absolute inset-0 flex items-center justify-center p-6 text-center text-sm text-gray-600'
+      >
+        Für die Karte wird JavaScript benötigt. Nutze den Link „Route auf Google
+        Maps anzeigen“ beim jeweiligen Treffpunkt.
+      </div>
+    </noscript>
+  </div>
+  <figcaption class='mt-3 hidden text-sm leading-snug'>
+    Klicke auf die Markierungen für weitere Informationen und die Route zu den
+    Treffpunkten.
+  </figcaption>
+</figure>
 
 <script>
   import {
@@ -174,6 +180,11 @@ const { points, label } = Astro.props
       let loaded = false
       map.once('load', () => {
         loaded = true
+        // The caption only makes sense once the markers are on screen.
+        container
+          .closest('figure')
+          ?.querySelector('figcaption')
+          ?.classList.remove('hidden')
       })
       map.on('error', (event) => {
         console.error('[MeetingPointMap]', event.error)

@@ -58,13 +58,10 @@ const [harryhirsch] = muggenbrunnMeetingPoints
           </p>
         </div>
       </div>
-      <figure>
-        <MeetingPointMap points={kandelMeetingPoints} label='Karte der Treffpunkte am Kandel' />
-        <figcaption class='mt-3 text-sm leading-snug'>
-          Klicke auf die Markierungen für weitere Informationen und die Route zu
-          den Treffpunkten.
-        </figcaption>
-      </figure>
+      <MeetingPointMap
+        points={kandelMeetingPoints}
+        label='Karte der Treffpunkte am Kandel'
+      />
     </div>
     <div class='mx-auto mt-8 flow-root max-w-3xl space-y-12 md:mt-16'>
       <div>
@@ -106,13 +103,10 @@ const [harryhirsch] = muggenbrunnMeetingPoints
           class='rounded'
         />
       </div>
-      <figure>
-        <MeetingPointMap points={muggenbrunnMeetingPoints} label='Karte des Treffpunkts in Muggenbrunn' />
-        <figcaption class='mt-3 text-sm leading-snug'>
-          Klicke auf die Markierungen für weitere Informationen und die Route zu
-          den Treffpunkten.
-        </figcaption>
-      </figure>
+      <MeetingPointMap
+        points={muggenbrunnMeetingPoints}
+        label='Karte des Treffpunkts in Muggenbrunn'
+      />
     </div>
   </main>
 </Page>
