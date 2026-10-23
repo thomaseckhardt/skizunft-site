@@ -88,10 +88,11 @@ const courses = [
   {
     title: 'Skikurs Jugendliche und Erwachsene',
     age: 'ab 14 Jahren',
-    description: `<p>Unser Beginner Kurs richtet sich an Jugendliche und Erwachasene, …</p><ul><li>die bisher noch keine Erfahrungen mit dem Skifahren gemacht haben.</li><li>die am Tag des Kurses zum ersten Mal auf dem Ski stehen.</li><li>die Spaß daran haben, sich im Schnee zu bewegen.</li></ul>`,
+    description: `<p>Unser Beginner Kurs richtet sich an Jugendliche und Erwachsene, …</p><ul><li>die bisher noch keine Erfahrungen mit dem Skifahren gemacht haben.</li><li>die am Tag des Kurses zum ersten Mal auf dem Ski stehen.</li><li>die Spaß daran haben, sich im Schnee zu bewegen.</li></ul>`,
     duration: '10 – 12 Uhr und 13 – 15 Uhr',
     meetingPointTitle: 'Treffpunkt 1',
     meetingPoint: 'Berggasthaus Kandelhof',
+    noDatesMessage: `Den Skikurs für Jugendliche und Erwachsene bieten wir auf Nachfrage an. Hast du Interesse? Dann schreib uns an <a href="mailto:skischule@szkollnau.de?subject=Anfrage%20Skikurs%20Jugendliche%20und%20Erwachsene">skischule@szkollnau.de</a>.`,
     dates: courseDates.filter(
       (course) => course.category?.slug === 'ski-erwachsene',
     ),
@@ -103,6 +104,8 @@ const courses = [
     duration: '10 – 12 Uhr und 13 – 15 Uhr',
     meetingPointTitle: 'Treffpunkt 1',
     meetingPoint: 'Berggasthaus Kandelhof',
+    noDatesMessage:
+      'Die Termine für die Snowboardkurse stehen noch nicht fest. Schau bald wieder vorbei!',
     dates: courseDates.filter(
       (course) => course.category?.slug === 'snowboard',
     ),
@@ -167,7 +170,12 @@ const courses = [
                       ))}
                     </ul>
                   ) : (
-                    <i>Aktuell keine Termine verfügbar.</i>
+                    <i
+                      set:html={
+                        course.noDatesMessage ??
+                        'Aktuell keine Termine verfügbar.'
+                      }
+                    />
                   )}
                 </div>
                 <p class='!mb-2 flex items-center gap-x-2'>
