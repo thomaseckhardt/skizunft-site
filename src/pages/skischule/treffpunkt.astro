@@ -1,6 +1,15 @@
 ---
+import MeetingPointMap from '@/components/MeetingPointMap.astro'
+import MeetingPointRouteLink from '@/components/MeetingPointRouteLink.astro'
 import Image from '@/components/shared/Image.astro'
+import {
+  kandelMeetingPoints,
+  muggenbrunnMeetingPoints,
+} from '@/data/meeting-points'
 import Page from '@/layouts/Page.astro'
+
+const [kandelhof, parkplatz] = kandelMeetingPoints
+const [harryhirsch] = muggenbrunnMeetingPoints
 ---
 
 <Page title='Treffpunkte für Skikurse und Snowboardkurse' description=''>
@@ -27,6 +36,7 @@ import Page from '@/layouts/Page.astro'
         <h4>
           <div class='typo-hero-xs'>Treffpunkt 1: Berggasthaus Kandelhof</div>
         </h4>
+        <MeetingPointRouteLink point={kandelhof} />
         <div class='prose mt-3'>
           <p>
             Unser Schild „DSV-Skischule Kandel Skizunft Kollnau“ am Berggasthaus
@@ -40,6 +50,7 @@ import Page from '@/layouts/Page.astro'
         <h4>
           <div class='typo-hero-xs'>Treffpunkt 2: Parkplatz</div>
         </h4>
+        <MeetingPointRouteLink point={parkplatz} />
         <div class='prose mt-3'>
           <p>
             Der Parkplatz vor dem Wald in Richtung St. Peter. Hier treffen sich
@@ -48,22 +59,10 @@ import Page from '@/layouts/Page.astro'
         </div>
       </div>
       <figure>
-        <div class='relative aspect-1/1 min-h-[480px] max-w-full'>
-          <iframe
-            src='https://www.google.com/maps/d/embed?mid=1wJwIC4Jj4R_XCmMKjDjgYHwbFpyL26w&ehbc=2E312F&noprof=0'
-            width='640'
-            height='480'
-            class='absolute inset-0 h-full w-full'></iframe>
-        </div>
-        <figcaption class='mt-3 flex items-start gap-x-2 text-sm leading-snug'>
-          <img
-            src='https://mt.google.com/vt/icon/name=icons/onion/SHARED-mymaps-container-bg_4x.png,icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1826-meeting-point_4x.png&highlight=ff000000,0288D1,ff000000&scale=2.0'
-            width='28'
-            height='28'
-            class='flex-0 relative -top-1'
-          />
-          Klicke auf die Markierungen für weitere Informationen zu den Treffpunkten
-          für unsere Ski und Snowboard Kurse.
+        <MeetingPointMap points={kandelMeetingPoints} label='Karte der Treffpunkte am Kandel' />
+        <figcaption class='mt-3 text-sm leading-snug'>
+          Klicke auf die Markierungen für weitere Informationen und die Route zu
+          den Treffpunkten.
         </figcaption>
       </figure>
     </div>
@@ -79,6 +78,7 @@ import Page from '@/layouts/Page.astro'
             Treffpunkt: Harryhirsch Kiosk Hütte an der Talstation
           </div>
         </h4>
+        <MeetingPointRouteLink point={harryhirsch} />
         <div class='prose mt-3'>
           <p>
             Alle Kursteilnehmer treffen sich am <a
@@ -107,22 +107,10 @@ import Page from '@/layouts/Page.astro'
         />
       </div>
       <figure>
-        <div class='relative aspect-1/1 min-h-[480px] max-w-full'>
-          <iframe
-            src='https://www.google.com/maps/d/u/1/embed?mid=1YmRNHlHf6czwVVD2GonEQp4cgdOKLhk&ehbc=2E312F&noprof=1&zoom=9'
-            width='640'
-            height='480'
-            class='absolute inset-0 h-full w-full'></iframe>
-        </div>
-        <figcaption class='mt-3 flex items-start gap-x-2 text-sm leading-snug'>
-          <img
-            src='https://mt.google.com/vt/icon/name=icons/onion/SHARED-mymaps-container-bg_4x.png,icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1826-meeting-point_4x.png&highlight=ff000000,0288D1,ff000000&scale=2.0'
-            width='28'
-            height='28'
-            class='flex-0 relative -top-1'
-          />
-          Klicke auf die Markierungen für weitere Informationen zu den Treffpunkten
-          für unsere Ski und Snowboard Kurse.
+        <MeetingPointMap points={muggenbrunnMeetingPoints} label='Karte des Treffpunkts in Muggenbrunn' />
+        <figcaption class='mt-3 text-sm leading-snug'>
+          Klicke auf die Markierungen für weitere Informationen und die Route zu
+          den Treffpunkten.
         </figcaption>
       </figure>
     </div>

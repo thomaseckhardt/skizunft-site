@@ -1,0 +1,207 @@
+---
+import type { MeetingPoint } from '@/data/meeting-points'
+
+type Props = {
+  points: MeetingPoint[]
+  label: string
+}
+
+const { points, label } = Astro.props
+---
+
+<div
+  class='relative aspect-[4/3] min-h-[400px] max-w-full overflow-hidden rounded bg-slate-100'
+>
+  <div
+    class='absolute inset-0'
+    role='region'
+    aria-label={label}
+    data-meeting-point-map={JSON.stringify(points)}
+  >
+  </div>
+  <div
+    class='absolute inset-0 hidden items-center justify-center p-6 text-center text-sm text-gray-600'
+    data-meeting-point-map-fallback
+  >
+    Die Karte ist derzeit nicht verfügbar. Nutze den Link „Route auf Google Maps
+    anzeigen“ beim jeweiligen Treffpunkt.
+  </div>
+  <noscript>
+    <div
+      class='absolute inset-0 flex items-center justify-center p-6 text-center text-sm text-gray-600'
+    >
+      Für die Karte wird JavaScript benötigt. Nutze den Link „Route auf Google
+      Maps anzeigen“ beim jeweiligen Treffpunkt.
+    </div>
+  </noscript>
+</div>
+
+<script>
+  import {
+    googleMapsRouteUrl,
+    type MeetingPoint,
+  } from '@/data/meeting-points'
+
+  const apiKey = import.meta.env.PUBLIC_MAPTILER_KEY as string | undefined
+
+  // German UI strings of the MapLibre controls used on this map.
+  const locale = {
+    'AttributionControl.ToggleAttribution': 'Quellenangaben ein-/ausblenden',
+    'CooperativeGesturesHandler.WindowsHelpText':
+      'Strg + Scrollen zum Zoomen der Karte',
+    'CooperativeGesturesHandler.MacHelpText':
+      '⌘ + Scrollen zum Zoomen der Karte',
+    'CooperativeGesturesHandler.MobileHelpText':
+      'Karte mit zwei Fingern verschieben',
+    'Marker.Title': 'Kartenmarkierung',
+    'NavigationControl.ZoomIn': 'Hineinzoomen',
+    'NavigationControl.ZoomOut': 'Herauszoomen',
+    'Popup.Close': 'Schließen',
+  }
+
+  const showFallback = (container: HTMLElement) => {
+    container.hidden = true
+    const fallback = container.parentElement?.querySelector<HTMLElement>(
+      '[data-meeting-point-map-fallback]',
+    )
+    fallback?.classList.replace('hidden', 'flex')
+  }
+
+  const createMarkerElement = (point: MeetingPoint) => {
+    const element = document.createElement('div')
+    element.className =
+      'flex size-8 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-brandred-600 text-sm font-bold text-white shadow-md'
+    element.setAttribute('aria-label', point.title)
+    if (point.label) {
+      element.textContent = point.label
+    } else {
+      const dot = document.createElement('span')
+      dot.className = 'size-2.5 rounded-full bg-white'
+      element.append(dot)
+    }
+    return element
+  }
+
+  const createPopupContent = (point: MeetingPoint) => {
+    const content = document.createElement('div')
+    content.className = 'space-y-1 pr-4 text-sm leading-snug'
+
+    const title = document.createElement('p')
+    title.className = 'font-bold'
+    title.textContent = point.title
+
+    const description = document.createElement('p')
+    description.textContent = point.description
+
+    const link = document.createElement('a')
+    link.className = 'link block pt-1'
+    link.href = googleMapsRouteUrl(point)
+    link.target = '_blank'
+    link.rel = 'noopener noreferrer'
+    link.textContent = 'Route auf Google Maps anzeigen'
+
+    content.append(title, description, link)
+    return content
+  }
+
+  const initMap = async (container: HTMLElement) => {
+    const points: MeetingPoint[] = JSON.parse(
+      container.dataset.meetingPointMap ?? '[]',
+    )
+    if (!apiKey || points.length === 0) {
+      showFallback(container)
+      return
+    }
+
+    try {
+      const [sdk] = await Promise.all([
+        import('@maptiler/sdk'),
+        import('@maptiler/sdk/dist/maptiler-sdk.css'),
+      ])
+      const {
+        config,
+        Language,
+        LngLatBounds,
+        Map,
+        MapStyle,
+        Marker,
+        NavigationControl,
+        Popup,
+      } = sdk
+
+      config.apiKey = apiKey
+      config.useEuEndpoints = true
+      config.telemetry = false
+      config.caching = false
+
+      const bounds = new LngLatBounds()
+      points.forEach(({ lng, lat }) => bounds.extend([lng, lat]))
+
+      const map = new Map({
+        container,
+        style: MapStyle.WINTER_V4,
+        language: Language.GERMAN,
+        center: bounds.getCenter(),
+        zoom: 16,
+        cooperativeGestures: true,
+        dragRotate: false,
+        pitchWithRotate: false,
+        touchPitch: false,
+        navigationControl: false,
+        geolocateControl: false,
+        terrainControl: false,
+        locale,
+      })
+      map.addControl(new NavigationControl({ showCompass: false }))
+      map.touchZoomRotate.disableRotation()
+
+      if (points.length > 1) {
+        map.fitBounds(bounds, { padding: 96, maxZoom: 16, duration: 0 })
+      }
+
+      points.forEach((point) => {
+        new Marker({ element: createMarkerElement(point) })
+          .setLngLat([point.lng, point.lat])
+          .setPopup(
+            new Popup({ offset: 20, maxWidth: '260px' }).setDOMContent(
+              createPopupContent(point),
+            ),
+          )
+          .addTo(map)
+      })
+
+      // An exhausted quota or a rejected key fails before the style loads.
+      let loaded = false
+      map.once('load', () => {
+        loaded = true
+      })
+      map.on('error', (event) => {
+        console.error('[MeetingPointMap]', event.error)
+        if (!loaded) {
+          map.remove()
+          showFallback(container)
+        }
+      })
+    } catch (error) {
+      console.error('[MeetingPointMap]', error)
+      showFallback(container)
+    }
+  }
+
+  // Loading the SDK starts a billed MapTiler session, so maps are only
+  // created once they come close to the viewport.
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        observer.unobserve(entry.target)
+        initMap(entry.target as HTMLElement)
+      })
+    },
+    { rootMargin: '200px' },
+  )
+
+  document
+    .querySelectorAll<HTMLElement>('[data-meeting-point-map]')
+    .forEach((container) => observer.observe(container))
+</script>
