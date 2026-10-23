@@ -30,6 +30,25 @@ const { points, label, zoomOffset = 0 } = Astro.props
       Die Karte ist derzeit nicht verfügbar. Nutze den Link „Route auf Google Maps
       anzeigen“ beim jeweiligen Treffpunkt.
     </div>
+    <div
+      class='absolute inset-0 hidden flex-col items-center justify-center gap-4 p-6 text-center text-sm text-gray-600'
+      data-meeting-point-map-consent
+    >
+      <p class='max-w-sm'>
+        Die Karte wird von MapTiler geladen. Dabei wird deine IP-Adresse an
+        MapTiler übertragen. Mehr dazu in unserer <a
+          class='link'
+          href='/datenschutz'>Datenschutzerklärung</a
+        >.
+      </p>
+      <button
+        type='button'
+        class='rounded-full bg-brandred-600 px-4 py-1.5 font-semibold text-white shadow-md transition ease-in-out hover:bg-brandred-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brandred-600'
+        data-meeting-point-map-accept
+      >
+        Karte laden
+      </button>
+    </div>
     <noscript>
       <div
         class='absolute inset-0 flex items-center justify-center p-6 text-center text-sm text-gray-600'
@@ -46,6 +65,11 @@ const { points, label, zoomOffset = 0 } = Astro.props
 </figure>
 
 <script>
+  import {
+    acceptConsent,
+    consentReady,
+    hasConsent,
+  } from '@/components/consent/cookieConsent'
   import {
     googleMapsRouteUrl,
     type MeetingPoint,
@@ -230,7 +254,41 @@ const { points, label, zoomOffset = 0 } = Astro.props
     { rootMargin: '200px' },
   )
 
-  document
-    .querySelectorAll<HTMLElement>('[data-meeting-point-map]')
-    .forEach((container) => observer.observe(container))
+  const containers = document.querySelectorAll<HTMLElement>(
+    '[data-meeting-point-map]',
+  )
+
+  const consentPlaceholder = (container: HTMLElement) =>
+    container.parentElement?.querySelector<HTMLElement>(
+      '[data-meeting-point-map-consent]',
+    )
+
+  // MapTiler receives the visitor's IP address, so maps only load with
+  // consent. Until then a placeholder asks for it.
+  let started = false
+  const startMaps = () => {
+    if (started || !hasConsent('maps')) return
+    started = true
+    containers.forEach((container) => {
+      consentPlaceholder(container)?.classList.replace('flex', 'hidden')
+      observer.observe(container)
+    })
+  }
+
+  consentReady.then(() => {
+    if (hasConsent('maps')) {
+      startMaps()
+      return
+    }
+    containers.forEach((container) => {
+      const placeholder = consentPlaceholder(container)
+      placeholder?.classList.replace('hidden', 'flex')
+      placeholder
+        ?.querySelector('[data-meeting-point-map-accept]')
+        ?.addEventListener('click', () => acceptConsent('maps'))
+    })
+    // Consent given in the banner or the preferences while on the page
+    window.addEventListener('cc:onConsent', startMaps)
+    window.addEventListener('cc:onChange', startMaps)
+  })
 </script>

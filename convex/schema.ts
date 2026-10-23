@@ -32,4 +32,14 @@ export default defineSchema({
     priceTotal: v.number(),
     cancelled: v.optional(v.boolean()),
   }).index('by_bookingId', ['bookingId']),
+  /** Consent log of the cookie consent banner, one entry per consent action */
+  consents: defineTable({
+    consentId: v.string(),
+    action: v.union(v.literal('firstConsent'), v.literal('change')),
+    revision: v.number(),
+    consentTimestamp: v.string(),
+    lastConsentTimestamp: v.string(),
+    acceptedCategories: v.array(v.union(v.literal('necessary'), v.literal('maps'))),
+    rejectedCategories: v.array(v.union(v.literal('necessary'), v.literal('maps'))),
+  }).index('by_consentId', ['consentId']),
 })

@@ -74,7 +74,9 @@ export default {
         '-header': 'calc(var(--header-height) * -1)',
       },
       fontFamily: {
-        hero: ['verveine', ...defaultTheme.fontFamily.sans],
+        // Self-hosted via @fontsource/patrick-hand (replaces verveine from
+        // Adobe Fonts), loaded and preloaded in BaseHead.astro.
+        hero: ['Patrick Hand', ...defaultTheme.fontFamily.sans],
         // sans: ["Mona Sans", ...defaultTheme.fontFamily.sans],
         // display: [
         //   ["Mona Sans", ...defaultTheme.fontFamily.sans],
