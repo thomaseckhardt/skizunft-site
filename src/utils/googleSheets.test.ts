@@ -1,111 +1,166 @@
 import { describe, expect, it, vi } from 'vitest'
-import { saveSheet, withBackoff } from './googleSheets'
+import { saveSheets, withBackoff } from './googleSheets'
 
 vi.spyOn(console, 'log').mockImplementation(() => {})
 
-const noDelay = { delayMs: 0, backoff: { baseDelayMs: 0, jitter: false } }
+const noDelay = { backoff: { baseDelayMs: 0, jitter: false } }
 
 const tooManyRequests = () =>
   Object.assign(new Error('Too many requests'), { response: { status: 429 } })
 
-/** In-memory stand-in for a spreadsheet that records every write. */
-const fakeSpreadsheet = (titles: string[] = []) => {
-  const calls: unknown[][] = []
-  const fakeSheet = (title: string) => ({
-    clear: vi.fn(async () => {
-      calls.push(['clear', title])
-    }),
-    setHeaderRow: vi.fn(async (header: string[]) => {
-      calls.push(['setHeaderRow', title, header])
-    }),
-    addRows: vi.fn(async (rows: unknown[][]) => {
-      calls.push(['addRows', title, rows])
-      return []
-    }),
-  })
-  const sheetsByTitle: Record<string, ReturnType<typeof fakeSheet>> =
-    Object.fromEntries(titles.map((title) => [title, fakeSheet(title)]))
-  const doc = {
-    sheetsByTitle,
-    addSheet: vi.fn(async ({ title }: { title: string }) => {
-      calls.push(['addSheet', title])
-      sheetsByTitle[title] = fakeSheet(title)
-      return sheetsByTitle[title]
-    }),
-  }
-  return { doc, calls }
+/** In-memory stand-in for a spreadsheet that records every request. */
+const fakeSpreadsheet = (
+  sheetsByTitle: Record<
+    string,
+    { sheetId: number; rowCount: number; columnCount: number }
+  > = {},
+) => {
+  const post = vi.fn(async (_url: string, _options: { json: unknown }) => ({}))
+  const doc = { sheetsByTitle, sheetsApi: { post } }
+  const calls = () => post.mock.calls.map(([url, { json }]) => [url, json])
+  return { doc, post, calls }
 }
 
-describe('saveSheet', () => {
-  it('replaces the content of an existing tab', async () => {
-    const { doc, calls } = fakeSpreadsheet(['bookings'])
+const defaultTab = (sheetId: number) => ({
+  sheetId,
+  rowCount: 1000,
+  columnCount: 26,
+})
 
-    await saveSheet(
-      doc as any,
-      { tabName: 'bookings', data: [['Kurs', 'Teilnehmerzahl'], ['a', 1]] },
+describe('saveSheets', () => {
+  it('replaces the content of all tabs in one clear and one write', async () => {
+    const { doc, calls } = fakeSpreadsheet({
+      bookings: defaultTab(1),
+      overview: defaultTab(2),
+    })
+
+    await saveSheets(
+      doc,
+      [
+        { tabName: 'bookings', data: [['Buchungsnummer'], ['123']] },
+        {
+          tabName: 'overview',
+          data: [
+            ['Kurs', 'Teilnehmerzahl'],
+            ['a', 1],
+          ],
+        },
+      ],
       noDelay,
     )
 
-    expect(calls).toEqual([
-      ['clear', 'bookings'],
-      ['setHeaderRow', 'bookings', ['Kurs', 'Teilnehmerzahl']],
-      ['addRows', 'bookings', [['a', 1]]],
+    expect(calls()).toEqual([
+      ['values:batchClear', { ranges: ["'bookings'", "'overview'"] }],
+      [
+        'values:batchUpdate',
+        {
+          valueInputOption: 'USER_ENTERED',
+          data: [
+            {
+              range: "'bookings'!A1",
+              majorDimension: 'ROWS',
+              values: [['Buchungsnummer'], ['123']],
+            },
+            {
+              range: "'overview'!A1",
+              majorDimension: 'ROWS',
+              values: [
+                ['Kurs', 'Teilnehmerzahl'],
+                ['a', 1],
+              ],
+            },
+          ],
+        },
+      ],
     ])
   })
 
-  it('creates a missing tab', async () => {
+  it('creates missing tabs before writing', async () => {
     const { doc, calls } = fakeSpreadsheet()
 
-    await saveSheet(
-      doc as any,
-      { tabName: 'ski-bambini-1', data: [['Buchungsnummer']] },
+    await saveSheets(
+      doc,
+      [{ tabName: 'ski-bambini-1', data: [['Buchungsnummer']] }],
       noDelay,
     )
 
-    expect(calls).toEqual([
-      ['addSheet', 'ski-bambini-1'],
-      ['clear', 'ski-bambini-1'],
-      ['setHeaderRow', 'ski-bambini-1', ['Buchungsnummer']],
+    expect(calls()[0]).toEqual([
+      ':batchUpdate',
+      {
+        requests: [
+          {
+            addSheet: {
+              properties: {
+                title: 'ski-bambini-1',
+                gridProperties: { rowCount: 1000, columnCount: 26 },
+              },
+            },
+          },
+        ],
+      },
     ])
   })
 
-  it('only clears the tab when there is no data', async () => {
-    const { doc, calls } = fakeSpreadsheet(['overview'])
+  it('enlarges tabs too small for their data', async () => {
+    const { doc, calls } = fakeSpreadsheet({
+      attendees: { sheetId: 7, rowCount: 2, columnCount: 26 },
+    })
 
-    await saveSheet(doc as any, { tabName: 'overview', data: [] }, noDelay)
-
-    expect(calls).toEqual([['clear', 'overview']])
-  })
-
-  it('adds rows in chunks, keeping their order', async () => {
-    const { doc, calls } = fakeSpreadsheet(['attendees'])
-    const rows = Array.from({ length: 5 }, (_, i) => [`row ${i + 1}`])
-
-    await saveSheet(
-      doc as any,
-      { tabName: 'attendees', data: [['Header'], ...rows] },
-      { ...noDelay, chunkSize: 2 },
-    )
-
-    expect(calls.filter(([call]) => call === 'addRows')).toEqual([
-      ['addRows', 'attendees', [['row 1'], ['row 2']]],
-      ['addRows', 'attendees', [['row 3'], ['row 4']]],
-      ['addRows', 'attendees', [['row 5']]],
-    ])
-  })
-
-  it('retries a write that hit the rate limit', async () => {
-    const { doc } = fakeSpreadsheet(['bookings'])
-    const sheet = doc.sheetsByTitle.bookings
-    sheet.addRows.mockRejectedValueOnce(tooManyRequests())
-
-    await saveSheet(
-      doc as any,
-      { tabName: 'bookings', data: [['Header'], ['row']] },
+    await saveSheets(
+      doc,
+      [{ tabName: 'attendees', data: [['Header'], ['a'], ['b']] }],
       noDelay,
     )
 
-    expect(sheet.addRows).toHaveBeenCalledTimes(2)
+    expect(calls()[0]).toEqual([
+      ':batchUpdate',
+      {
+        requests: [
+          {
+            updateSheetProperties: {
+              properties: {
+                sheetId: 7,
+                gridProperties: { rowCount: 3, columnCount: 26 },
+              },
+              fields: 'gridProperties(rowCount,columnCount)',
+            },
+          },
+        ],
+      },
+    ])
+  })
+
+  it('only clears tabs without data', async () => {
+    const { doc, calls } = fakeSpreadsheet({ overview: defaultTab(1) })
+
+    await saveSheets(doc, [{ tabName: 'overview', data: [] }], noDelay)
+
+    expect(calls()).toEqual([['values:batchClear', { ranges: ["'overview'"] }]])
+  })
+
+  it('escapes apostrophes in tab names', async () => {
+    const { doc, calls } = fakeSpreadsheet({ "kid's": defaultTab(1) })
+
+    await saveSheets(doc, [{ tabName: "kid's", data: [['a']] }], noDelay)
+
+    expect(calls()[0]).toEqual(['values:batchClear', { ranges: ["'kid''s'"] }])
+  })
+
+  it('retries a request that hit the rate limit', async () => {
+    const { doc, post } = fakeSpreadsheet({ bookings: defaultTab(1) })
+    post.mockRejectedValueOnce(tooManyRequests())
+
+    await saveSheets(
+      doc,
+      [{ tabName: 'bookings', data: [['Header'], ['row']] }],
+      noDelay,
+    )
+
+    expect(post.mock.calls.map(([url]) => url)).toEqual([
+      'values:batchClear',
+      'values:batchClear',
+      'values:batchUpdate',
+    ])
   })
 })
 
