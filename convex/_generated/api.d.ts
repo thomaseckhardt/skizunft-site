@@ -11,6 +11,8 @@
 import type * as adminSecret from "../adminSecret.js";
 import type * as attendees from "../attendees.js";
 import type * as bookings from "../bookings.js";
+import type * as consents from "../consents.js";
+import type * as crons from "../crons.js";
 
 import type {
   ApiFromModules,
@@ -22,6 +24,8 @@ declare const fullApi: ApiFromModules<{
   adminSecret: typeof adminSecret;
   attendees: typeof attendees;
   bookings: typeof bookings;
+  consents: typeof consents;
+  crons: typeof crons;
 }>;
 
 /**

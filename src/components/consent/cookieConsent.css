@@ -1,0 +1,19 @@
+/* Brand colors of the cookie consent banner (tailwind brandblue). */
+#cc-main {
+  --cc-font-family: inherit;
+  --cc-btn-primary-bg: theme(colors.brandblue.600);
+  --cc-btn-primary-border-color: theme(colors.brandblue.600);
+  --cc-btn-primary-hover-bg: theme(colors.brandblue.800);
+  --cc-btn-primary-hover-border-color: theme(colors.brandblue.800);
+  --cc-btn-secondary-bg: theme(colors.brandblue.100);
+  --cc-btn-secondary-border-color: theme(colors.brandblue.100);
+  --cc-btn-secondary-hover-bg: theme(colors.brandblue.200);
+  --cc-btn-secondary-hover-border-color: theme(colors.brandblue.200);
+  --cc-toggle-on-bg: theme(colors.brandblue.600);
+  --cc-link-color: theme(colors.brandblue.700);
+}
+
+#cc-main code {
+  font-size: 0.875em;
+  word-break: break-all;
+}
