@@ -19,19 +19,19 @@ const month = date?.toLocaleString('de-DE', { month: 'long' })
 <a
   href={href}
   class={clsx(
-    'group flex items-center transition duration-300 ease-in-out hovers:hover:-translate-y-0.5',
+    'group flex items-stretch transition duration-300 ease-in-out hovers:hover:-translate-y-0.5',
     className,
   )}
   {...props}
 >
   <div
-    class="relative z-10 h-20 w-20 flex-none items-center rounded-lg bg-white py-2 text-center text-sky-700 shadow transition hovers:group-hover:shadow-lg"
+    class="relative z-10 flex min-h-20 w-20 flex-none flex-col justify-center rounded-lg bg-white py-2 text-center text-sky-700 shadow transition hovers:group-hover:shadow-lg"
   >
     <div class="-mt-0.5 font-hero text-6xl leading-none">{day}</div>
     <div class="-mt-1 text-xs font-semibold leading-none">{month}</div>
   </div>
   <div
-    class="-ml-4 min-h-[4.625rem] flex-1 rounded-br-lg rounded-tr-lg bg-sky-50 py-2 pl-8 pr-4 text-sm leading-snug text-sky-800 shadow-sm transition hovers:group-hover:shadow-md"
+    class="-ml-4 my-[0.1875rem] flex min-h-[4.625rem] flex-1 flex-col justify-center rounded-br-lg rounded-tr-lg bg-sky-50 py-2 pl-8 pr-4 text-sm leading-snug text-sky-800 shadow-sm transition hovers:group-hover:shadow-md"
   >
     <div class="font-semibold">{title}</div>
     {description && <div class="whitespace-pre-line">{description}</div>}
