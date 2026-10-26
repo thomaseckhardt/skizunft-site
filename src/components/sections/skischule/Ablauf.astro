@@ -2,6 +2,7 @@
 import { startContainer } from 'node_modules/astro/dist/core/dev'
 import clsx from 'clsx'
 import Icon from '@/components/Icon.astro'
+import CourseSchedule from '@/components/skischool/CourseSchedule.astro'
 
 const flow = [
   {
@@ -90,7 +91,11 @@ const flow = [
         </a>
       </div>
     </div>
-    <div class="mx-auto mt-8 flow-root max-w-3xl md:mt-12">
+    <div class="mx-auto mt-16 max-w-3xl md:mt-20">
+      <h3 class="typo-hero-sm text-center">Kurstermine im Überblick</h3>
+      <CourseSchedule class="mt-6 rounded-2xl bg-white p-4 shadow-sm sm:p-6" />
+    </div>
+    <div class="mx-auto mt-16 flow-root max-w-3xl md:mt-20">
       <ul role="list" class="-mb-8">
         {
           flow.map((item, index) => (

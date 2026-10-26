@@ -3,6 +3,7 @@ import Alert from '@/components/Alert.astro'
 import AlertSection from '@/components/AlertSection.astro'
 import Icon from '@/components/Icon.astro'
 import StatusKurse from '@/components/sections/skischule/StatusKurse.astro'
+import CourseSchedule from '@/components/skischool/CourseSchedule.astro'
 import Page from '@/layouts/Page.astro'
 import { fetchStories } from '@/storyblok/utils/fetchStories'
 import clsx from '@/utils/clsx'
@@ -139,6 +140,10 @@ const courses = [
           </p>
         </div>
       </h2>
+      <div class='mx-auto mt-16 max-w-3xl md:mt-20'>
+        <h3 class='typo-hero-sm text-center'>Kurstermine im Überblick</h3>
+        <CourseSchedule class='mt-6' />
+      </div>
       {
         /**
       <Alert class='mx-auto mt-6 max-w-3xl'>
