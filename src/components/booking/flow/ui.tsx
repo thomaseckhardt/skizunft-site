@@ -286,26 +286,41 @@ export function ChoiceList<T>({
   )
 }
 
+const noticeIcons = {
+  info: 'info-20-regular',
+  success: 'checkmark-circle-20-regular',
+  warning: 'warning-20-regular',
+  error: 'warning-20-regular',
+}
+
 export function Notice({
   tone = 'info',
+  icon = undefined,
+  className = undefined,
   children,
 }: {
-  tone?: 'info' | 'warning' | 'error'
+  tone?: 'info' | 'success' | 'warning' | 'error'
+  /** Overrides the icon of the tone */
+  icon?: string
+  className?: string
   children: ReactNode
 }) {
   return (
     <div
-      role={tone === 'info' ? 'status' : 'alert'}
+      role={tone === 'info' || tone === 'success' ? 'status' : 'alert'}
       className={clsx(
         'flex gap-x-2 rounded-md p-4 text-sm',
         tone === 'info' && 'border border-sky-600 bg-sky-50 text-sky-700',
+        tone === 'success' &&
+          'border border-emerald-600 bg-emerald-50 text-emerald-800',
         tone === 'warning' &&
           'border border-amber-300 bg-amber-50 text-amber-800',
         tone === 'error' && 'bg-red-50 text-red-800',
+        className,
       )}
     >
       <Icon
-        name={tone === 'info' ? 'info-20-regular' : 'warning-20-regular'}
+        name={icon ?? noticeIcons[tone]}
         size={20}
         className="mt-[0.125em]"
       />

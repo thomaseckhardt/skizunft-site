@@ -1,6 +1,10 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { Submission } from './parseSubmission'
 import { prepareBooking, type Catalog } from './prepareBooking'
+
+vi.mock('../../components/booking/discountCodes', () => ({
+  discountCodes: { brettlemarkt2026: { rate: 0.1, label: 'Brettlemarkt' } },
+}))
 
 const catalog: Catalog = {
   courseCategories: [{ id: 'beginner', price: 100, priceMember: 80 }],
@@ -49,7 +53,9 @@ describe('prepareBooking', () => {
     )
     expect(result.ok).toBe(true)
     if (!result.ok) return
-    expect(result.prepared.attendees.map((a) => a.priceTotal)).toEqual([200, 80])
+    expect(result.prepared.attendees.map((a) => a.priceTotal)).toEqual([
+      200, 80,
+    ])
     expect(result.prepared.booking.priceTotal).toBe(280)
   })
 
@@ -83,7 +89,10 @@ describe('prepareBooking', () => {
 
   it('rejects courses that are not in the catalog or have no category', () => {
     expect(
-      prepareBooking(submission([{ courses: ['nope', 'no-category'] }]), catalog),
+      prepareBooking(
+        submission([{ courses: ['nope', 'no-category'] }]),
+        catalog,
+      ),
     ).toEqual({
       ok: false,
       error: 'unknownCourse',
@@ -93,7 +102,10 @@ describe('prepareBooking', () => {
 
   it('rejects closed and canceled courses', () => {
     expect(
-      prepareBooking(submission([{ courses: ['closed', 'canceled'] }]), catalog),
+      prepareBooking(
+        submission([{ courses: ['closed', 'canceled'] }]),
+        catalog,
+      ),
     ).toEqual({
       ok: false,
       error: 'unbookable',

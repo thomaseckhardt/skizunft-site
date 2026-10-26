@@ -1,13 +1,39 @@
-const discountCodes: Record<string, number> = {
-  // Still printed on an old QR code in use
-  // brettlemarkt2025: 0.1,
-  // brettlemarkt2026: 0.1,
+import { discountCodes } from './discountCodes'
+
+export type Discount =
+  | { status: 'none' }
+  | { status: 'invalid'; code: string }
+  | { status: 'active'; code: string; rate: number; label: string }
+
+export const resolveDiscountCode = (
+  discountCode: string | null | undefined,
+): Discount => {
+  const code = discountCode?.trim()
+  if (!code) return { status: 'none' }
+  const config = discountCodes[code.toLowerCase()]
+  return config
+    ? { status: 'active', code, ...config }
+    : { status: 'invalid', code }
 }
 
-export const getDiscountRate = (discountCode: string | null) =>
-  (discountCode && discountCodes[discountCode]) || 0
+export const getDiscountRate = (discount: Discount) =>
+  discount.status === 'active' ? discount.rate : 0
 
-export const createPricing = ({ courses, courseCategories, discountRate }) => {
+// The non-breaking space keeps number and sign on one line.
+export const formatPercent = (rate: number) =>
+  `${Math.round(rate * 100)}\u00a0%`
+
+export const createPricing = ({
+  courses,
+  courseCategories,
+  discount = { status: 'none' },
+}: {
+  courses: any[]
+  courseCategories: any[]
+  discount?: Discount
+}) => {
+  const discountRate = getDiscountRate(discount)
+
   const getAttendeeTotalPrice = (attendee) => {
     if (!Array.isArray(attendee?.courses)) return 0
 
@@ -37,12 +63,17 @@ export const createPricing = ({ courses, courseCategories, discountRate }) => {
   const getTotalPrice = (attendees) =>
     getSubtotal(attendees) * (1 - discountRate)
 
+  /** A single price with the discount applied */
+  const getDiscountedPrice = (price: number) => price * (1 - discountRate)
+
   return {
+    discount,
     discountRate,
     getAttendeeTotalPrice,
     getSubtotal,
     getDiscount,
     getTotalPrice,
+    getDiscountedPrice,
   }
 }
 
