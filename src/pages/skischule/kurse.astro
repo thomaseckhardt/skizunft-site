@@ -42,6 +42,7 @@ const courseDates = courseStories.map((story) => {
 
 const courses = [
   {
+    id: 'ski-bambini',
     title: 'Skikurs Bambini',
     age: 'zwischen 4 und 5 Jahren',
     description: `<p>Der Skikurs für die Kleinsten. Hier lernen die Kinder spielerisch das Skifahren.</p>`,
@@ -53,6 +54,7 @@ const courses = [
     ),
   },
   {
+    id: 'ski-beginner',
     title: 'Skikurs Beginner',
     age: 'zwischen 6 und 13 Jahren',
     description: `<p>Unser Beginner Kurs richtet sich an Kinder, …</p><ul><li>die bisher noch keine Erfahrungen mit dem Skifahren gemacht haben.</li><li>die am Tag des Kurses zum ersten Mal auf dem Ski stehen.</li><li>die Spaß daran haben, sich im Schnee zu bewegen.</li></ul><p>Im Beginner Kurs lernt das Kind</p><ul><li>Sich sicher auf dem Ski zu bewegen</li><li>Punktuell und sicher zu bremsen.</li><li>Die ersten Pflugkurven im flachen Gelände zu fahren.</li></ul>`,
@@ -64,6 +66,7 @@ const courses = [
     ),
   },
   {
+    id: 'ski-junior-champion',
     title: 'Skikurs Junior Champion',
     age: 'zwischen 6 und 13 Jahren',
     description: `<p>Unser Junior Champion Kurs richtet sich an Kinder,</p><ul><li>die sich bereits sicher auf dem Ski (fort)bewegen können.</li><li>die bremsen können.</li><li>für die aneinanderhängende Pflugkurven im flachen Gelände kein Problem sind.</li></ul><p>Im Junior Champion Kurs lernt das Kind</p><ul><li>Zu liften.</li><li>Kurven in paralleler Skistellung zu fahren.</li><li>In unterschiedlichen Hangneigungen parallel Ski zufahren.</li></ul>`,
@@ -75,6 +78,7 @@ const courses = [
     ),
   },
   {
+    id: 'ski-champion',
     title: 'Skikurs Champion',
     age: 'zwischen 6 und 13 Jahren',
     description: `<p>Unser Champion Kurs richtet sich an Kinder,</p><ul><li>die sicher liften können.</li><li>die Kurven überwiegend mit einer parallelen Skistellung fahren.</li><li>die sicher an unterschiedlichen Hangneigungen bremsen können.</li><li>die einen längeren Pistenabschnitt am Stück, ohne Pausen fahren können.</li><li>die sich beim Fahren in unterschiedlichen Hangneigungen sicher fühlen.</li></ul><p>Im Champion Kurs lernt das Kind</p><ul><li>In unterschiedlichen Geländeformen sicher zu fahren.</li><li>Durch den gezielten Einsatz komplexer Übungsformen, variabel Ski zu fahren.</li><li>Den Ski sportlich auf der Kante zu fahren (Carving).</li></ul>`,
@@ -86,6 +90,7 @@ const courses = [
     ),
   },
   {
+    id: 'ski-erwachsene',
     title: 'Skikurs Jugendliche und Erwachsene',
     age: 'ab 14 Jahren',
     description: `<p>Unser Beginner Kurs richtet sich an Jugendliche und Erwachsene, …</p><ul><li>die bisher noch keine Erfahrungen mit dem Skifahren gemacht haben.</li><li>die am Tag des Kurses zum ersten Mal auf dem Ski stehen.</li><li>die Spaß daran haben, sich im Schnee zu bewegen.</li></ul>`,
@@ -98,6 +103,7 @@ const courses = [
     ),
   },
   {
+    id: 'snowboard',
     title: 'Snowboardkurs',
     age: 'zwischen 6 und 13 Jahren',
     description: `<p>Unser Snowboardkurs richtet sich an Kinder, die bisher noch keine Erfahrungen mit dem Snowboarden gemacht haben.</p>`,
@@ -151,7 +157,7 @@ const courses = [
       <div class='mx-auto mt-8 flow-root max-w-3xl space-y-16 md:mt-16'>
         {
           courses.map((course) => (
-            <div>
+            <div id={course.id} class='scroll-mt-24'>
               <h3 class=''>
                 <div class='typo-hero-sm'>{course.title}</div>
                 <div class='typo-hero-xs mt-2'>{course.age}</div>

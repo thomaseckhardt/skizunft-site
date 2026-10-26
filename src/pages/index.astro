@@ -4,6 +4,7 @@ import HeroHome from '@/components/HeroHome.astro'
 import Page from '@/layouts/Page.astro'
 import DsvSkischule from '@/images/dsv-skischule.svg'
 import StatusKurse from '@/components/sections/skischule/StatusKurse.astro'
+import CourseSchedule from '@/components/skischool/CourseSchedule.astro'
 ---
 
 <Page
@@ -59,6 +60,10 @@ import StatusKurse from '@/components/sections/skischule/StatusKurse.astro'
         >
           Kurstermine <span aria-hidden='true'>→</span>
         </a>
+      </div>
+      <div class='mx-auto mt-16 max-w-3xl md:mt-20'>
+        <h3 class='typo-hero-sm text-center'>Kurstermine im Überblick</h3>
+        <CourseSchedule class='mt-6' />
       </div>
     </div>
     <StatusKurse class='mt-24 md:mt-32' />
