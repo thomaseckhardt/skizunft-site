@@ -1,0 +1,57 @@
+---
+import clsx from 'clsx'
+import { bookingEnabled, loadBookingData } from '@/data/booking'
+import CourseScheduleTable from './CourseScheduleTable'
+import { getToday, type ScheduleCourse } from './courseSchedule'
+
+interface Props {
+  /** Shows a "Kurs buchen" button below the table. */
+  showBookingButton?: boolean
+  class?: string
+}
+
+const { showBookingButton = false, class: className } = Astro.props
+
+const toDateString = (date: Date) => date.toISOString().slice(0, 10)
+
+const { courses } = await loadBookingData()
+const scheduleCourses: ScheduleCourse[] = courses
+  .filter((course: any) => course.catgeory?.slug)
+  .map((course: any) => ({
+    slug: course.slug,
+    categorySlug: course.catgeory.slug,
+    startDate: toDateString(course.startDate),
+    endDate: toDateString(course.endDate),
+    seatLimit: course.seatLimit,
+    closed: course.closed,
+    canceled: course.canceled,
+  }))
+---
+
+<div class={className}>
+  <CourseScheduleTable
+    client:visible
+    courses={scheduleCourses}
+    buildDate={getToday()}
+    bookingEnabled={bookingEnabled}
+    showDemoRow={import.meta.env.DEV}
+  />
+  {
+    showBookingButton && (
+      <div class='mt-8 flex justify-center'>
+        <a href='/buchung/' class='block flex-none'>
+          <div
+            class={clsx(
+              'rounded-full px-6 py-2 text-sm font-semibold shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
+              'bg-brandred-600 text-white focus-visible:outline-brandred-600',
+              'transition ease-in-out',
+              'hovers:hover:-translate-y-0.5 hovers:hover:bg-brandred-500 hovers:hover:shadow-lg',
+            )}
+          >
+            Kurs buchen
+          </div>
+        </a>
+      </div>
+    )
+  }
+</div>
