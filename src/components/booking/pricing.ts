@@ -1,7 +1,7 @@
 const discountCodes: Record<string, number> = {
   // Still printed on an old QR code in use
-  brettlemarkt2025: 0.1,
-  brettlemarkt2026: 0.1,
+  // brettlemarkt2025: 0.1,
+  // brettlemarkt2026: 0.1,
 }
 
 export const getDiscountRate = (discountCode: string | null) =>
