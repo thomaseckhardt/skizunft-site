@@ -14,6 +14,9 @@ _Avoid_: Category, CourseCategory
 A concrete, dated run of a course offering (e.g. "Ski Anfänger 1" on given dates) that an attendee can be booked onto.
 _Avoid_: Course date, Termin, Kurstermin
 
+**Course Weekend** (UI: Kurswochenende):
+A weekend on which courses take place, numbered across the season ("2. Kurswochenende"). The homepage lists upcoming course weekends among the club's events, derived from the courses rather than maintained as events.
+
 **Discipline** (UI: Disziplin):
 Ski or Snowboard.
 
