@@ -5,6 +5,7 @@ export type Availability =
   | 'canceled'
   | 'closed'
   | 'fullyBooked'
+  | 'lastSeat'
   | 'fewSeatsLeft'
   | 'open'
 
@@ -18,7 +19,7 @@ type AvailabilityCourse = {
 }
 
 /** Up to this many free seats, a course shows that only few seats are left. */
-const fewSeatsLeftLimit = 2
+const fewSeatsLeftLimit = 3
 
 /** States that override the booking state maintained in Storyblok. */
 const automaticStates: Partial<
@@ -26,7 +27,8 @@ const automaticStates: Partial<
 > = {
   closed: { message: 'ausgebucht', color: 'red' },
   fullyBooked: { message: 'ausgebucht', color: 'red' },
-  fewSeatsLeft: { message: 'Nur noch wenige Plätze frei', color: 'blue' },
+  lastSeat: { message: 'Letzter Platz frei', color: 'red' },
+  fewSeatsLeft: { message: 'Fast ausgebucht', color: 'blue' },
 }
 
 /** Storyblok stores the seat limit as a string; anything invalid means no limit. */
@@ -80,6 +82,7 @@ export const getAvailability = (
   if (course.closed) return 'closed'
   if (freeSeats === undefined) return 'open'
   if (freeSeats <= 0) return 'fullyBooked'
+  if (freeSeats === 1) return 'lastSeat'
   if (freeSeats <= fewSeatsLeftLimit) return 'fewSeatsLeft'
   return 'open'
 }
