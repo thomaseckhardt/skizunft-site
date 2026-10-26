@@ -133,7 +133,9 @@ export default function SummaryStep({
     >
       <div className="space-y-10">
         <section>
-          <h2 className="text-lg font-semibold text-gray-900">Kurse</h2>
+          <h2 className="text-pretty text-lg font-semibold text-gray-900">
+            Kurse
+          </h2>
           {attendees.length === 0 ? (
             <p className="mt-2 text-sm text-gray-500">
               Du hast noch keinen Kurs ausgewählt.
@@ -261,7 +263,9 @@ export default function SummaryStep({
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-gray-900">Deine Daten</h2>
+          <h2 className="text-pretty text-lg font-semibold text-gray-900">
+            Deine Daten
+          </h2>
           <dl className="mt-2 divide-y divide-gray-200 text-sm">
             <ContactRow
               label="Name"

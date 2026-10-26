@@ -528,7 +528,9 @@ export function CartOverview({ state, catalog, pricing }: StepProps) {
 
   return (
     <div className="rounded-lg bg-gray-50 p-4 text-sm">
-      <h2 className="font-semibold text-gray-900">Bisher ausgewählt</h2>
+      <h2 className="text-pretty font-semibold text-gray-900">
+        Bisher ausgewählt
+      </h2>
       <ul role="list" className="mt-2 divide-y divide-gray-200">
         {state.attendees.map((attendee) => (
           <li key={attendee.id} className="flex justify-between gap-x-4 py-3">

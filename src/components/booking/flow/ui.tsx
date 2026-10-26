@@ -25,7 +25,7 @@ export function StepShell({
 }) {
   return (
     <div>
-      <h1 className="text-2xl font-semibold leading-tight text-gray-900 md:text-3xl">
+      <h1 className="text-pretty text-2xl font-semibold leading-tight text-gray-900 md:text-3xl">
         {title}
       </h1>
       {description && (
@@ -353,7 +353,7 @@ export function ConfirmDialog({
                 />
               </div>
               <div>
-                <DialogTitle className="text-base font-semibold text-gray-900">
+                <DialogTitle className="text-pretty text-base font-semibold text-gray-900">
                   {title}
                 </DialogTitle>
                 <div className="mt-2 text-sm text-gray-600">{children}</div>

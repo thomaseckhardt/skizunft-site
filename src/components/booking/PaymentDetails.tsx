@@ -76,7 +76,7 @@ export default function PaymentDetails() {
 
   return (
     <section className="mx-auto mt-12 max-w-2xl rounded-2xl border border-sky-600 bg-sky-50 p-4 text-left sm:p-8">
-      <h2 className="font-hero text-2xl text-brandblue-700">
+      <h2 className="text-pretty font-hero text-2xl text-brandblue-700">
         Jetzt überweisen
       </h2>
       <p className="mt-2 text-sky-700">
