@@ -94,6 +94,7 @@ export type CellState = Availability | 'none'
 const statePriority: CellState[] = [
   'open',
   'fewSeatsLeft',
+  'lastSeat',
   'fullyBooked',
   'closed',
   'canceled',

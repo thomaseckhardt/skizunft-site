@@ -79,9 +79,18 @@ describe('getCellState', () => {
     expect(getCellState(courses, bambini, columns[0], undefined)).toBe('open')
   })
 
-  it('shows few seats left and fully booked courses', () => {
+  it('shows few seats left, the last seat and fully booked courses', () => {
+    expect(getCellState(courses, bambini, columns[0], { 'bambini-1': 4 })).toBe(
+      'open',
+    )
+    expect(getCellState(courses, bambini, columns[0], { 'bambini-1': 5 })).toBe(
+      'fewSeatsLeft',
+    )
     expect(getCellState(courses, bambini, columns[0], { 'bambini-1': 6 })).toBe(
       'fewSeatsLeft',
+    )
+    expect(getCellState(courses, bambini, columns[0], { 'bambini-1': 7 })).toBe(
+      'lastSeat',
     )
     expect(getCellState(courses, bambini, columns[0], { 'bambini-1': 8 })).toBe(
       'fullyBooked',
@@ -99,7 +108,7 @@ describe('getCellState', () => {
     ]
     const [column] = getScheduleColumns(groups, '2026-10-26')
     expect(
-      getCellState(groups, bambini, column, { 'bambini-1a': 8, 'bambini-1b': 7 }),
+      getCellState(groups, bambini, column, { 'bambini-1a': 7, 'bambini-1b': 6 }),
     ).toBe('fewSeatsLeft')
   })
 })

@@ -76,7 +76,21 @@ function Cell({ state }: { state: CellState }) {
             aria-hidden="true"
           />
           <span className="mt-0.5 block text-xs font-medium leading-tight text-sky-600">
-            Nur noch wenige Plätze
+            Fast ausgebucht
+          </span>
+        </>
+      )
+    case 'lastSeat':
+      return (
+        <>
+          <Icon
+            name="checkmark-20-filled"
+            size={20}
+            className="mx-auto text-rose-700"
+            aria-hidden="true"
+          />
+          <span className="mt-0.5 block text-xs font-medium leading-tight text-rose-700">
+            Letzter Platz frei
           </span>
         </>
       )
@@ -126,6 +140,7 @@ const stickyCell = 'sticky left-0 z-10 bg-white'
 /** The states the demo row shows, one per column and repeating. */
 const demoStates: CellState[] = [
   'fewSeatsLeft',
+  'lastSeat',
   'fullyBooked',
   'canceled',
   'open',
