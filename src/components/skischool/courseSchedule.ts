@@ -34,8 +34,15 @@ export type ScheduleRow = {
   noCoursesMessage?: string
 }
 
-export const scheduleGroups: Record<string, { title: string; age: string }> = {
-  kids: { title: 'Skikurse Kinder', age: '6–13 Jahre' },
+export const scheduleGroups: Record<
+  string,
+  { title: string; age: string; offeringPrefix: string }
+> = {
+  kids: {
+    title: 'Skikurse Kinder',
+    age: '6–13 Jahre',
+    offeringPrefix: 'Ski Kinder',
+  },
 }
 
 export const scheduleRows: ScheduleRow[] = [
