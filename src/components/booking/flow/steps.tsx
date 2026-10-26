@@ -291,8 +291,35 @@ export function SkillLevelStep({
 
 // --------------------------------------------------
 
+/** A course price, struck through next to the discounted one, if any. */
+function CoursePrice({
+  price,
+  pricing,
+  className,
+}: {
+  price: number
+  pricing: Pricing
+  className: string
+}) {
+  if (pricing.discountRate === 0) {
+    return <span className={className}>{formatPrice(price)}</span>
+  }
+  return (
+    <>
+      <s className="text-gray-500">
+        <span className="sr-only">regulär </span>
+        {formatPrice(price)}
+      </s>{' '}
+      <span className={className}>
+        <span className="sr-only">jetzt </span>
+        {formatPrice(pricing.getDiscountedPrice(price))}
+      </span>
+    </>
+  )
+}
+
 export function CoursesStep(props: StepProps) {
-  const { state, dispatch, catalog, seatsTaken, onBack } = props
+  const { state, dispatch, catalog, pricing, seatsTaken, onBack } = props
   const { draft } = state
   const category = getCategory(props)
   // Other attendees of this booking take seats as well.
@@ -375,15 +402,19 @@ export function CoursesStep(props: StepProps) {
       </div>
       <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1 rounded-lg bg-gray-50 p-4 text-sm text-gray-700">
         <div>
-          <span className="text-lg font-semibold text-gray-900">
-            {category.priceFormatted}
-          </span>{' '}
+          <CoursePrice
+            price={category.price}
+            pricing={pricing}
+            className="text-lg font-semibold text-gray-900"
+          />{' '}
           pro Kurs
         </div>
         <div>
-          <span className="text-lg font-semibold text-sky-600">
-            {category.priceMemberFormatted}
-          </span>{' '}
+          <CoursePrice
+            price={category.priceMember}
+            pricing={pricing}
+            className="text-lg font-semibold text-sky-600"
+          />{' '}
           pro Kurs für Vereinsmitglieder
         </div>
       </div>

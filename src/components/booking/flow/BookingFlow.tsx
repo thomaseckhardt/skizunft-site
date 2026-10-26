@@ -1,7 +1,7 @@
 import { useQueries } from 'convex/react'
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
 import { api } from '../../../../convex/_generated/api'
-import { createPricing, getDiscountRate } from '../pricing'
+import { createPricing, resolveDiscountCode } from '../pricing'
 import useSubmitBooking from '../useSubmitBooking'
 import {
   createFlowReducer,
@@ -28,18 +28,25 @@ import {
   type StepProps,
 } from './steps'
 import type { SeatsTaken } from './availability'
+import DiscountNotice from './DiscountNotice'
 import SummaryStep from './SummaryStep'
 
 const storageKey = 'skizunft-booking-flow-v2'
 
-const loadState = (): FlowState => {
+const loadStoredState = (): FlowState | undefined => {
   try {
     const stored = JSON.parse(sessionStorage.getItem(storageKey) ?? 'null')
     if (Array.isArray(stored?.steps) && stored.steps.length > 0) return stored
   } catch {
     // Storage may be unavailable, e.g. in private windows.
   }
-  return createInitialState()
+}
+
+const loadState = (): FlowState => {
+  const state = loadStoredState() ?? createInitialState()
+  // A code in the link replaces the stored one, e.g. when scanning a new QR code.
+  const discountCode = new URLSearchParams(window.location.search).get('code')
+  return discountCode ? { ...state, discountCode } : state
 }
 
 const saveState = (state: FlowState) => {
@@ -111,10 +118,8 @@ export default function BookingFlow({
   const submitted = useRef(false)
   const seatsTaken = useSeatsTaken()
 
-  const discountRate = getDiscountRate(
-    new URLSearchParams(window.location.search).get('code'),
-  )
-  const pricing = createPricing({ courses, courseCategories, discountRate })
+  const discount = resolveDiscountCode(state.discountCode)
+  const pricing = createPricing({ courses, courseCategories, discount })
   const submitBooking = useSubmitBooking()
 
   const depth = state.steps.length - 1
@@ -200,6 +205,9 @@ export default function BookingFlow({
         />
       </div>
       <div className="mt-6" key={`${depth}-${step}`}>
+        {(depth === 0 || step === 'summary') && (
+          <DiscountNotice discount={discount} className="mb-6" />
+        )}
         {StepComponent ? (
           <StepComponent {...stepProps} />
         ) : (

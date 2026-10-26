@@ -3,6 +3,7 @@ import { formatPrice } from '@/utils/format'
 import clsx from 'clsx'
 import { useState, type ReactNode } from 'react'
 import type { BookingValues } from '../useSubmitBooking'
+import { formatPercent } from '../pricing'
 import { countBookingSeats, isNoLongerBookable } from './availability'
 import type { ContactStepId, FlowAttendee } from './flowState'
 import type { StepProps } from './steps'
@@ -46,7 +47,7 @@ export default function SummaryStep({
 
   const isSubmitting = submitState === 'submitting'
   const isLocked = isSubmitting || submitState === 'mailFailed'
-  const discountPercent = Math.round(pricing.discountRate * 100)
+  const { discount } = pricing
 
   const getCourse = (slug: string) =>
     catalog.courses.find((course) => course.slug === slug)
@@ -107,6 +108,7 @@ export default function SummaryStep({
         privacyConfirmed,
         photoConsent,
         website,
+        discountCode: state.discountCode,
         attendees: attendees.map(
           ({ firstName, lastName, age, member, courses }) => ({
             firstName,
@@ -224,7 +226,7 @@ export default function SummaryStep({
           )}
 
           <dl className="mt-6 space-y-4 border-t border-gray-200 pt-6 text-sm">
-            {discountPercent > 0 && (
+            {discount.status === 'active' && (
               <>
                 <div className="flex justify-between">
                   <dt>Zwischensumme</dt>
@@ -236,7 +238,7 @@ export default function SummaryStep({
                   <dt>
                     Rabatt{' '}
                     <span className="text-gray-500">
-                      ({discountPercent} % Brettlemarkt)
+                      ({formatPercent(discount.rate)} {discount.label})
                     </span>
                   </dt>
                   <dd className="font-medium text-gray-900">

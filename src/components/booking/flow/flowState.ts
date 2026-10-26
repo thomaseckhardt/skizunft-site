@@ -65,6 +65,8 @@ export type FlowState = {
   booker: Booker
   attendees: FlowAttendee[]
   draft: Draft
+  /** Taken from the link the booker came with, kept across reloads. */
+  discountCode?: string
 }
 
 export type FlowAction =
@@ -450,6 +452,7 @@ export const createFlowReducer =
         }
 
       case 'reset':
-        return createInitialState()
+        // The Discount Code came with the link, not with the discarded booking.
+        return { ...createInitialState(), discountCode: state.discountCode }
     }
   }

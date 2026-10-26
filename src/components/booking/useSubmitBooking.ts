@@ -14,6 +14,8 @@ export type BookingValues = {
   photoConsent?: boolean
   /** Honeypot field, rendered hidden. People leave it empty. */
   website?: string
+  /** Checked on the server, which only applies a valid one. */
+  discountCode?: string
   attendees: {
     firstName: string
     lastName: string
@@ -45,7 +47,6 @@ export default function useSubmitBooking() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         ...values,
-        discountCode: params.get('code') ?? undefined,
         bookingKey: params.get('key') ?? undefined,
       }),
     })

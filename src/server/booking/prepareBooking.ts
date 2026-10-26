@@ -1,5 +1,8 @@
 import { parseSeatLimit } from '../../components/booking/flow/availability'
-import { createPricing, getDiscountRate } from '../../components/booking/pricing'
+import {
+  createPricing,
+  resolveDiscountCode,
+} from '../../components/booking/pricing'
 import type { Submission } from './parseSubmission'
 
 type CatalogCourse = {
@@ -80,8 +83,8 @@ export function prepareBooking(
     return { ok: false, error: 'unbookable', courses: unbookable }
   }
 
-  const discountRate = getDiscountRate(submission.discountCode ?? null)
-  const pricing = createPricing({ ...catalog, discountRate })
+  const discount = resolveDiscountCode(submission.discountCode)
+  const pricing = createPricing({ ...catalog, discount })
 
   const attendees = submission.attendees.map((attendee) => ({
     ...attendee,
@@ -103,7 +106,7 @@ export function prepareBooking(
         ...booker,
         priceTotal: pricing.getTotalPrice(attendees),
         // Only a code that grants a discount is stored
-        ...(discountRate > 0 && discountCode ? { discountCode } : {}),
+        ...(discount.status === 'active' ? { discountCode } : {}),
       },
       attendees,
       seatLimits,
